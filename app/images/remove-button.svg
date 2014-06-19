@@ -1,0 +1,21 @@
+<?xml version="1.0"?><svg width="744.09448819" height="1052.3622047" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title/>
+ <defs>
+  <linearGradient id="linearGradient2209">
+   <stop stop-color="#ffe900" offset="0" id="stop2211"/>
+   <stop stop-color="#ffe900" stop-opacity="0" offset="1" id="stop2213"/>
+  </linearGradient>
+  <linearGradient y2="0.92413" y1="0" xlink:href="#linearGradient2209" x2="0.524704" x1="0.261265" id="linearGradient2520"/>
+  <linearGradient y2="-0.147508" y1="0.94612" xlink:href="#linearGradient2209" x2="0.721216" x1="0.953897" id="linearGradient2546"/>
+  <linearGradient y2="-0.147508" y1="0.94612" xlink:href="#linearGradient2209" x2="0.721216" x1="0.953898" id="linearGradient3069"/>
+  <linearGradient y2="0.92413" y1="0" xlink:href="#linearGradient2209" x2="0.524704" x1="0.261265" id="linearGradient3073"/>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <path fill="#ff0000" fill-rule="evenodd" stroke="#cb0000" stroke-width="19.95945" marker-start="none" marker-mid="none" marker-end="none" stroke-miterlimit="4" stroke-dashoffset="0" id="path3059" d="m525.386353,738.156128a148.33902,148.33902 0 1 1 -296.678009,0a148.33902,148.33902 0 1 1 296.678009,0z"/>
+  <path fill="url(#linearGradient3069)" fill-rule="evenodd" stroke-width="0" stroke-miterlimit="4" stroke-dashoffset="0" id="path3061" d="m413.108917,870.115845c36.829071,-9.868286 66.078247,-34.144348 83.588135,-65.402893c28.439178,-67.325134 -77.667603,90.300232 -165.308197,61.664612c25.477539,9.343689 53.780518,11.22467 81.720062,3.738281z"/>
+  <path fill="url(#linearGradient3073)" fill-rule="evenodd" stroke-width="0" stroke-miterlimit="4" stroke-dashoffset="0" id="path3063" d="m377.273621,600.241272c-76.2565,0 -138.142517,63.514526 -138.142517,141.777649c0,10.584534 1.174576,20.886658 3.320999,30.811157c75.808029,-145.926514 157.485336,-54.069885 262.793472,-84.202881c-20.564972,-51.816833 -70.121674,-88.385925 -127.971954,-88.385925z"/>
+  <path opacity="0.735294" fill="#ffffff" stroke-width="1px" id="path3065" d="m293.323578,762.596985l0,-48.881775l167.447327,0l0,48.881775"/>
+  <path fill="#ffffff" stroke-width="1px" id="path3067" d="m297.640228,758.530762l0,-40.74939l158.814026,0l0,40.74939"/>
+ </g>
+</svg>

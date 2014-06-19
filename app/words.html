@@ -1,0 +1,63 @@
+
+<ons-page  ng-controller="wordsController"
+    class="center">
+    <ons-scroller>
+        <ons-list>
+            <div class="input-group  input-group-local">
+                <input type="text" class="form-control  form-control-local"
+                       ng-keypress="addItemKeyPress($event)"
+                       ng-model="$parent.inputText"
+                       placeholder="Type words or phrases here">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-primary-local"
+                            type="button"
+                            ng-click="addItem()">
+                            <p class="input-plus-text">+</p>
+                        </button>
+                    </span>
+            </div><!-- /input-group -->
+            <ons-list-item
+                    class="topcoat-list__item--tappable
+                    topcoat-list__item__line-height my-repeat-animation"
+                    ng-repeat="(key, item) in filterNonCollections(words)">
+                <div class="my-show-hide-animation" ng-hide="!editMode">
+                    <a href="">
+                        <img src="images/remove-button-th.png"
+                             class="list-item-delete-icon remove-button-animation"
+                             width="30px" height="30px" ng-click="removeItem(key)"
+                             ng-hide="!editMode">
+                    </a>
+                    <!--
+                    <ons-icon
+                        icon="trash-o"
+                        size="lg"
+                        class="list-item-delete-icon"
+                        ng-click="removeItem(key)">
+                    </ons-icon>
+                    -->
+                </div>
+                <div ng-click="nextPage(key, item.word)">
+                    <p class="list-item-text"
+                        ng-class="{list_item_text_left: editMode}">
+                        {{item.word}}
+                    </p>
+                    <div class="list-item-outer-icon"
+                         ng-click="">
+                        <ons-icon
+                            icon="angle-right"
+                            size="lg"
+                            class="list-item-details-icon">
+                        </ons-icon>
+                    </div>
+                </div>
+            </ons-list-item>
+        </ons-list>
+    </ons-scroller>
+
+    <ons-bottom-toolbar>
+        <ons-icon icon="pencil" size="lg"
+                  ng-click="toggleEditMode()">
+        </ons-icon>
+    </ons-bottom-toolbar>
+
+</ons-page>

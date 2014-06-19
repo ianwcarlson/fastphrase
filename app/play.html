@@ -1,0 +1,82 @@
+<ons-navigator title="Play"
+    left-button-icon="fa fa-lg fa-bars"
+    on-left-button-click="ons.slidingMenu.toggleMenu()">
+    <ons-page class="center" ng-controller="playController">
+        <ons-navigator-toolbar title="Page1">
+        </ons-navigator-toolbar>
+        <div class="container-fluid">
+            <p class="play-select-title">Select a category:</p>
+            <select ng-model="selectedCollection"
+                ng-options="collection as collection.name for collection in collections"
+                class="form-control">
+            </select>
+
+            <div class="row row-margin">
+                <div class="col-xs-6 col-sm-6 button-group left-side-padding">
+                    <button class="btn btn-lg btn-success btn-block start-round-button"
+                        type="button" ng-click="startNewRound()">Start Round</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 right-side-padding">
+                    <button class="btn btn-lg btn-warning btn-block start-round-button"
+                        type="button" ng-click="resetGame()">Reset</button>
+
+                </div>
+            </div>
+            <br>
+            <div class="row row-margin">
+                <div class="col-xs-6 col-sm-6 left-side-padding">
+                    <div class="list-group" ng-class="{highlighted: team1}">
+
+                        <div class="list-group-item list-group-item-success">
+                            <button type="button" class="btn btn-primary increment-score-button"
+                                ng-click="incrementTeam('team1')">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </button>
+                            Team 1
+                            <button type="button" class="btn btn-primary decrement-score-button"
+                                ng-click="decrementTeam('team1')">
+                                <i class="fa fa-minus fa-lg"></i>
+                            </button>
+                        </div>
+                        <div class="list-group-item">
+                            {{scores.team1}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 right-side-padding">
+                    <div class="list-group" ng-class="{highlighted: team2}">
+                        <div class="list-group-item list-group-item-info">
+                            <button type="button" class="btn btn-primary increment-score-button"
+                                ng-click="incrementTeam('team2')">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </button>
+                            Team 2
+                            <button type="button" class="btn btn-primary decrement-score-button"
+                                ng-click="decrementTeam('team2')">
+                                <i class="fa fa-minus fa-lg"></i>
+                            </button>
+                        </div>
+                        <div class="list-group-item">
+                            {{scores.team2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="play-word-main-outer-id">
+                <div  class="col-xs-6 col-xs-offset-3">
+                    <div class="play-word-main-inner">
+                        <p class="play-word-main-text">{{newWord}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-lg btn-info btn-block"
+                        type="button" ng-click="getNextWord({increment: true})">Next</button>
+                </div>
+            </div>
+
+        </div>
+    </ons-page>
+</ons-navigator>
