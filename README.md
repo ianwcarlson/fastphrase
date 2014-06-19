@@ -1,4 +1,4 @@
-Welcome to Onsen UI
+
 
 Here is how to run the project
 
