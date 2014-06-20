@@ -3,13 +3,15 @@
 	var playControllerModule = angular.module('playControllerModule', []);
 
     playControllerModule.controller('playController', [
-        '$scope', '$firebase', '$timeout',
-        function($scope, $firebase, $timeout){
+        '$scope', '$firebase', '$timeout','loginService',
+        function($scope, $firebase, $timeout, loginService){
 
         $scope.collections = [];
-        var wordSetRef = new Firebase('https://blistering-fire-4858.firebaseio.com/wordset');
+        var user = loginService.getUser();
+        var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+        var wordSetRef = new Firebase(firebaseUrl);
         var collections = $firebase(wordSetRef);
-        //bindCollections.$bind($scope, 'collectionsArray');
+
         for (var item in collections) {
             var value = collections[item];
             if (value.collectionName) {
@@ -38,7 +40,7 @@
                 var value = collections[item];
                 if (value.collectionName === $scope.selectedCollection.name) {
                     var collectionHashKey = item;
-                    var url = 'https://blistering-fire-4858.firebaseio.com/wordset' + '/' + collectionHashKey;
+                    var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
                     var wordSetRef = new Firebase(url);
                     var words = $firebase(wordSetRef);
                     for (var word in words){
