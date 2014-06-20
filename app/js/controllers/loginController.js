@@ -3,21 +3,20 @@
 	var loginControllerModule = angular.module('loginControllerModule', []);
 
     loginControllerModule.controller('loginController', [
-        '$scope', function($scope){
+        '$scope', 'loginService', '$state',
+        function($scope, loginService, $state){
 
-        var chatRef = new Firebase('https://blistering-fire-4858.firebaseio.com');
-        var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
-            if (error) {
-                // an error occurred while attempting login
-                alert(error);
-            } else if (user) {
-                // user authenticated with Firebase
-                //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
+        var auth = loginService.getLoginAuthorization();
 
-            } else {
-                // user is logged out
+        // this will get call whenever login state changes
+        var updateLoginStatus = function(){
+            if (loginService.getLoginActive()){
+                $state.go('collections', {action: '', title: ''});
             }
-        });
+        };
+        loginService.setLoginCallback(updateLoginStatus);
+        // run the first time to see if token already valid
+        updateLoginStatus();
 
         $scope.login = function(provider){
             auth.login(provider);

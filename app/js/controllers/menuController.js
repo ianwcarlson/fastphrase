@@ -3,8 +3,14 @@
 	var menuControllerModule = angular.module('menuControllerModule', []);
 
     menuControllerModule.controller('menuController', [
-        '$scope', function($scope){
+        '$scope', 'loginService', function($scope, loginService){
 
+        $scope.loginActive = false;
+        var updateLoginStatus = function(){
+            $scope.loginActive = loginService.getLoginActive();
+        };
+        loginService.setLoginCallback(updateLoginStatus);
+        updateLoginStatus();
 
     }]);
 
