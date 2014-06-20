@@ -19,6 +19,8 @@ loginServiceModule.factory('loginService', function(){
             //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
 
         } else {
+            loginActive = false;
+            callEachCallback(callbackArray);
             // user is logged out
         }
     });
@@ -38,7 +40,7 @@ loginServiceModule.factory('loginService', function(){
         getLoginAuthorization: function(){
             return auth;
         },
-        getUserID: function(){
+        getUser: function(){
             return userID;
         }
     }

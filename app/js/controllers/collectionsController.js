@@ -3,15 +3,16 @@
 	var controllerModule = angular.module('controllerModule', []);
 
     controllerModule.controller('collectionsController', [
-        '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state',
-        function($scope, $rootScope, wordSetManager, $firebase, $state){
+        '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
+        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService){
 
         $scope.editMode = true;
         $scope.toggleEditMode = function(){
             $scope.editMode = !$scope.editMode;
         };
-
-        var wordSetRef = new Firebase('https://blistering-fire-4858.firebaseio.com/wordset');
+        var user = loginService.getUser();
+        var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+        var wordSetRef = new Firebase(firebaseUrl);
 
         $scope.collections = $firebase(wordSetRef);
 
@@ -45,8 +46,8 @@
     }]);
 
     controllerModule.controller('wordsController', [
-        '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state',
-        function($scope, $rootScope, wordSetManager, $firebase, $state){
+        '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
+        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService){
 
             $scope.editMode = false;
             $scope.toggleEditMode = function(){
@@ -55,7 +56,9 @@
             $scope.showDef = false;
             var activeCollectionKey = wordSetManager.getActiveCollection();
 
-            var collectionRef = new Firebase('https://blistering-fire-4858.firebaseio.com/wordset' +
+            var user = loginService.getUser();
+            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+            var collectionRef = new Firebase(firebaseUrl +
                 '/' + activeCollectionKey);
 
             $scope.words = $firebase(collectionRef);
@@ -97,16 +100,17 @@
         }]);
 
     controllerModule.controller('definitionController', [
-        '$scope', 'wordSetManager', '$firebase',
-        function($scope, wordSetManager, $firebase){
+        '$scope', 'wordSetManager', '$firebase','loginService',
+        function($scope, wordSetManager, $firebase, loginService){
 
             var activeWordKey = wordSetManager.getActiveWord();
             var activeCollectionKey = wordSetManager.getActiveCollection();
 
-            var pathString = 'https://blistering-fire-4858.firebaseio.com/wordset' +
+            var user = loginService.getUser();
+            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id +
                 '/' + activeCollectionKey + '/' + activeWordKey;
 
-            var definitionRef = new Firebase(pathString + '/' + 'definition');
+            var definitionRef = new Firebase(firebaseUrl + '/' + 'definition');
             var fireBaseDefinitionRef = $firebase(definitionRef);
             fireBaseDefinitionRef.$bind($scope.$parent, 'inputText');
 

@@ -12,6 +12,11 @@
         loginService.setLoginCallback(updateLoginStatus);
         updateLoginStatus();
 
+        var auth = loginService.getLoginAuthorization();
+        $scope.logout = function(){
+            auth.logout();
+        }
+
     }]);
 
 
