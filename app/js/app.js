@@ -20,6 +20,10 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             url: "/login",
             templateUrl: "login.html"
         })
+        .state('signup', {
+            url: "/signup",
+            templateUrl: "signup.html"
+        })
         .state('collections', {
             url: "/collections?action&title",
             templateUrl: "collections.html"

@@ -74,3 +74,14 @@ opacity:0.9;
         margin-top:10px;
     }
 }
+h2 {
+    margin-top: -5px;
+}
+.input-group-bottom-margin{
+    margin-bottom: 10px;
+}
+.error-form-text{
+    color: darkred;
+    display: block;
+    margin-bottom: 0px;
+}

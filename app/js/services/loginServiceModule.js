@@ -24,10 +24,20 @@ loginServiceModule.factory('loginService', function(){
             // user is logged out
         }
     });
+
     function callEachCallback(callbackArray){
         callbackArray.forEach(function(callback){
             callback();
         })
+    }
+
+    function generatePassword () {
+        var possibleChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?_-';
+        var password = '';
+        for(var i = 0; i < 16; i += 1) {
+            password+=possibleChars[ Math.floor(Math.random()*possibleChars.length)]
+        }
+        return password;
     }
 
     return{
@@ -42,7 +52,8 @@ loginServiceModule.factory('loginService', function(){
         },
         getUser: function(){
             return userID;
-        }
+        },
+        generatePassword: generatePassword
     }
 });
 
