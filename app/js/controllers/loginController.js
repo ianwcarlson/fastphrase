@@ -31,9 +31,10 @@
 
             var auth = loginService.getLoginAuthorization();
             $scope.showFirst = true;
+            $scope.emailInUse = false;
 
             $scope.submitEmail = function(){
-
+                //$scope.showFirst = false;
                 var autoGenPassword = loginService.generatePassword();
                 auth.createUser($scope.signup.inputEmail, autoGenPassword, function(error, user){
 
@@ -48,7 +49,8 @@
                         })
                     }
                     else{
-                        alert('create User failed');
+                        if (error.code === 'EMAIL_TAKEN')
+                        $scope.emailIn = true;
                     }
                 })
             }
@@ -65,6 +67,52 @@
                         $state.go('login');
                     }
                 })
+            };
+
+            function authErrorClass(scopeVariable, error){
+                var nonUserError = false;
+
+                switch(error.code){
+                    case ('EMAIL_TAKEN'):
+                        $scope[scopeVariable] = 'Email already in use.';
+                        break;
+                    case ('INVALID_EMAIL'):
+                        $scope[scopeVariable] = 'Email invalid.';
+                        break;
+                    case ('AUTHENTICATION_DISABLE'):
+                        console.log('Authentication Error: The specified authentication type is not enabled for this Firebase.');
+                        nonUserError = true;
+                        break;
+                    case ('INVALID_FIREBASE'):
+                        console.log('Authentication Error: Invalid Firebase specified.');
+                        nonUserError = true;
+                        break;
+                    case ('INVALID_ORIGIN'):
+                        console.log('Authentication Error: Invalid origin');
+                        nonUserError = true;
+                        break;
+                    case ('INVALID_PASSWORD'):
+                        $scope[scopeVariable] = 'Username or password incorrect';
+                        break;
+                    case ('INVALID_USER'):
+                        $scope[scopeVariable] = 'Username or password incorrect';
+                        break;
+                    case ('UNKNOWN_ERROR'):
+                        console.log('Authentication Error: Unknown error occurred');
+                        nonUserError = true;
+                        break;
+                    case ('USER_DENIED'):
+                        console.log('Authentication Error: User denied');
+                        nonUserError = true;
+                        break;
+                    default:
+                        console.log('Authentication Error: ', error);
+                        nonUserError = true;
+                        break;
+                }
+                if (nonUserError){
+                    $scope[scopeVariable] = 'Authentication error occurred: contact support@fastphrase.com';
+                }
             }
         }
     ])
