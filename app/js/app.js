@@ -45,7 +45,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-myApp.run(function($rootScope, $timeout, $state, $stateParams) {
+myApp.run(function($rootScope, $timeout, $state, $stateParams, loginService) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         switch (toParams.action) {
             case 'push':

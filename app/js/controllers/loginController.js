@@ -29,32 +29,46 @@
         '$scope', 'loginService', '$state',
         function($scope, loginService, $state){
 
-        var auth = loginService.getLoginAuthorization();
-        $scope.showFirst = true;
+            var auth = loginService.getLoginAuthorization();
+            $scope.showFirst = true;
 
-        $scope.submitEmail = function(){
+            $scope.submitEmail = function(){
 
-            var autoGenPassword = loginService.generatePassword();
-            auth.createUser($scope.signup.inputEmail, autoGenPassword, function(error, user){
+                var autoGenPassword = loginService.generatePassword();
+                auth.createUser($scope.signup.inputEmail, autoGenPassword, function(error, user){
 
-                if (!error){
-                    auth.sendPasswordResetEmail($scope.signup.inputEmail, function(error, success){
-                        if (!error){
-                            $scope.showFirst = false;
-                        }
-                        else{
-                            alert(error);
-                        }
-                    })
-                }
-                else{
-                    alert('create User failed');
-                }
-            })
-        }
+                    if (!error){
+                        auth.sendPasswordResetEmail($scope.signup.inputEmail, function(error, success){
+                            if (!error){
+                                $scope.showFirst = false;
+                            }
+                            else{
+                                alert(error);
+                            }
+                        })
+                    }
+                    else{
+                        alert('create User failed');
+                    }
+                })
+            }
 
+            $scope.setNewPassword = function(){
+                auth.changePassword($scope.signup.inputEmail, $scope.tempPassword,
+                    $scope.pw2, function(error, success){
+
+                    if (!error){
+                        console.log('Password changed successfully');
+                    }
+                    else{
+                        alert('login successful');
+                        $state.go('login');
+                    }
+                })
+            }
         }
     ])
+
 
 
 })();

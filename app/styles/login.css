@@ -85,3 +85,12 @@ h2 {
     display: block;
     margin-bottom: 0px;
 }
+.form-group{
+    margin-bottom: 5px;
+}
+.control-label{
+    float: left;
+}
+.btn-margin-top{
+    margin-top: 15px;
+}
