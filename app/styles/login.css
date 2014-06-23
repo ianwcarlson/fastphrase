@@ -83,7 +83,13 @@ h2 {
 .error-form-text{
     color: darkred;
     display: block;
-    margin-bottom: 0px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    text-align: left;
+}
+.error-form-text-login{
+    margin-bottom: 10px;
 }
 .form-group{
     margin-bottom: 5px;
@@ -94,3 +100,9 @@ h2 {
 .btn-margin-top{
     margin-top: 15px;
 }
+.forgot-password{
+    margin-top: 10px;
+    text-align: right;
+}
+
+

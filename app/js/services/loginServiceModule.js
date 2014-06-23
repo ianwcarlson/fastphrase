@@ -4,13 +4,14 @@ loginServiceModule.factory('loginService', function(){
     var loginActive = false;
     var userID = null;
     var callbackArray = [];
+    var errorMsg = '';
     var chatRef = new Firebase('https://blistering-fire-4858.firebaseio.com');
     var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
         if (error) {
             loginActive = false;
             // an error occurred while attempting login
-            alert(error.message);
-            alert(error.code);
+            errorMsg = authError(error);
+            callEachCallback(callbackArray);
         } else if (user) {
             userID = user;
             loginActive = true;
@@ -40,6 +41,59 @@ loginServiceModule.factory('loginService', function(){
         return password;
     }
 
+    function authError(error){
+
+        var nonUserError = false;
+        var errorMessage = null;
+
+        if (error) {
+            switch (error.code) {
+                case ('EMAIL_TAKEN'):
+                    errorMessage = 'Email already in use.';
+                    break;
+                case ('INVALID_EMAIL'):
+                    errorMessage = 'Email invalid.';
+                    break;
+                case ('AUTHENTICATION_DISABLE'):
+                    console.log('Authentication Error: The specified authentication type is not enabled for this Firebase.');
+                    nonUserError = true;
+                    break;
+                case ('INVALID_FIREBASE'):
+                    console.log('Authentication Error: Invalid Firebase specified.');
+                    nonUserError = true;
+                    break;
+                case ('INVALID_ORIGIN'):
+                    console.log('Authentication Error: Invalid origin');
+                    nonUserError = true;
+                    break;
+                case ('INVALID_PASSWORD'):
+                    errorMessage = 'Username or password incorrect';
+                    break;
+                case ('INVALID_USER'):
+                    errorMessage = 'Username or password incorrect';
+                    break;
+                case ('UNKNOWN_ERROR'):
+                    console.log('Authentication Error: Unknown error occurred');
+                    nonUserError = true;
+                    break;
+                case ('USER_DENIED'):
+                    console.log('Authentication Error: User denied');
+                    nonUserError = true;
+                    break;
+                default:
+                    console.log('Authentication Error: ', error);
+                    nonUserError = true;
+                    break;
+            }
+            if (nonUserError) {
+                errorMessage = 'Authentication error occurred: contact support@fastphrase.com';
+            }
+        }
+        return errorMessage;
+    }
+
+
+
     return{
         setLoginCallback: function(callback){
             callbackArray.push(callback);
@@ -53,7 +107,11 @@ loginServiceModule.factory('loginService', function(){
         getUser: function(){
             return userID;
         },
-        generatePassword: generatePassword
+        generatePassword: generatePassword,
+        getAuthError: authError,
+        getErrorMessage: function(){
+            return errorMsg;
+        }
     }
 });
 
