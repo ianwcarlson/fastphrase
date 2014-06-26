@@ -18,31 +18,31 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('login', {
             url: "/login",
-            templateUrl: "login.html"
+            templateUrl: "partials/login.html"
         })
         .state('signup', {
             url: "/signup",
-            templateUrl: "signup.html"
+            templateUrl: "partials/signup.html"
         })
         .state('resetPassword', {
             url: "/resetPassword",
-            templateUrl: "resetPassword.html"
+            templateUrl: "partials/resetPassword.html"
         })
         .state('collections', {
             url: "/collections?action&title",
-            templateUrl: "collections.html"
+            templateUrl: "partials/collections.html"
         })
         .state('play', {
             //url: "/play",
-            templateUrl: "play.html"
+            templateUrl: "partials/play.html"
         })
         .state('words', {
             url: "/words?action&title",
-            templateUrl: "words.html"
+            templateUrl: "partials/words.html"
         })
         .state('definitions', {
             url: "/definitions?action&title",
-            templateUrl: "definitions.html"
+            templateUrl: "partials/definitions.html"
         });
 
     $urlRouterProvider.otherwise('login');

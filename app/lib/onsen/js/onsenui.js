@@ -998,10 +998,10 @@ limitations under the License.
                         // NOTE IWC HACK to bypass Onsen router and use ui-router
                         var page = $rootScope.ons.navigator.getCurrentPage();
                         switch(page.options.page){
-                            case('definitions.html'):
+                            case('partials/definitions.html'):
                                 $state.go('words', {action: 'pop', title: ''});
                                 break;
-                            case('words.html'):
+                            case('partials/words.html'):
                                 $state.go('collections', {action: 'pop', title: ''});
                                 break;
                             default:
