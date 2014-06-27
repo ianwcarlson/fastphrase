@@ -58,10 +58,24 @@
 
             var user = loginService.getUser();
             var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
-            var collectionRef = new Firebase(firebaseUrl +
-                '/' + activeCollectionKey);
+            var collectionRef = new Firebase(firebaseUrl + '/' + activeCollectionKey);
+            var wordCountRefNode = new Firebase(firebaseUrl + '/' + activeCollectionKey + '/' + 'wordCount')
 
             $scope.words = $firebase(collectionRef);
+            var wordCountRef = $firebase(wordCountRefNode);
+
+            $scope.wordCount = 0;
+            wordCountRef.$bind($scope, 'wordCount');
+            syncWordCount();
+
+            function syncWordCount(){
+                var keys = $scope.words.$getIndex();
+                for (var idx=0; idx<keys.length; idx++){
+                    if (keys[idx] !== 'wordCount' && keys[idx] !== 'collectionName'){
+                        $scope.wordCount += 1;
+                    }
+                }
+            }
 
             $scope.filterNonCollections = function(items) {
                 var result = {};
@@ -77,6 +91,7 @@
                 //$scope.collections = wordSetManager.getCollectionsFromWordSet();
                 //$scope.words.splice(index, 1);
                 $scope.words.$remove(id);
+                $scope.wordCount -= 1;
             };
             $scope.addItem = function(){
                 var newObject = {};
@@ -86,6 +101,7 @@
                 //$scope.words.push(wordObj);
                 $scope.words.$add(newObject);
                 $scope.inputText = '';
+                $scope.wordCount += 1;
             };
             $scope.addItemKeyPress = function(ev){
                 if (ev.which==13){
@@ -97,6 +113,7 @@
                 //$rootScope.ons.navigator.pushPage('definitions.html', {title: wordName})
                 $state.go('definitions', {action: 'push', title: wordName});
             }
+
         }]);
 
     controllerModule.controller('definitionController', [
