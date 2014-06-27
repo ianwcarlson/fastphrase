@@ -4,7 +4,6 @@
  * Fix bug buzzer silence upon reset
  * Add confirmation modals when deleting categories and resetting
  * Implement Twitter OAuth
- * Add number of words in a category badge
  * Add show definition when playing
  * Better routing to login page authentication
  * Busy animations during page loads
