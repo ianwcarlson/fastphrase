@@ -17,19 +17,12 @@
         $scope.collections = $firebase(wordSetRef);
 
         $scope.removeItem = function(id){
-            //wordSetManager.deleteCollection(index);
-            //$scope.collections = wordSetManager.getCollectionsFromWordSet();
-            //$scope.collections.splice(index, 1);
-            //var key = $scope.collections[index];
-            //var itemRef = new Firebase('https://blistering-fire-4858.firebaseio.com/wordset' + '/' + id);
-            //itemRef.remove();
             $scope.collections.$remove(id);
         };
         $scope.addItem = function(){
             var newObject = {};
             newObject.collectionName = $scope.inputText;
-            //wordSetManager.addCollection($scope.inputText);
-            //$scope.collections.push(wordSetManager.getCollectionByName($scope.inputText));
+            newObject.wordCount = 0;
             $scope.collections.$add(newObject);
             $scope.inputText = '';
         };
