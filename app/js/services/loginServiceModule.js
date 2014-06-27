@@ -55,15 +55,15 @@ loginServiceModule.factory('loginService', function(){
                     errorMessage = 'Email invalid.';
                     break;
                 case ('AUTHENTICATION_DISABLE'):
-                    console.log('Authentication Error: The specified authentication type is not enabled for this Firebase.');
+                    alert('Authentication Error: The specified authentication type is not enabled for this Firebase.');
                     nonUserError = true;
                     break;
                 case ('INVALID_FIREBASE'):
-                    console.log('Authentication Error: Invalid Firebase specified.');
+                    alert('Authentication Error: Invalid Firebase specified.');
                     nonUserError = true;
                     break;
                 case ('INVALID_ORIGIN'):
-                    console.log('Authentication Error: Invalid origin');
+                    alert('Authentication Error: Invalid origin');
                     nonUserError = true;
                     break;
                 case ('INVALID_PASSWORD'):
@@ -73,15 +73,15 @@ loginServiceModule.factory('loginService', function(){
                     errorMessage = 'Username or password incorrect';
                     break;
                 case ('UNKNOWN_ERROR'):
-                    console.log('Authentication Error: Unknown error occurred');
+                    alert('Authentication Error: Unknown error occurred');
                     nonUserError = true;
                     break;
                 case ('USER_DENIED'):
-                    console.log('Authentication Error: User denied');
+                    alert('Authentication Error: User denied');
                     nonUserError = true;
                     break;
                 default:
-                    console.log('Authentication Error: ', error);
+                    alert('Authentication Error: ', error);
                     nonUserError = true;
                     break;
             }
