@@ -1,25 +1,14 @@
 <ons-navigator
     title="Categories"
     left-button-icon="fa fa-lg fa-bars"
-    on-left-button-click="ons.slidingMenu.toggleMenu()">
+    on-left-button-click="ons.slidingMenu.toggleMenu()"
+    right-button-icon="fa fa-lg fa-pencil">
+
     <ons-page  ng-controller="collectionsController"
         class="center">
+        <edit-icon edit-icon-callback="toggleEditMode"></edit-icon>
         <ons-scroller>
             <ons-list>
-                <!--
-                <div class="input-text-box-div">
-                    <input class="input-text-box topcoat-text-input"
-                           ng-keypress="addItemKeyPress($event)"
-                           ng-model="$parent.inputText" placeholder="Type collection names here"
-                           style="width: 90%">
-                    <ons-button ng-click="addItem()"
-                        class="input-button-add">
-                        <p class="input-plus-text">+</p>
-                    </ons-button>
-                </div>
-
-                -->
-
                 <div class="input-group input-group-local">
                     <input type="text" class="form-control form-control-local"
                         ng-keypress="addItemKeyPress($event)"
@@ -45,14 +34,6 @@
                                  width="30px" height="30px" ng-click="removeItem(key)"
                                  ng-hide="!editMode">
                         </a>
-                        <!--
-                        <ons-icon
-                            icon="trash-o"
-                            size="lg"
-                            class="list-item-delete-icon"
-                            ng-click="removeItem(key)">
-                        </ons-icon>
-                        -->
                     </div>
                     <div ng-click="nextPage(key, item.collectionName)">
                         <p class="list-item-text"
@@ -75,23 +56,5 @@
                 </ons-list-item>
             </ons-list>
         </ons-scroller>
-
-        <ons-bottom-toolbar>
-            <ons-icon icon="pencil" size="lg"
-                      ng-click="toggleEditMode()">
-            </ons-icon>
-        </ons-bottom-toolbar>
-
-        <!--
-        <h1>Page 2</h1>
-        <ons-button ng-click="ons.slidingMenu.toggleMenu()">
-            Toggle Menu
-        </ons-button>
-
-        <p></p>
-        <ons-button ng-click="ons.navigator.pushPage('page3.html', { title: 'Page 3' })">
-            Push Page 3
-        </ons-button>
-        -->
     </ons-page>
 </ons-navigator>

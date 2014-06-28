@@ -28,4 +28,24 @@ directivesModule.directive('pwCheck', [function(){
     }
 }]);
 
+directivesModule.directive('editIcon', [function(){
+    return{
+        restrict: 'E',
+        scope: {
+            editIconCallback: '='
+        },
+        link: function(scope, element){
+            function findIconAndInvoke() {
+                var elements = document.getElementsByClassName('right-section-icon');
+                elements[0].onclick = function () {
+                    scope.editIconCallback();
+                    scope.$apply();
+                }
+            }
+            findIconAndInvoke();
+            scope.$on('updatePage', findIconAndInvoke);
+        }
+    }
+}]);
+
 

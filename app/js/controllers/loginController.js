@@ -12,7 +12,11 @@
         // this will get call whenever login state changes
         var updateLoginStatus = function(){
             if (loginService.getLoginActive()){
-                $state.go('collections', {action: '', title: ''});
+                $state.go('collections', {
+                    action: '',
+                    title: '',
+                    rightButtonIcon: 'fa fa-lg fa-pencil'
+                });
             }
             else{
                 $scope.login.loginError = loginService.getErrorMessage();

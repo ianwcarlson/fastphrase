@@ -6,7 +6,7 @@
         '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
         function($scope, $rootScope, wordSetManager, $firebase, $state, loginService){
 
-        $scope.editMode = true;
+        $scope.editMode = false;
         $scope.toggleEditMode = function(){
             $scope.editMode = !$scope.editMode;
         };
@@ -33,9 +33,13 @@
         };
         $scope.nextPage = function(selectedIndex, collectionName){
             wordSetManager.setActiveCollection(selectedIndex);
-            $state.go('words', {action: 'push', title: collectionName});
+            $state.go('words', {
+                action: 'push',
+                title: collectionName,
+                rightButtonIcon: 'fa fa-lg fa-pencil'
+            });
             //$rootScope.ons.navigator.pushPage('words.html', {title: collectionName})
-        }
+        };
     }]);
 
     controllerModule.controller('wordsController', [
@@ -104,7 +108,10 @@
             $scope.nextPage = function(selectedIndex, wordName){
                 wordSetManager.setActiveWord(selectedIndex);
                 //$rootScope.ons.navigator.pushPage('definitions.html', {title: wordName})
-                $state.go('definitions', {action: 'push', title: wordName});
+                $state.go('definitions', {
+                    action: 'push',
+                    title: wordName
+                });
             }
 
         }]);

@@ -9,7 +9,8 @@ var myApp =	angular.module('myApp', [
     'loginControllerModule',
     'playControllerModule',
     'menuControllerModule',
-    'ui.router'
+    'ui.router',
+    'directivesModule'
 ]);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
@@ -37,7 +38,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "partials/play.html"
         })
         .state('words', {
-            url: "/words?action&title",
+            url: "/words?action&title&rightButtonIcon",
             templateUrl: "partials/words.html"
         })
         .state('definitions', {
@@ -49,11 +50,13 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-myApp.run(function($rootScope, $timeout, $state, $stateParams, loginService) {
+myApp.run(function($rootScope, $timeout, $state, $stateParams, $templateCache) {
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
         switch (toParams.action) {
             case 'push':
-                $rootScope.ons.navigator.pushPage(toState.templateUrl, {title: toParams.title});
+                $rootScope.ons.navigator.pushPage(toState.templateUrl, {
+                    title: toParams.title, rightButtonIcon: toParams.rightButtonIcon
+                });
                 break;
             case 'pop':
                 $rootScope.ons.navigator.popPage();
@@ -64,11 +67,7 @@ myApp.run(function($rootScope, $timeout, $state, $stateParams, loginService) {
                 }
         }
 
-        //$timeout(function () {
-            //if ($scope.ons.splitView) {
-            //    $scope.ons.splitView.close();
-            //}
-        //}, 100);
+        $rootScope.$broadcast('updatePage');
 
         $rootScope.state = $state.current;
     });
@@ -82,9 +81,8 @@ myApp.run(function($rootScope, $timeout, $state, $stateParams, loginService) {
         console.log('stateChangeError');
     });
 
-    $rootScope.$on('$viewContentLoaded',
-        function(event){
-        console.log('content loaded');
+    $rootScope.$on('$viewContentLoaded', function(){
+        $templateCache.removeAll();
     });
 });
 
