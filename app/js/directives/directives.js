@@ -35,7 +35,7 @@ directivesModule.directive('editIcon', [function(){
             editIconCallback: '='
         },
         link: function(scope, element){
-            function findIconAndInvoke() {
+            function findIconAndInvokeCallback() {
                 var elements = document.getElementsByClassName('right-section-icon');
                 for (var item in elements){
                     elements[item].onclick = function() {
@@ -48,8 +48,8 @@ directivesModule.directive('editIcon', [function(){
                 //    scope.$apply();
                 //}
             }
-            findIconAndInvoke();
-            scope.$on('updatePage', findIconAndInvoke);
+            findIconAndInvokeCallback();
+            scope.$on('updatePage', findIconAndInvokeCallback);
         }
     }
 }]);

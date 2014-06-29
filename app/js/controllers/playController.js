@@ -6,6 +6,7 @@
         '$scope', '$firebase', '$timeout','loginService',
         function($scope, $firebase, $timeout, loginService){
 
+        var NUM_TEAMS = 2;
         $scope.collections = [];
         var user = loginService.getUser();
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
@@ -100,23 +101,76 @@
         }, 0);
 
         function scoreManager(){
-            $scope.scores = {};
-            $scope.scores.team1 = 0;
-            $scope.scores.team2 = 0;
+            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+            $scope.scoresDB = {};
+            $scope.scoresLocal = {};
+            var teamNames = [];
+            var teamNameUrls = [];
+            var scoreTeamRefArray = [];
+            var scoresUrl = firebaseUrl + '/' + 'scores';
+            var scoresFBRef = new Firebase(scoresUrl);
+            var scores = $firebase(scoresFBRef);
+
+            // instantiate function object to get initial DB state and
+            // create one if it doesn't already exist
+            var initialSnapshotCallback = function(snapshot){
+                if (snapshot.val() === null){
+                    $scope.scoresDB[teamNames[idx]].$set('0');
+                } else {
+                    $scope.scoresLocal[snapshot.name()] = snapshot.val();
+                    scoreTeamRefArray[idx].off('value', initialSnapshotCallback);
+                }
+            };
+
+            for (var idx=0; idx<NUM_TEAMS; idx++){
+                teamNames[idx] = 'team' + (idx + 1);
+                teamNameUrls[idx] = firebaseUrl + '/' + 'scoresDB' + '/' + teamNames[idx];
+                scoreTeamRefArray.push(new Firebase(teamNameUrls[idx]));
+                $scope.scoresDB[teamNames[idx]] = $firebase(scoreTeamRefArray[idx]);
+
+                scoreTeamRefArray[idx].on('value', initialSnapshotCallback);
+            }
+
+            function syncDB(){
+                var scores = [];
+                for (var idx=0; idx<NUM_TEAMS; idx++){
+                    // read current scores
+                    scores[idx] = $scope.scoresLocal[teamNames[idx]];
+                    $scope.scoresDB[teamNames[idx]].$set(scores[idx]);
+                }
+            }
+
+
+            //var scoreTeam1Ref = new Firebase(firebaseUrl + '/' + 'scores' + '/' + 'team1');
+            //var scoreTeam2Ref = new Firebase(firebaseUrl + '/' + 'scores' + '/' + 'team2');
+            //$scope.scores.team1 = $firebase(scoreTeam1Ref);
+            //$scope.scores.team2 = $firebase(scoreTeam2Ref);
+
+            //$scope.scores = {};
+            //$scope.scores.$set({team1: 0, team2: 0});
+            //$scope.scores.team1 = 0;
+            //$scope.scores.team2 = 0;
 
             return{
                 incrementTeam: function(team){
-                    $scope.scores[team] += 1;
+
+                    $scope.scoresLocal[team] += 1;
+                    syncDB();
                 },
                 decrementTeam: function(team){
-                    if ($scope.scores[team] > 0) {
-                        $scope.scores[team] -= 1
+                    if ($scope.scoresLocal[team] > 0) {
+                        $scope.scoresLocal[team] -= 1
                     }
+                    syncDB();
                 },
                 resetScores: function(){
-                    $scope.scores = {};
-                    $scope.scores.team1 = 0;
-                    $scope.scores.team2 = 0;
+                    //$scope.scores = {};
+                    //$scope.scores.team1 = 0;
+                    //$scope.scores.team2 = 0;
+                    teamNames.forEach(function(teamName){
+                        $scope.scoresLocal[teamName] = 0;
+                    });
+                    syncDB();
                 }
             }
         }

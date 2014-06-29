@@ -34,7 +34,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "partials/collections.html"
         })
         .state('play', {
-            //url: "/play",
+            url: "/play",
             templateUrl: "partials/play.html"
         })
         .state('words', {

@@ -1,6 +1,5 @@
  * Integrate new release of Onsen
  * Add service that remembers score, or bind to firebase node
- * Edit icon button doesn't work after navigation from play view
  * Ensure all templates get cached
  * Fix bug buzzer silence upon reset
  * Add confirmation modals when deleting categories and resetting
