@@ -27,14 +27,6 @@
                              width="30px" height="30px" ng-click="removeItem(key)"
                              ng-hide="!editMode">
                     </a>
-                    <!--
-                    <ons-icon
-                        icon="trash-o"
-                        size="lg"
-                        class="list-item-delete-icon"
-                        ng-click="removeItem(key)">
-                    </ons-icon>
-                    -->
                 </div>
                 <div ng-click="nextPage(key, item.word)">
                     <p class="list-item-text"
@@ -53,11 +45,4 @@
             </ons-list-item>
         </ons-list>
     </ons-scroller>
-
-    <ons-bottom-toolbar>
-        <ons-icon icon="pencil" size="lg"
-                  ng-click="toggleEditMode()">
-        </ons-icon>
-    </ons-bottom-toolbar>
-
 </ons-page>

@@ -266,3 +266,9 @@
     position: relative;
     margin-top: -50%;
 }
+.badge-right{
+    right: 47px;
+    position: absolute;
+    top: 13px;
+    background-color: #496050;
+}
