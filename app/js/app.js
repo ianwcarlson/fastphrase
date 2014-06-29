@@ -66,8 +66,10 @@ myApp.run(function($rootScope, $timeout, $state, $stateParams, $templateCache) {
                     $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
                 }
         }
+        $timeout(function(){
+            $rootScope.$broadcast('updatePage');
+        }, 0);
 
-        $rootScope.$broadcast('updatePage');
 
         $rootScope.state = $state.current;
     });
@@ -83,6 +85,10 @@ myApp.run(function($rootScope, $timeout, $state, $stateParams, $templateCache) {
 
     $rootScope.$on('$viewContentLoaded', function(){
         $templateCache.removeAll();
+    });
+
+    $rootScope.$on('$stateChangeStart', function(){
+        //$rootScope.$broadcast('updatePage');
     });
 });
 

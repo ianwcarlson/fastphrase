@@ -1326,17 +1326,17 @@ limitations under the License.
 				var that = this;
 
 				this.setReady(false);
-
-                if ($templateCache.get(page) != undefined) {
-                    console.log('cache');
-                    var div = document.createElement('div');
-                    div.innerHTML = $templateCache.get(page);
-                    var pageContent = angular.element(div.cloneNode(true));
-                    var pageEl = this.generatePageEl(pageContent, options);
-                    var pageScope = this.createPageScope();
-                    var compiledPage = this.compilePageEl(pageEl, pageScope);
-                    this._pushPageDOM(page, div, compiledPage, pageScope, options);
-                } else {
+                // IWC caching hack
+                //if ($templateCache.get(page) != undefined) {
+                //    console.log('cache');
+                //    var div = document.createElement('div');
+                //    div.innerHTML = $templateCache.get(page);
+                //    var pageContent = angular.element(div.cloneNode(true));
+                //    var pageEl = this.generatePageEl(pageContent, options);
+                //    var pageScope = this.createPageScope();
+                //    var compiledPage = this.compilePageEl(pageEl, pageScope);
+                //    this._pushPageDOM(page, div, compiledPage, pageScope, options);
+                //} else {
                     $http({
                         url: page,
                         method: 'GET'
@@ -1355,7 +1355,7 @@ limitations under the License.
                     }.bind(this)).error(function (data, status, headers, config) {
                         console.error('error', data, status);
                     });
-                }
+                //}
 			},
 
 			popPage: function() {

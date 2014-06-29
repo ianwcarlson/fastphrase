@@ -37,10 +37,16 @@ directivesModule.directive('editIcon', [function(){
         link: function(scope, element){
             function findIconAndInvoke() {
                 var elements = document.getElementsByClassName('right-section-icon');
-                elements[0].onclick = function () {
-                    scope.editIconCallback();
-                    scope.$apply();
-                }
+                for (var item in elements){
+                    elements[item].onclick = function() {
+                        scope.editIconCallback();
+                        scope.$apply();
+                    }
+                };
+                //elements[0].onclick = function () {
+                //    scope.editIconCallback();
+                //    scope.$apply();
+                //}
             }
             findIconAndInvoke();
             scope.$on('updatePage', findIconAndInvoke);
