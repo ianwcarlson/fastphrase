@@ -186,12 +186,11 @@
             var buzzer = new Howl({urls: ['media/audio/beep-18.mp3']});
             var isPlayActive = false;
             var secondTick = function(){
-                if (time > 0){
+                if (time > 0 && !timerCancelled){
                     // beep playing logic
                     if (soundEnabled) {
                         if (time > 15) {
                             if (preCount === 0) {
-                                //beep.src = beep.src;
                                 beep.play();
 
                                 preCount = MAX_PRE_COUNT;
@@ -210,7 +209,6 @@
                     $timeout(secondTick, 1000);
                 }
                 else if(soundEnabled && !timerCancelled){
-                    //buzzer.src = buzzer.src;
                     buzzer.play();
                     isPlayActive = false;
                     timerEndCallback();
@@ -219,7 +217,6 @@
                 else if (timerCancelled){
                     timerCancelled = false;
                     isPlayActive = false;
-                    timerEndCallback();
                 }
 
             };
@@ -235,7 +232,9 @@
                 },
                 cancelTimer: function(){
                     time = 0;
-                    timerCancelled = true;
+                    if (isPlayActive){
+                        timerCancelled = true;
+                    }
                 },
                 enableSound: function(isSoundEnabled){
                     soundEnabled = isSoundEnabled;
