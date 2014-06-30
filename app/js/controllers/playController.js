@@ -55,14 +55,7 @@
         }
 
         function incrementScore(){
-            var currentState = turnManagerObj.getCurrentState();
-            var selectedTeam = '';
-            if (currentState.team1) {
-                selectedTeam = 'team1';
-            }
-            else {
-                selectedTeam = 'team2';
-            }
+            var selectedTeam = turnManagerObj.getActiveTeam();
             scoreManagerObj.incrementTeam(selectedTeam);
         }
 
@@ -87,7 +80,7 @@
             $scope.getNextWord({increment: false});
         };
         var endTurnTasks = function(){
-            turnManagerObj.toggleTurn();
+            turnManagerObj.nextTurn();
         };
         playTimer.timerEndCallback(endTurnTasks);
 
@@ -101,109 +94,83 @@
         }, 0);
 
         function scoreManager(){
-            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
-            $scope.scoresDB = {};
-            $scope.scoresLocal = {};
-            var teamNames = [];
-            var teamNameUrls = [];
-            var scoreTeamRefArray = [];
-            var scoresUrl = firebaseUrl + '/' + 'scores';
-            var scoresFBRef = new Firebase(scoresUrl);
-            var scores = $firebase(scoresFBRef);
-
-            // instantiate function object to get initial DB state and
-            // create one if it doesn't already exist
-            var initialSnapshotCallback = function(snapshot){
-                if (snapshot.val() === null){
-                    $scope.scoresDB[teamNames[idx]].$set('0');
-                } else {
-                    $scope.scoresLocal[snapshot.name()] = snapshot.val();
-                    scoreTeamRefArray[idx].off('value', initialSnapshotCallback);
-                }
-            };
-
-            for (var idx=0; idx<NUM_TEAMS; idx++){
-                teamNames[idx] = 'team' + (idx + 1);
-                teamNameUrls[idx] = firebaseUrl + '/' + 'scoresDB' + '/' + teamNames[idx];
-                scoreTeamRefArray.push(new Firebase(teamNameUrls[idx]));
-                $scope.scoresDB[teamNames[idx]] = $firebase(scoreTeamRefArray[idx]);
-
-                scoreTeamRefArray[idx].on('value', initialSnapshotCallback);
-            }
-
-            function syncDB(){
-                var scores = [];
-                for (var idx=0; idx<NUM_TEAMS; idx++){
-                    // read current scores
-                    scores[idx] = $scope.scoresLocal[teamNames[idx]];
-                    $scope.scoresDB[teamNames[idx]].$set(scores[idx]);
-                }
-            }
-
-
-            //var scoreTeam1Ref = new Firebase(firebaseUrl + '/' + 'scores' + '/' + 'team1');
-            //var scoreTeam2Ref = new Firebase(firebaseUrl + '/' + 'scores' + '/' + 'team2');
-            //$scope.scores.team1 = $firebase(scoreTeam1Ref);
-            //$scope.scores.team2 = $firebase(scoreTeam2Ref);
-
-            //$scope.scores = {};
-            //$scope.scores.$set({team1: 0, team2: 0});
-            //$scope.scores.team1 = 0;
-            //$scope.scores.team2 = 0;
+            var initialScore = [0,0];
+            var scoreSync = autoSyncType('scores', initialScore);
 
             return{
                 incrementTeam: function(team){
-
-                    $scope.scoresLocal[team] += 1;
-                    syncDB();
+                    var newValue = scoreSync.getValue(team);
+                    newValue += 1;
+                    scoreSync.setValue(team, newValue);
                 },
                 decrementTeam: function(team){
-                    if ($scope.scoresLocal[team] > 0) {
-                        $scope.scoresLocal[team] -= 1
+                    if (scoreSync.getValue(team) > 0) {
+                        var newValue = scoreSync.getValue(team);
+                        newValue -= 1;
+                        scoreSync.setValue(team, newValue);
                     }
-                    syncDB();
                 },
                 resetScores: function(){
-                    //$scope.scores = {};
-                    //$scope.scores.team1 = 0;
-                    //$scope.scores.team2 = 0;
-                    teamNames.forEach(function(teamName){
-                        $scope.scoresLocal[teamName] = 0;
+                    var names = scoreSync.getIndex();
+                    names.forEach(function(name){
+                        scoreSync.setValue(name, 0);
                     });
-                    syncDB();
                 }
             }
         }
 
         function turnManager(){
-            $scope.team1 = true;
-            $scope.team2 = false;
+            var initialTurnState = [true, false];
+            var turnSync = autoSyncType('turns', initialTurnState);
+            var teamNames = turnSync.getIndex();
 
             var resetTurn = function(){
-                $scope.team1 = true;
-                $scope.team2 = false;
+                teamNames.forEach(function(name){
+                    if (name === 'team1') {
+                        turnSync.setValue(name, true);
+                    } else {
+                        turnSync.setValue(name, false);
+                    }
+                });
             };
 
-            var toggleTurn = function(){
-                if ($scope.team1){
-                    $scope.team1 = false;
-                    $scope.team2 = true;
+            var nextTurn = function(){
+                var nextTurnIdx;
+                var idx;
+                for (idx=0; idx<teamNames.length; idx++){
+                    var readValue = turnSync.getValue(teamNames[idx]);
+                    if (readValue === true){
+                        var idxPlusOne = idx + 1;
+                        if (idxPlusOne === teamNames.length){
+                            nextTurnIdx = 0;
+                        } else {
+                            nextTurnIdx = idxPlusOne;
+                        }
+                    }
                 }
-                else{
-                    $scope.team1 = true;
-                    $scope.team2 = false;
+                for (idx=0; idx<teamNames.length; idx++){
+                    var newValue = (nextTurnIdx === idx) ? true : false;
+                    turnSync.setValue(teamNames[idx], newValue);
                 }
+            };
+
+            var getActiveTeam = function(){
+                var readValue;
+                var activeTeam = '';
+                for (var idx=0; idx<teamNames.length; idx++){
+                    readValue = turnSync.getValue(teamNames[idx]);
+                    if (readValue === true){
+                        activeTeam = teamNames[idx];
+                        break;
+                    }
+                }
+                return activeTeam;
             };
 
             return{
                 resetTurn: resetTurn,
-                toggleTurn: toggleTurn,
-                getCurrentState: function(){
-                    var returnObj = {};
-                    returnObj.team1 = $scope.team1;
-                    returnObj.team2 = $scope.team2;
-                    return returnObj;
-                }
+                nextTurn: nextTurn,
+                getActiveTeam: getActiveTeam
             }
         }
 
@@ -279,6 +246,62 @@
                 isPlayActive: function(){
                     return isPlayActive;
                 }
+            }
+        }
+
+        function autoSyncType(type, initialStateArray) {
+            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+            var scoresDB = {};
+            $scope[type] = {};
+            var teamNames = [];
+            var teamNameUrls = [];
+            var teamRefArray = [];
+
+            // instantiate function object to get initial DB state and
+            // create one if it doesn't already exist
+            var initialSnapshotCallback = function (snapshot) {
+                if (snapshot.val() === null) {
+                    scoresDB[teamNames[idx]].$set(initialStateArray[idx]);
+                } else {
+                    $scope[type][snapshot.name()] = snapshot.val();
+                    teamRefArray[idx].off('value', initialSnapshotCallback);
+                }
+            };
+
+            // initialize arrays and callback
+            for (var idx = 0; idx < NUM_TEAMS; idx++) {
+                teamNames[idx] = 'team' + (idx + 1);
+                teamNameUrls[idx] = firebaseUrl + '/' + type + '/' + teamNames[idx];
+                teamRefArray.push(new Firebase(teamNameUrls[idx]));
+                scoresDB[teamNames[idx]] = $firebase(teamRefArray[idx]);
+
+                teamRefArray[idx].on('value', initialSnapshotCallback);
+            }
+
+            // read local changes and propagate them to the back-end
+            function syncDB() {
+                var localData = [];
+                for (var idx = 0; idx < NUM_TEAMS; idx++) {
+                    // read current scores
+                    localData[idx] = $scope[type][teamNames[idx]];
+                    scoresDB[teamNames[idx]].$set(localData[idx]);
+                }
+            }
+            function getValue(name){
+                return $scope[type][name];
+            }
+            function setValue(name, newValue){
+                $scope[type][name] = newValue;
+                syncDB();
+            }
+            function getIndex(){
+                return teamNames;
+            }
+
+            return{
+                setValue: setValue,
+                getValue: getValue,
+                getIndex: getIndex
             }
         }
 

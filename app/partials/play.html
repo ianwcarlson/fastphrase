@@ -25,7 +25,7 @@
             <br>
             <div class="row row-margin">
                 <div class="col-xs-6 col-sm-6 left-side-padding">
-                    <div class="list-group" ng-class="{highlighted: team1}">
+                    <div class="list-group" ng-class="{highlighted: turns.team1}">
 
                         <div class="list-group-item list-group-item-success">
                             <button type="button" class="btn btn-primary increment-score-button"
@@ -39,12 +39,12 @@
                             </button>
                         </div>
                         <div class="list-group-item">
-                            {{scoresLocal.team1}}
+                            {{scores.team1}}
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 right-side-padding">
-                    <div class="list-group" ng-class="{highlighted: team2}">
+                    <div class="list-group" ng-class="{highlighted: turns.team2}">
                         <div class="list-group-item list-group-item-info">
                             <button type="button" class="btn btn-primary increment-score-button"
                                 ng-click="incrementTeam('team2')">
@@ -57,7 +57,7 @@
                             </button>
                         </div>
                         <div class="list-group-item">
-                            {{scoresLocal.team2}}
+                            {{scores.team2}}
                         </div>
                     </div>
                 </div>
