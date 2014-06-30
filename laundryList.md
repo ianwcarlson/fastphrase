@@ -1,7 +1,6 @@
  * Integrate new release of Onsen
- * Add service that remembers score, or bind to firebase node
  * Ensure all templates get cached
- * Fix bug buzzer silence upon reset
+ * filter extra blanks on categories page
  * Add confirmation modals when deleting categories and resetting
  * Implement Twitter OAuth
  * Add show definition when playing
@@ -24,3 +23,4 @@
  * Investigate advertisement streams
  * App logo
  * Optimize library dependencies, stripping unused CSS and
+ * hide word after play reset

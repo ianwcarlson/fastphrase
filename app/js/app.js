@@ -10,7 +10,8 @@ var myApp =	angular.module('myApp', [
     'playControllerModule',
     'menuControllerModule',
     'ui.router',
-    'directivesModule'
+    'directivesModule',
+    'filtersModule'
 ]);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {

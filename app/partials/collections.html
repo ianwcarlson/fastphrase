@@ -25,7 +25,7 @@
                 <ons-list-item
                     class="topcoat-list__item--tappable
                     topcoat-list__item__line-height my-repeat-animation"
-                    ng-repeat="(key,item) in collections">
+                    ng-repeat="(key,item) in collections | filterNonCategories">
 
                     <div class="my-show-hide-animation" ng-hide="!editMode">
                         <a href="">
