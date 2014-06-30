@@ -7,6 +7,7 @@
  * Fix menu icons
  * Busy animations during page loads
  * Implement page resize event handler to prevent next button from getting covered
+ * Check if passwords entered match in sign up page
  * Integrate new release of Onsen
  * Ensure all templates get cached
  * Add Settings:
