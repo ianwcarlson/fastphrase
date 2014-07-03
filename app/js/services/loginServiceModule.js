@@ -3,7 +3,7 @@ var loginServiceModule = angular.module('loginServiceModule', []);
 loginServiceModule.factory('loginService', ['appConstants', 'localStorageService',
     function(appConstants, localStorageService){
 
-    var validTokenExpireTimeSecs = 60;
+    var validTokenExpireTimeSecs = 3600;
     var loginActive = false;
     var userID = null;
     var tokenCreationTime = 0;

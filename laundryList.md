@@ -1,5 +1,5 @@
  * Customize password reset email to current domain (need to verify)
- * Better routing to login page authentication
+ * Logout doesn't work right
  * Add path back to login from signup/password reset
  * Add confirmation modals when deleting categories and resetting
  * Add show definition when playing

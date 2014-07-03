@@ -196,7 +196,7 @@
             var timerCancelled = false;
             var timerEndCallback = function(){};
             var beep = new Howl({urls: ['media/audio/beep-08b.mp3']});
-            var buzzer = new Howl({urls: ['media/audio/beep-18.mp3']});
+            var buzzer = new Howl({urls: ['media/audio/008664315-buzzer.mp3']});
             var isPlayActive = false;
             var secondTick = function(){
                 if (time > 0 && !timerCancelled){
