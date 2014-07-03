@@ -9,6 +9,7 @@
  * Check if passwords entered match in sign up page
  * Integrate new release of Onsen
  * Ensure all templates get cached
+ * reload bug on words and definitions pages
  * Add Settings:
   * Play turn time
   * Play/Study Mode

@@ -12,6 +12,17 @@
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
         var wordSetRef = new Firebase(firebaseUrl);
         $scope.collections = $firebase(wordSetRef);
+        $scope.collections.$on('loaded', function(){
+            //var filteredCategories = {};
+            for (var item in $scope.collections){
+                if (angular.isDefined($scope.collections[item].collectionName)){
+
+                    $scope.selectedCollection = $scope.collections[item];
+                    break;
+                }
+
+            }
+        });
 
         //for (var item in collections) {
         //    var value = collections[item];
@@ -19,7 +30,7 @@
         //        $scope.collections.push({name: value.collectionName});
         //    }
         //}
-        $scope.selectedCollection = $scope.collections[0];
+        //$scope.selectedCollection = $scope.collections[0];
 
         var playTimer = new TimerClass();
         var turnManagerObj = turnManager();
@@ -37,17 +48,19 @@
 
         var playWordSet = [];
         function gatherWords(){
-            for (var item in collections) {
-                var value = collections[item];
-                if (value.collectionName === $scope.selectedCollection.name) {
-                    var collectionHashKey = item;
-                    var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
-                    var wordSetRef = new Firebase(url);
-                    var words = $firebase(wordSetRef);
-                    for (var word in words){
-                        var wordValue = words[word];
-                        if (wordValue.word){
-                            playWordSet.push(wordValue.word);
+            for (var item in $scope.collections) {
+                var value = $scope.collections[item];
+                if (angular.isDefined(value.collectionName)){
+                    if (value.collectionName === $scope.selectedCollection.collectionName) {
+                        var collectionHashKey = item;
+                        var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
+                        var wordSetRef = new Firebase(url);
+                        var words = $firebase(wordSetRef);
+                        for (var word in words) {
+                            var wordValue = words[word];
+                            if (wordValue.word) {
+                                playWordSet.push(wordValue.word);
+                            }
                         }
                     }
                 }
