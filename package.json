@@ -1,0 +1,27 @@
+{
+  "name": "FastPhrase",
+  "version": "0.0.1",
+  "description": "Phrase guessing game that includes building and sharing custom categories for memorization and fun",
+  "main": "app/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianwcarlson/fastphrase.git"
+  },
+  "keywords": [
+    "catchphrase",
+    "game",
+    "fast",
+    "fun",
+    "custom",
+    "categories"
+  ],
+  "author": "ianwcarlson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ianwcarlson/fastphrase/issues"
+  },
+  "homepage": "https://github.com/ianwcarlson/fastphrase"
+}

@@ -2,7 +2,6 @@
  * Better routing to login page authentication
  * Add path back to login from signup/password reset
  * Add confirmation modals when deleting categories and resetting
- * Implement Twitter OAuth
  * Add show definition when playing
  * Fix menu icons
  * Busy animations during page loads

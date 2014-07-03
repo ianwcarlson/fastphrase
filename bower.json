@@ -1,0 +1,24 @@
+{
+  "name": "FastPhrase",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ianwcarlson/fastphrase",
+  "authors": [
+    "ianwcarlson <iancarlson3000@yahoo>"
+  ],
+  "description": "Phrase guessing game that includes building and sharing custom categories for memorization and fun",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "scripts"
+  ],
+  "dependencies": {
+    "onsenui": "~1.0.4",
+    "howler": "~1.1.23",
+    "bootstrap": "~3.2.0"
+  }
+}

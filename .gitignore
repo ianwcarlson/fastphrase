@@ -1,0 +1,5 @@
+# Ignore the following with Git
+
+.idea
+node_modules
+
