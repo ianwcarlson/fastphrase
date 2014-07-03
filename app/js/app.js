@@ -6,6 +6,7 @@ var myApp =	angular.module('myApp', [
     'servicesModule',
     'loginServiceModule',
     'firebase',
+    'LocalStorageModule',
     'loginControllerModule',
     'playControllerModule',
     'menuControllerModule',
@@ -14,7 +15,8 @@ var myApp =	angular.module('myApp', [
     'filtersModule'
 ]);
 
-myApp.config(function($stateProvider, $urlRouterProvider) {
+myApp.config(['$stateProvider', '$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider) {
 
 
     $stateProvider
@@ -48,31 +50,54 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         });
 
     $urlRouterProvider.otherwise('login');
+}]);
+
+myApp.constant('appConstants', {
+
+    firebaseMainUrl: 'https://blistering-fire-4858.firebaseio.com'
+
 });
 
+myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache', 'loginService',
+    function($rootScope, $timeout, $state, $stateParams, $templateCache, loginService) {
 
-myApp.run(function($rootScope, $timeout, $state, $stateParams, $templateCache) {
+    var auth = loginService.getLoginAuthorization();
+
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        switch (toParams.action) {
-            case 'push':
-                $rootScope.ons.navigator.pushPage(toState.templateUrl, {
-                    title: toParams.title, rightButtonIcon: toParams.rightButtonIcon
-                });
-                break;
-            case 'pop':
-                $rootScope.ons.navigator.popPage();
-                break;
-            default:
-                if ($rootScope.ons.slidingMenu) {
-                    $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
-                }
+
+        if (loginService.verifyUserFromLocalStorage()) {
+            // user and session valid
+            switch (toParams.action) {
+                case 'push':
+                    $rootScope.ons.navigator.pushPage(toState.templateUrl, {
+                        title: toParams.title, rightButtonIcon: toParams.rightButtonIcon
+                    });
+                    break;
+                case 'pop':
+                    $rootScope.ons.navigator.popPage();
+                    break;
+                default:
+                    if ($rootScope.ons.slidingMenu) {
+                        $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
+                    }
+            }
+            $timeout(function () {
+                $rootScope.$broadcast('updatePage');
+            }, 0);
+
+
+            $rootScope.state = $state.current;
         }
-        $timeout(function(){
-            $rootScope.$broadcast('updatePage');
-        }, 0);
-
-
-        $rootScope.state = $state.current;
+        else{
+            // user and/or session invalid
+            // redirect to login page
+            //var auth = loginService.getLoginAuthorization();
+            //auth.logout();
+            $state.go('login');
+            if ($rootScope.ons.slidingMenu) {
+                $rootScope.ons.slidingMenu.setAbovePage('partials/login.html');
+            }
+        }
     });
 
     $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
@@ -91,5 +116,5 @@ myApp.run(function($rootScope, $timeout, $state, $stateParams, $templateCache) {
     $rootScope.$on('$stateChangeStart', function(){
         //$rootScope.$broadcast('updatePage');
     });
-});
+}]);
 

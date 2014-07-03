@@ -1,11 +1,16 @@
 var loginServiceModule = angular.module('loginServiceModule', []);
 
-loginServiceModule.factory('loginService', function(){
+loginServiceModule.factory('loginService', ['appConstants', 'localStorageService',
+    function(appConstants, localStorageService){
+
+    var validTokenExpireTimeSecs = 60;
     var loginActive = false;
     var userID = null;
+    var tokenCreationTime = 0;
     var callbackArray = [];
     var errorMsg = '';
-    var chatRef = new Firebase('https://blistering-fire-4858.firebaseio.com');
+    var firebaseUrl = appConstants.firebaseMainUrl;
+    var chatRef = new Firebase(firebaseUrl);
     var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
         if (error) {
             loginActive = false;
@@ -15,6 +20,7 @@ loginServiceModule.factory('loginService', function(){
         } else if (user) {
             userID = user;
             loginActive = true;
+            setUserInfoToLocalStorage(user);
             callEachCallback(callbackArray);
             // user authenticated with Firebase
             //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
@@ -28,7 +34,9 @@ loginServiceModule.factory('loginService', function(){
 
     function callEachCallback(callbackArray){
         callbackArray.forEach(function(callback){
-            callback();
+            if (angular.isDefined(callback) && typeof callback === 'function') {
+                callback();
+            }
         })
     }
 
@@ -92,7 +100,35 @@ loginServiceModule.factory('loginService', function(){
         return errorMessage;
     }
 
+    function verifyUserFromLocalStorage(){
+        var loginActive = false;
 
+        if (localStorageService.isSupported){
+            userID = angular.fromJson(localStorageService.get('userID'));
+            tokenCreationTime = localStorageService.get('tokenCreationTime');
+            if (angular.isDefined(userID) && angular.isDefined(tokenCreationTime)){
+                var date = new Date();
+                var EpochSeconds = date.getTime()/1000;
+
+                var expireTime = Number(tokenCreationTime) + validTokenExpireTimeSecs;
+                if (EpochSeconds < expireTime){
+                    // session not expired
+                    loginActive = true;
+                }
+            }
+        }
+
+        return loginActive;
+    }
+
+    function setUserInfoToLocalStorage(userID){
+        if (localStorageService.isSupported){
+            var date = new Date();
+            var EpochSeconds = date.getTime()/1000;
+            localStorageService.set('userID', angular.toJson(userID));
+            localStorageService.set('tokenCreationTime', EpochSeconds);
+        }
+    }
 
     return{
         setLoginCallback: function(callback){
@@ -111,7 +147,9 @@ loginServiceModule.factory('loginService', function(){
         getAuthError: authError,
         getErrorMessage: function(){
             return errorMsg;
-        }
+        },
+        verifyUserFromLocalStorage: verifyUserFromLocalStorage,
+        setUserInfoToLocalStorage: setUserInfoToLocalStorage
     }
-});
+}]);
 

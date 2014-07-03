@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <p class="play-select-title">Select a category:</p>
             <select ng-model="selectedCollection"
-                ng-options="collection as collection.name for collection in collections"
+                ng-options="collection as value.collectionName for (key,value) in collections | filterNonCategories"
                 class="form-control">
             </select>
 

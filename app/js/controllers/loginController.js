@@ -25,7 +25,7 @@
         };
         loginService.setLoginCallback(updateLoginStatus);
         // run the first time to see if token already valid
-        updateLoginStatus();
+        //updateLoginStatus();
 
         $scope.login = function(provider){
             auth.login(provider,{

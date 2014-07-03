@@ -11,14 +11,14 @@
         var user = loginService.getUser();
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
         var wordSetRef = new Firebase(firebaseUrl);
-        var collections = $firebase(wordSetRef);
+        $scope.collections = $firebase(wordSetRef);
 
-        for (var item in collections) {
-            var value = collections[item];
-            if (value.collectionName) {
-                $scope.collections.push({name: value.collectionName});
-            }
-        }
+        //for (var item in collections) {
+        //    var value = collections[item];
+        //    if (value.collectionName) {
+        //        $scope.collections.push({name: value.collectionName});
+        //    }
+        //}
         $scope.selectedCollection = $scope.collections[0];
 
         var playTimer = new TimerClass();

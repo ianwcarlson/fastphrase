@@ -1,6 +1,6 @@
 {
   "firebase": "blistering-fire-4858",
-  "public": ".",
+  "public": "app",
   "ignore": [
     "firebase.json",
     ".*",
