@@ -3,13 +3,12 @@
  * Add path back to login from signup/password reset
  * Add confirmation modals when deleting categories and resetting
  * Add show definition when playing
- * Fix menu icons
  * Busy animations during page loads
  * Implement page resize event handler to prevent next button from getting covered
  * Check if passwords entered match in sign up page
  * Integrate new release of Onsen
  * Ensure all templates get cached
- * reload bug on words and definitions pages
+ * refresh browser bug on words and definitions pages
  * Add Settings:
   * Play turn time
   * Play/Study Mode
