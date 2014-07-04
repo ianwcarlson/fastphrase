@@ -1,4 +1,5 @@
  * Customize password reset email to current domain (need to verify)
+ * ui-router allow access to sign up page
  * Logout doesn't work right
  * Add path back to login from signup/password reset
  * Add confirmation modals when deleting categories and resetting

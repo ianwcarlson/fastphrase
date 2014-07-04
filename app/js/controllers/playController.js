@@ -3,8 +3,8 @@
 	var playControllerModule = angular.module('playControllerModule', []);
 
     playControllerModule.controller('playController', [
-        '$scope', '$firebase', '$timeout','loginService',
-        function($scope, $firebase, $timeout, loginService){
+        '$scope', '$firebase', '$timeout','loginService', '$rootScope',
+        function($scope, $firebase, $timeout, loginService, $rootScope){
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
@@ -35,62 +35,38 @@
         var playTimer = new TimerClass();
         var turnManagerObj = turnManager();
         var scoreManagerObj = scoreManager();
+        var wordPlayManagerObj = wordPlayManager();
 
         $scope.incrementTeam = scoreManagerObj.incrementTeam;
         $scope.decrementTeam = scoreManagerObj.decrementTeam;
 
         $scope.resetGame = function(){
             scoreManagerObj.resetScores();
-            gatherWords();
+            wordPlayManagerObj.resetWordGroup();
             playTimer.cancelTimer();
             turnManagerObj.resetTurn();
         };
-
-        var playWordSet = [];
-        function gatherWords(){
-            for (var item in $scope.collections) {
-                var value = $scope.collections[item];
-                if (angular.isDefined(value.collectionName)){
-                    if (value.collectionName === $scope.selectedCollection.collectionName) {
-                        var collectionHashKey = item;
-                        var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
-                        var wordSetRef = new Firebase(url);
-                        var words = $firebase(wordSetRef);
-                        for (var word in words) {
-                            var wordValue = words[word];
-                            if (wordValue.word) {
-                                playWordSet.push(wordValue.word);
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         function incrementScore(){
             var selectedTeam = turnManagerObj.getActiveTeam();
             scoreManagerObj.incrementTeam(selectedTeam);
         }
 
-        $scope.getNextWord = function(isIncrementScore){
-            if(playTimer.isPlayActive()) {
-                if (playWordSet.length === 0) {
-                    gatherWords();
-                }
-                var calcIndex = Math.round((playWordSet.length - 1) * Math.random());
-                $scope.newWord = playWordSet[calcIndex];
-                playWordSet.splice(calcIndex, 1);
-
-                if (isIncrementScore.increment){
-                    incrementScore();
-                }
-            }
+        $scope.getNextWord = function() {
+            // TEMP IWC
+            //if (playTimer.isPlayActive()) {
+            wordPlayManagerObj.getNextWord();
+            incrementScore();
+            //}
         };
+
+
 
         $scope.startNewRound = function(){
             gatherWords();
             playTimer.startTimer();
-            $scope.getNextWord({increment: false});
+            incrementScore();
+            wordPlayManagerObj.getNextWord();
         };
         var endTurnTasks = function(){
             turnManagerObj.nextTurn();
@@ -102,9 +78,92 @@
         var bottomBarHeight = 44;
         var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
         $timeout(function(){
-            var element = document.getElementById("play-word-main-outer-id");
+            var element = document.getElementById("play-word-main-outer1");
             element.style.height = bottomHalfHeight + 'px';
         }, 0);
+
+        //$scope.triggerNextWord = function(){
+            //if (playTimer.isPlayActive()) {
+                //$rootScope.$broadcast('triggerNextWord');
+            //}
+        //};
+
+        function wordPlayManager(){
+            var playWordSet = [];
+            var scopeObjects = ['newWord1', 'newWord2', 'newWord3'];
+            var liveObjectView = [];
+            var scopeObjectIdx;
+
+            resetLiveView();
+
+            function gatherWords(){
+                for (var item in $scope.collections) {
+                    var value = $scope.collections[item];
+                    if (angular.isDefined(value.collectionName)){
+                        if (value.collectionName === $scope.selectedCollection.collectionName) {
+                            var collectionHashKey = item;
+                            var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
+                            var wordSetRef = new Firebase(url);
+                            var words = $firebase(wordSetRef);
+                            for (var word in words) {
+                                var wordValue = words[word];
+                                if (wordValue.word) {
+                                    playWordSet.push(wordValue.word);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            function resetLiveView(){
+                liveObjectView = ['', '', 'newWord1'];
+                scopeObjectIdx = 1;
+            }
+
+            function updateLiveView(){
+                // shift left
+                liveObjectView.splice(0, 1);
+                // append next scope key to be modified
+                liveObjectView.push(scopeObjects[scopeObjectIdx]);
+                incrementScopeObjectIdx();
+            }
+
+            function incrementScopeObjectIdx(){
+                scopeObjectIdx = (scopeObjectIdx === scopeObjects.length - 1) ?
+                    (0) : (scopeObjectIdx + 1);
+            }
+
+            function calcIndexAndInsertWord(wordArray, scopeObject){
+                var calcIndex = Math.round((wordArray.length - 1) * Math.random());
+                $scope[scopeObject] = wordArray[calcIndex];
+                wordArray.splice(calcIndex, 1);
+            }
+
+            function resetWordGroup(){
+
+                resetLiveView();
+                for (var idx=0; idx<scopeObjects.length; idx++){
+                    calcIndexAndInsertWord(playWordSet, liveObjectView[idx]);
+                }
+            }
+
+            function getNextWord(){
+                $rootScope.$broadcast('triggerNextWord');
+
+                if (playWordSet.length < 3) {
+                    gatherWords();
+                }
+
+                calcIndexAndInsertWord(playWordSet, liveObjectView[liveObjectView.length - 1]);
+                $timeout(updateLiveView, 0);
+            }
+
+            return{
+                resetWordGroup: resetWordGroup,
+                getNextWord: getNextWord
+            }
+        }
 
         function scoreManager(){
             var initialScore = [0,0];

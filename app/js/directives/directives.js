@@ -42,7 +42,7 @@ directivesModule.directive('editIcon', [function(){
                         scope.editIconCallback();
                         scope.$apply();
                     }
-                };
+                }
                 //elements[0].onclick = function () {
                 //    scope.editIconCallback();
                 //    scope.$apply();
@@ -50,6 +50,42 @@ directivesModule.directive('editIcon', [function(){
             }
             findIconAndInvokeCallback();
             scope.$on('updatePage', findIconAndInvokeCallback);
+        }
+    }
+}]);
+
+directivesModule.directive('animateWord', [function(){
+    return{
+        restrict: 'A',
+        scope: true,
+        link: function(scope, element, attrs){
+            var styleLeft = Number(attrs.initialPosition);
+            var prevClassName = '';
+            var newClassName = '';
+            console.log('styleLeft: ', styleLeft);
+            scope.$on('triggerNextWord', function(){
+            //    element.addClass('animated bounceInRight');
+                prevClassName = 'slidingCard' + styleLeft.toString();
+
+                styleLeft = (styleLeft <= -50) ? (150) : (styleLeft -=100);
+
+                newClassName = 'slidingCard' + styleLeft.toString();
+                element.removeClass(prevClassName + ' animated');
+                element.addClass(newClassName + ' animated');
+                //element[0].style.left = styleLeft + '%';
+            });
+
+            scope.$on('resetToInitial', function(){
+                styleLeft = Number(attrs.initialPosition);
+                element[0].style.left = styleLeft + '%';
+            });
+            //element.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            //    element.removeClass('animated bounceInRight bounceOutLeft');
+            //    element.addClass('animated bounceOutLeft')
+            //});
+
+
+
         }
     }
 }]);

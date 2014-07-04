@@ -62,10 +62,24 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="play-word-main-outer-id">
-                <div  class="col-xs-6 col-xs-offset-3">
-                    <div class="play-word-main-inner">
-                        <p class="play-word-main-text">{{newWord}}</p>
+            <div class="" id="play-word-main-outer1">
+                <div class="">
+                    <div  animate-word initial-position="150" class="play-word-main-inner1">
+                        <p class="play-word-main-text">{{newWord1}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="" id="play-word-main-outer2">
+                <div class="">
+                    <div  animate-word initial-position="250" class="play-word-main-inner2">
+                        <p class="play-word-main-text">{{newWord2}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="" id="play-word-main-outer3">
+                <div class="">
+                    <div animate-word initial-position="350" class="play-word-main-inner3">
+                        <p class="play-word-main-text">{{newWord3}}</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +87,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <button class="btn btn-lg btn-info btn-block"
-                        type="button" ng-click="getNextWord({increment: true})">Next</button>
+                        type="button" ng-click="getNextWord()">Next</button>
                 </div>
             </div>
 
