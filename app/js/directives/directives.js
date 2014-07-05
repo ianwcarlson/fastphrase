@@ -67,22 +67,24 @@ directivesModule.directive('animateWord', [function(){
             //    element.addClass('animated bounceInRight');
                 prevClassName = 'slidingCard' + styleLeft.toString();
 
-                styleLeft = (styleLeft <= -50) ? (150) : (styleLeft -=100);
+                styleLeft = (styleLeft <= -80) ? (120) : (styleLeft -=100);
 
-                newClassName = 'slidingCard' + styleLeft.toString();
-                element.removeClass(prevClassName + ' animated');
-                element.addClass(newClassName + ' animated');
-                //element[0].style.left = styleLeft + '%';
+                modifyElementClass(prevClassName, styleLeft);
             });
 
             scope.$on('resetToInitial', function(){
+                prevClassName = 'slidingCard' + styleLeft.toString();
                 styleLeft = Number(attrs.initialPosition);
-                element[0].style.left = styleLeft + '%';
+
+                modifyElementClass(prevClassName, styleLeft);
             });
-            //element.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-            //    element.removeClass('animated bounceInRight bounceOutLeft');
-            //    element.addClass('animated bounceOutLeft')
-            //});
+
+            function modifyElementClass(prevClass, newStyleLeft){
+                var newClass = 'slidingCard' + newStyleLeft.toString();
+                element.removeClass(prevClass + ' animated');
+                element.addClass(newClass + ' animated');
+            }
+
 
 
 

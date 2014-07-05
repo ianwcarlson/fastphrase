@@ -234,27 +234,22 @@
 }
 .play-word-main-outer{
     position: absolute;
-    left: 50%;
-    top: 250px;
-    font-size: 30px;
-    margin-top: -10px;
+    top: 56%;
+    left: 10%;
+    width: 60%;
+    border-color: rgba(255,255,255,0);
+    height: 30%;
+    padding: 0px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 6px 4px 6px #888888;
 }
-.play-word-main-inner1{
-    position: absolute;
+.play-word-main-inner{
+    position: relative;
     left: 150%;
-    top: 45%;
-    font-size: 30px;
-}
-.play-word-main-inner2{
-     position: absolute;
-     left: 150%;
-     top: 45%;
-     font-size: 30px;
- }
-.play-word-main-inner3{
-    position: absolute;
-    left: 150%;
-    top: 45%;
+    top: 50%;
     font-size: 30px;
 }
 .play-word-main-text{
@@ -284,102 +279,74 @@
     top: 13px;
     background-color: #496050;
 }
-.slidingCard350{
-    -webkit-animation: slide-to-350 0.4s 1;
-    -moz-animation:    slide-to-350 0.4s 1;
-    -o-animation:      slide-to-350 0.4s 1;
-    animation:         slide-to-350 0.4s 1;
+
+.slidingCard120{
+    -webkit-animation: slide-to-120 200ms 1;
+    -moz-animation:    slide-to-120 200ms 1;
+    -o-animation:      slide-to-120 200ms 1;
+    animation:         slide-to-120 200ms 1;
 }
-.slidingCard250{
-    -webkit-animation: slide-to-250 0.4s 1;
-    -moz-animation:    slide-to-250 0.4s 1;
-    -o-animation:      slide-to-250 0.4s 1;
-    animation:         slide-to-250 0.4s 1;
+.slidingCard20{
+    -webkit-animation: slide-to-20 200ms 1;
+    -moz-animation:    slide-to-20 200ms 1;
+    -o-animation:      slide-to-20 200ms 1;
+    animation:         slide-to-20 200ms 1;
 }
-.slidingCard150{
-    -webkit-animation: slide-to-150 0.4s 1;
-    -moz-animation:    slide-to-150 0.4s 1;
-    -o-animation:      slide-to-150 0.4s 1;
-    animation:         slide-to-150 0.4s 1;
-}
-.slidingCard50{
-    -webkit-animation: slide-to-50 0.4s 1;
-    -moz-animation:    slide-to-50 0.4s 1;
-    -o-animation:      slide-to-50 0.4s 1;
-    animation:         slide-to-50 0.4s 1;
-}
-.slidingCard-50{
-    -webkit-animation: slide-to--50 0.4s 1;
-    -moz-animation:    slide-to--50 0.4s 1;
-    -o-animation:      slide-to--50 0.4s 1;
-    animation:         slide-to--50 0.4s 1;
+.slidingCard-80{
+    -webkit-animation: slide-to--80 200ms 1;
+    -moz-animation:    slide-to--80 200ms 1;
+    -o-animation:      slide-to--80 200ms 1;
+    animation:         slide-to--80 200ms 1;
 }
 
 /* sliding animations */
-@-webkit-keyframes slide-to-250 {
-    0%   { left: 350%; }
-    100% { left: 250%; }
-}
-@-moz-keyframes slide-to-250 {
-    0%   { left: 350%; }
-    100% { left: 250%; }
-}
-@-o-keyframes slide-to-250 {
-    0%   { left: 350%; }
-    100% { left: 250%; }
-}
-@keyframes slide-to-250 {
-    0%   { left: 350%; }
-    100% { left: 250%; }
-}
-
-@-webkit-keyframes slide-to-150 {
+@-webkit-keyframes slide-to-120 {
     0%   { left: 250%; }
     100% { left: 150%; }
 }
-@-moz-keyframes slide-to-150 {
+@-moz-keyframes slide-to-120 {
     0%   { left: 250%; }
     100% { left: 150%; }
 }
-@-o-keyframes slide-to-150 {
+@-o-keyframes slide-to-120 {
     0%   { left: 250%; }
     100% { left: 150%; }
 }
-@keyframes slide-to-150 {
+@keyframes slide-to-120 {
     0%   { left: 250%; }
     100% { left: 150%; }
 }
 
-@-webkit-keyframes slide-to-50 {
+@-webkit-keyframes slide-to-20 {
     0%   { left: 150%; }
     100% { left: 50%; }
 }
-@-moz-keyframes slide-to-50 {
+@-moz-keyframes slide-to-20 {
     0%   { left: 150%; }
     100% { left: 50%; }
 }
-@-o-keyframes slide-to-50 {
+@-o-keyframes slide-to-20 {
     0%   { left: 150%; }
     100% { left: 50%; }
 }
-@keyframes slide-to-50 {
+@keyframes slide-to-20 {
     0%   { left: 150%; }
     100% { left: 50%; }
 }
 
-@-webkit-keyframes slide-to--50 {
+@-webkit-keyframes slide-to--80 {
     0%   { left: 50%; }
     100% { left: -50%; }
 }
-@-moz-keyframes slide-to--50 {
+@-moz-keyframes slide-to--80 {
     0%   { left: 50%; }
     100% { left: -50%; }
 }
-@-o-keyframes slide-to--50 {
+@-o-keyframes slide-to--80 {
     0%   { left: 50%; }
     100% { left: -50%; }
 }
-@keyframes slide-to--50 {
+@keyframes slide-to--80 {
     0%   { left: 50%; }
     100% { left: -50%; }
 }

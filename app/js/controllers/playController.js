@@ -3,25 +3,30 @@
 	var playControllerModule = angular.module('playControllerModule', []);
 
     playControllerModule.controller('playController', [
-        '$scope', '$firebase', '$timeout','loginService', '$rootScope',
-        function($scope, $firebase, $timeout, loginService, $rootScope){
+        '$scope', '$firebase', '$timeout','loginService', '$rootScope', '$q',
+        function($scope, $firebase, $timeout, loginService, $rootScope, $q){
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
         var user = loginService.getUser();
+        var wordPlayManagerObj = wordPlayManager();
+
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
         var wordSetRef = new Firebase(firebaseUrl);
+
         $scope.collections = $firebase(wordSetRef);
         $scope.collections.$on('loaded', function(){
             //var filteredCategories = {};
             for (var item in $scope.collections){
                 if (angular.isDefined($scope.collections[item].collectionName)){
-
+                    // get the first item and exit loop
                     $scope.selectedCollection = $scope.collections[item];
                     break;
                 }
 
             }
+
+            wordPlayManagerObj.setCategoryList($scope.collections);
         });
 
         //for (var item in collections) {
@@ -35,7 +40,7 @@
         var playTimer = new TimerClass();
         var turnManagerObj = turnManager();
         var scoreManagerObj = scoreManager();
-        var wordPlayManagerObj = wordPlayManager();
+
 
         $scope.incrementTeam = scoreManagerObj.incrementTeam;
         $scope.decrementTeam = scoreManagerObj.decrementTeam;
@@ -90,78 +95,120 @@
 
         function wordPlayManager(){
             var playWordSet = [];
-            var scopeObjects = ['newWord1', 'newWord2', 'newWord3'];
+            //var scopeObjects = ['word0', 'word1', 'word2'];
             var liveObjectView = [];
-            var scopeObjectIdx;
+            var initialWordSet;
+            var categoryList;
 
-            resetLiveView();
+            //var scopeObjectIdx;
 
-            function gatherWords(){
-                for (var item in $scope.collections) {
-                    var value = $scope.collections[item];
-                    if (angular.isDefined(value.collectionName)){
-                        if (value.collectionName === $scope.selectedCollection.collectionName) {
-                            var collectionHashKey = item;
-                            var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
-                            var wordSetRef = new Firebase(url);
-                            var words = $firebase(wordSetRef);
-                            for (var word in words) {
-                                var wordValue = words[word];
-                                if (wordValue.word) {
-                                    playWordSet.push(wordValue.word);
-                                }
+            function gatherWords() {
+                var deferred = $q.defer();
+                if (angular.isDefined(categoryList)){
+                    for (var item in categoryList) {
+                        var value = categoryList[item];
+                        if (angular.isDefined(value.collectionName)) {
+                            if (value.collectionName === $scope.selectedCollection.collectionName) {
+                                var collectionHashKey = item;
+                                var url = 'https://blistering-fire-4858.firebaseio.com/' + user.id + '/' + collectionHashKey;
+                                var wordSetRef = new Firebase(url);
+                                initialWordSet = $firebase(wordSetRef);
+                                initialWordSet.$on('loaded', function () {
+                                    loadWordSet(initialWordSet);
+                                    deferred.resolve();
+                                })
                             }
                         }
                     }
                 }
+                return deferred.promise;
+            }
+
+            function loadWordSet(words){
+
+                    for (var word in words) {
+                        var wordValue = words[word];
+                        if (wordValue.word) {
+                            playWordSet.push(wordValue.word);
+                        }
+                    }
             }
 
             function resetLiveView(){
-                liveObjectView = ['', '', 'newWord1'];
-                scopeObjectIdx = 1;
+                liveObjectView = [
+                    {word: '', index: 2},
+                    {word: '', index: 0},
+                    {word: '', index: 1}
+                ];
+                //scopeObjectIdx = 2;
             }
 
-            function updateLiveView(){
+            function updateLiveView(newWord){
+                // save old index
+                var oldIndex = liveObjectView[0].index;
                 // shift left
                 liveObjectView.splice(0, 1);
-                // append next scope key to be modified
-                liveObjectView.push(scopeObjects[scopeObjectIdx]);
-                incrementScopeObjectIdx();
+                // append next word and rotating index
+                liveObjectView.push({word: newWord, index: oldIndex});
+                //incrementScopeObjectIdx();
             }
 
-            function incrementScopeObjectIdx(){
-                scopeObjectIdx = (scopeObjectIdx === scopeObjects.length - 1) ?
-                    (0) : (scopeObjectIdx + 1);
+            //function incrementScopeObjectIdx(){
+            //    scopeObjectIdx = (scopeObjectIdx === scopeObjects.length - 1) ?
+            //        (0) : (scopeObjectIdx + 1);
+            //}
+
+            function calcIndexAndInsertWord(){
+                var calcIndex = Math.round((playWordSet.length - 1) * Math.random());
+                updateLiveView(playWordSet[calcIndex]);
+                //$scope[scopeObject] = wordArray[calcIndex];
+                playWordSet.splice(calcIndex, 1);
             }
 
-            function calcIndexAndInsertWord(wordArray, scopeObject){
-                var calcIndex = Math.round((wordArray.length - 1) * Math.random());
-                $scope[scopeObject] = wordArray[calcIndex];
-                wordArray.splice(calcIndex, 1);
+            function updateOneScopeItem(liveObject, liveObjectElement){
+                var scopeKey = 'word' + liveObject[liveObjectElement].index;
+                $scope[scopeKey] = liveObject[liveObjectElement].word;
+            }
+
+            function updateAllScopeItems(){
+                for (var idx = 0; idx<liveObjectView.length; idx++){
+                    updateOneScopeItem(liveObjectView, liveObjectView[idx].index);
+                }
             }
 
             function resetWordGroup(){
-
+                $rootScope.$broadcast('resetToInitial');
                 resetLiveView();
-                for (var idx=0; idx<scopeObjects.length; idx++){
-                    calcIndexAndInsertWord(playWordSet, liveObjectView[idx]);
-                }
+                var gatherWordsPromise = gatherWords();
+                gatherWordsPromise.then(function() {
+                    calcIndexAndInsertWord();
+                    $timeout(function () {
+                        updateAllScopeItems();
+                    }, 0);
+                })
             }
 
             function getNextWord(){
                 $rootScope.$broadcast('triggerNextWord');
 
                 if (playWordSet.length < 3) {
-                    gatherWords();
+                    loadWordSet(initialWordSet);
                 }
 
-                calcIndexAndInsertWord(playWordSet, liveObjectView[liveObjectView.length - 1]);
-                $timeout(updateLiveView, 0);
+                calcIndexAndInsertWord(playWordSet);
+                $timeout(function(){
+                    updateOneScopeItem(liveObjectView, liveObjectView.length-1);
+                }, 0);
+
             }
 
             return{
                 resetWordGroup: resetWordGroup,
-                getNextWord: getNextWord
+                getNextWord: getNextWord,
+                setCategoryList: function(newCategoryList){
+                    categoryList = newCategoryList;
+                    resetWordGroup();
+                }
             }
         }
 
