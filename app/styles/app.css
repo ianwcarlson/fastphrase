@@ -235,7 +235,8 @@
 .play-word-main-outer{
     position: absolute;
     top: 56%;
-    left: 10%;
+    left: 0%;
+    margin-left: 0%;
     width: 60%;
     border-color: rgba(255,255,255,0);
     height: 30%;
@@ -255,7 +256,8 @@
 .play-word-main-text{
     position: relative;
     top: -24px;
-    left: -50%;
+    left: 20%;
+    z-index: 9999;
 }
 .row-margin{
     margin-top: -10px;
@@ -301,52 +303,52 @@
 
 /* sliding animations */
 @-webkit-keyframes slide-to-120 {
-    0%   { left: 250%; }
-    100% { left: 150%; }
+    0%   { margin-left: 220%; }
+    100% { margin-left: 120%; }
 }
 @-moz-keyframes slide-to-120 {
-    0%   { left: 250%; }
-    100% { left: 150%; }
+    0%   { margin-left: 220%; }
+    100% { margin-left: 120%; }
 }
 @-o-keyframes slide-to-120 {
-    0%   { left: 250%; }
-    100% { left: 150%; }
+    0%   { margin-left: 220%; }
+    100% { margin-left: 120%; }
 }
 @keyframes slide-to-120 {
-    0%   { left: 250%; }
-    100% { left: 150%; }
+    0%   { margin-left: 220%; }
+    100% { margin-left: 120%; }
 }
 
 @-webkit-keyframes slide-to-20 {
-    0%   { left: 150%; }
-    100% { left: 50%; }
+    0%   { margin-left: 120%; }
+    100% { margin-left: 20%; }
 }
 @-moz-keyframes slide-to-20 {
-    0%   { left: 150%; }
-    100% { left: 50%; }
+    0%   { margin-left: 120%; }
+    100% { margin-left: 20%; }
 }
 @-o-keyframes slide-to-20 {
-    0%   { left: 150%; }
-    100% { left: 50%; }
+    0%   { margin-left: 120%; }
+    100% { margin-left: 20%; }
 }
 @keyframes slide-to-20 {
-    0%   { left: 150%; }
-    100% { left: 50%; }
+    0%   { margin-left: 120%; }
+    100% { margin-left: 20%; }
 }
 
 @-webkit-keyframes slide-to--80 {
-    0%   { left: 50%; }
-    100% { left: -50%; }
+    0%   { margin-left: 20%; }
+    100% { margin-left: -80%; }
 }
 @-moz-keyframes slide-to--80 {
-    0%   { left: 50%; }
-    100% { left: -50%; }
+    0%   { margin-left: 20%; }
+    100% { margin-left: -80%; }
 }
 @-o-keyframes slide-to--80 {
-    0%   { left: 50%; }
-    100% { left: -50%; }
+    0%   { margin-left: 20%; }
+    100% { margin-left: -80%; }
 }
 @keyframes slide-to--80 {
-    0%   { left: 50%; }
-    100% { left: -50%; }
+    0%   { margin-left: 20%; }
+    100% { margin-left: -80%; }
 }
