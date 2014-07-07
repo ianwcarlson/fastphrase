@@ -2,6 +2,8 @@
 var myApp =	angular.module('myApp', [
     'onsen.directives',
     'ngAnimate',
+    'ngTouch',
+    'angular-gestures',
     'controllerModule',
     'servicesModule',
     'loginServiceModule',

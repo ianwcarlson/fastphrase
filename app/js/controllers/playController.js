@@ -8,6 +8,7 @@
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
+
         var user = loginService.getUser();
         var wordPlayManagerObj = wordPlayManager();
 
@@ -68,7 +69,6 @@
 
 
         $scope.startNewRound = function(){
-            gatherWords();
             playTimer.startTimer();
             incrementScore();
             wordPlayManagerObj.getNextWord();
@@ -77,15 +77,6 @@
             turnManagerObj.nextTurn();
         };
         playTimer.timerEndCallback(endTurnTasks);
-
-        var windowHeight = window.innerHeight;
-        var topHalfHeight = 280;
-        var bottomBarHeight = 44;
-        var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
-        $timeout(function(){
-            var element = document.getElementById("play-word-main-outer1");
-            element.style.height = bottomHalfHeight + 'px';
-        }, 0);
 
         //$scope.triggerNextWord = function(){
             //if (playTimer.isPlayActive()) {
@@ -422,6 +413,8 @@
                 getIndex: getIndex
             }
         }
+
+
 
     }]);
 

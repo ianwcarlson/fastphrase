@@ -62,28 +62,35 @@
                     </div>
                 </div>
             </div>
-            <div class="" id="play-word-main-outer1">
-                <div animate-word initial-position="-80" class="play-word-main-outer" ng-show="word0">
-                    <div class="play-word-main-inner">
-                        <p class="play-word-main-text">{{word0}}</p>
+            <div class="card-container" card-div-height-calc>
+                <div card-div-height-calc>
+                    <div animate-word initial-position="-80" class="play-word-main-outer"
+                         ng-show="word0" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                         hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)">
+                        <div class="play-word-main-inner">
+                            <p class="play-word-main-text">{{word0}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div card-div-height-calc>
+                    <div animate-word initial-position="20" class="play-word-main-outer"
+                         ng-show="word1" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                         hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)">
+                        <div class="play-word-main-inner">
+                            <p class="play-word-main-text">{{word1}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div card-div-height-calc>
+                    <div animate-word initial-position="120" class="play-word-main-outer"
+                         ng-show="word2" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                         hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)">
+                        <div class="play-word-main-inner">
+                            <p class="play-word-main-text">{{word2}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="" id="play-word-main-outer2">
-                <div animate-word initial-position="20" class="play-word-main-outer" ng-show="word1">
-                    <div class="play-word-main-inner">
-                        <p class="play-word-main-text">{{word1}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="" id="play-word-main-outer3">
-                <div animate-word initial-position="120" class="play-word-main-outer" ng-show="word2">
-                    <div class="play-word-main-inner">
-                        <p class="play-word-main-text">{{word2}}</p>
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-xs-12">
                     <button class="btn btn-lg btn-info btn-block"

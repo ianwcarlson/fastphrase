@@ -62,9 +62,10 @@ directivesModule.directive('animateWord', [function(){
             var styleLeft = Number(attrs.initialPosition);
             var prevClassName = '';
             var newClassName = '';
+            var dragStartPosition;
             console.log('styleLeft: ', styleLeft);
             scope.$on('triggerNextWord', function(){
-            //    element.addClass('animated bounceInRight');
+
                 prevClassName = 'slidingCard' + styleLeft.toString();
 
                 styleLeft = (styleLeft <= -80) ? (120) : (styleLeft -=100);
@@ -80,16 +81,46 @@ directivesModule.directive('animateWord', [function(){
             });
 
             function modifyElementClass(prevClass, newStyleLeft){
-                var newClass = 'slidingCard' + newStyleLeft.toString();
+                newClassName = 'slidingCard' + newStyleLeft.toString();
                 element.removeClass(prevClass + ' animated');
-                element.addClass(newClass + ' animated');
+                element.addClass(newClassName + ' animated');
             }
 
+            scope.dragEvent = function(event){
+                var newPosition  = dragStartPosition + event.gesture.deltaX;
+                element[0].style.webkitTransform = "translateX(" + newPosition + 'px)';
+            };
 
+            scope.dragStart = function(event){
+                dragStartPosition = element[0].offsetLeft;
+                element[0].style.webkitTransform = "translateX(" + dragStartPosition + 'px)';
+                element.removeClass(newClassName + ' animated');
+
+            };
+
+            scope.dragEnd = function(event){
+                element[0].style.webkitTransform = '';
+                element.addClass(newClassName + ' animated');
+            };
 
 
         }
     }
 }]);
+
+directivesModule.directive('cardDivHeightCalc', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            var windowHeight = window.innerHeight;
+            var topHalfHeight = 280;
+            var bottomBarHeight = 44;
+            var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
+
+            element[0].style.height = bottomHalfHeight + 'px';
+
+        }
+    }
+});
 
 
