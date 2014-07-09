@@ -113,12 +113,49 @@ directivesModule.directive('cardDivHeightCalc', function(){
         restrict: 'A',
         link: function(scope, element, attrs){
             var windowHeight = window.innerHeight;
-            var topHalfHeight = 280;
+            var topHalfHeight = 270;
             var bottomBarHeight = 44;
             var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
 
             element[0].style.height = bottomHalfHeight + 'px';
 
+        }
+    }
+});
+
+directivesModule.directive('dynamicWidth', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            setWindowSize();
+
+            window.addEventListener('resize', setWindowSize);
+
+            function setWindowSize() {
+                var windowWidth = window.innerWidth;
+                var marginWidth = Number(attrs.marginWidth) || 20;
+                /*
+                if (typeof attrs.marginWidth !== 'undefined'){
+                    marginWidth = Number(attrs.marginWidth);
+                }
+                else {
+                    marginWidth = 20;
+                }
+                */
+
+
+                var unconstrainedWidth = windowWidth - marginWidth;
+                var containerWidth;
+
+                if (unconstrainedWidth > 730) {
+                    containerWidth = 720;
+                } else {
+                    containerWidth = unconstrainedWidth;
+                }
+
+                element[0].style.width = containerWidth + 'px';
+            }
         }
     }
 });

@@ -4,7 +4,7 @@
     <ons-page class="center" ng-controller="playController">
         <ons-navigator-toolbar title="Page1">
         </ons-navigator-toolbar>
-        <div class="container-fluid">
+        <div class="container-fluid" dynamic-width margin-width="20">
             <p class="play-select-title">Select a category:</p>
             <select ng-model="selectedCollection"
                 ng-options="value as value.collectionName for (key,value) in collections | filterNonCategories"
@@ -91,12 +91,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="btn btn-lg btn-info btn-block"
-                        type="button" ng-click="getNextWord()">Next</button>
-                </div>
+
+            <div class="next-button" dynamic-width margin-width="30">
+                <button class="btn btn-lg btn-info btn-block"
+                    type="button" ng-click="getNextWord()">Next</button>
             </div>
+
 
         </div>
     </ons-page>

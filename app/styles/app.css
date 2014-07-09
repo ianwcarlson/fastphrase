@@ -206,8 +206,8 @@
     font-size: 36px;
 }
 .next-button{
-    bottom: 0px;
-    height: 75px;
+    position: fixed;
+    bottom: 10px;
 }
 .start-round-button{
     margin-top: 18px;
@@ -234,12 +234,12 @@
 }
 .play-word-main-outer{
     position: absolute;
-    top: 40%;
+    top: 10%;
     left: 0%;
     margin-left: 0%;
     width: 60%;
     border-color: rgba(255,255,255,0);
-    height: 40%;
+    height: 80%;
     padding: 0px;
     border-width: 1px;
     border-style: solid;
@@ -327,7 +327,10 @@
     left: -80% !important;
     opacity: 0;
 }
-
+.card-container{
+    position: relative;
+    margin-top: -10px;
+}
 /* sliding animations */
 /*
 @-webkit-keyframes slide-to-120 {
