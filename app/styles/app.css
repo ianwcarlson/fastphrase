@@ -206,8 +206,8 @@
     font-size: 36px;
 }
 .next-button{
-    position: fixed;
-    bottom: 10px;
+    position: relative;
+    bottom: 0px;
 }
 .start-round-button{
     margin-top: 18px;
@@ -282,7 +282,7 @@
     background-color: #496050;
 }
 
-.slidingCard120{
+.slidingCard220{
     /*
     -webkit-animation: slide-to-120 1s 1;
     -moz-animation:    slide-to-120 1s 1;
@@ -294,7 +294,7 @@
     -ms-transition: 1s;
     -o-transition: 1s;
     transition: 1s;
-    left: 120% !important;
+    left: 220% !important;
     opacity: 0;
 }
 .slidingCard20{
@@ -312,7 +312,7 @@
     left: 20% !important;
     opacity: 1;
 }
-.slidingCard-80{
+.slidingCard-180{
     /*
     -webkit-animation: slide-to--80 1s 1;
     -moz-animation:    slide-to--80 1s 1;
@@ -324,12 +324,43 @@
     -ms-transition: 0.5s;
     -o-transition: 0.5s;
     transition: 0.5s;
-    left: -80% !important;
+    left: -180% !important;
     opacity: 0;
+}
+.flipCard-0{
+    /*
+    -webkit-animation: slide-to--80 1s 1;
+    -moz-animation:    slide-to--80 1s 1;
+    -o-animation:      slide-to--80 1s 1;
+    animation:         slide-to--80 1s 1;
+    */
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+.flipCard-180{
+    /*
+    -webkit-animation: slide-to--80 1s 1;
+    -moz-animation:    slide-to--80 1s 1;
+    -o-animation:      slide-to--80 1s 1;
+    animation:         slide-to--80 1s 1;
+    */
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 .card-container{
     position: relative;
     margin-top: -10px;
+    margin-bottom: 5px;
 }
 /* sliding animations */
 /*

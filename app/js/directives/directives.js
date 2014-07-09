@@ -60,48 +60,111 @@ directivesModule.directive('animateWord', [function(){
         scope: true,
         link: function(scope, element, attrs){
             var styleLeft = Number(attrs.initialPosition);
-            var prevClassName = '';
-            var newClassName = '';
-            var dragStartPosition;
-            console.log('styleLeft: ', styleLeft);
+            var prevXClassName = '';
+            var newXClassName = '';
+            var dragXStartPosition;
+
+            var flipXStartPosition;
+            var flipAngle = 0;
+            addFlipClass(0);
+
             scope.$on('triggerNextWord', function(){
 
-                prevClassName = 'slidingCard' + styleLeft.toString();
+                prevXClassName = 'slidingCard' + styleLeft.toString();
 
-                styleLeft = (styleLeft <= -80) ? (120) : (styleLeft -=100);
+                styleLeft = (styleLeft <= -180) ? (220) : (styleLeft -=200);
 
-                modifyElementClass(prevClassName, styleLeft);
+                modifyElementClass(prevXClassName, styleLeft);
             });
 
             scope.$on('resetToInitial', function(){
-                prevClassName = 'slidingCard' + styleLeft.toString();
+                prevXClassName = 'slidingCard' + styleLeft.toString();
                 styleLeft = Number(attrs.initialPosition);
 
-                modifyElementClass(prevClassName, styleLeft);
+                modifyElementClass(prevXClassName, styleLeft);
             });
 
             function modifyElementClass(prevClass, newStyleLeft){
-                newClassName = 'slidingCard' + newStyleLeft.toString();
+                newXClassName = 'slidingCard' + newStyleLeft.toString();
                 element.removeClass(prevClass + ' animated');
-                element.addClass(newClassName + ' animated');
+                element.addClass(newXClassName + ' animated');
             }
 
             scope.dragEvent = function(event){
-                var newPosition  = dragStartPosition + event.gesture.deltaX;
-                element[0].style.webkitTransform = "translateX(" + newPosition + 'px)';
+                var newXPosition  = dragXStartPosition + event.gesture.deltaX;
+                //element[0].style.webkitTransform = "translateX(" + newXPosition + 'px)';
+
+                var newYPosition = flipAngle + event.gesture.deltaY;
+                newYPosition = wrapAngle(newYPosition);
+                var transformString = 'translateX(' + newXPosition + 'px) ' +
+                    'rotateY(' + newYPosition.toString() + 'deg)';
+                element[0].style.webkitTransform = transformString;
+                console.log('transformString: ', transformString);
             };
 
             scope.dragStart = function(event){
-                dragStartPosition = element[0].offsetLeft;
-                element[0].style.webkitTransform = "translateX(" + dragStartPosition + 'px)';
-                element.removeClass(newClassName + ' animated');
+                dragXStartPosition = element[0].offsetLeft;
+                var transformString = 'translateX(' + dragXStartPosition + 'px) ' +
+                    'rotateY(' + flipAngle + 'deg)';
+                element[0].style.webkitTransform = transformString;
+                console.log('transformStringStart: ', transformString);
+
+                element.removeClass(newXClassName + ' animated');
+
+                removeFlipClass(flipAngle);
 
             };
 
             scope.dragEnd = function(event){
                 element[0].style.webkitTransform = '';
-                element.addClass(newClassName + ' animated');
+                element.addClass(newXClassName + ' animated');
+
+                addFlipClass(flipAngle);
+
             };
+
+            scope.flipCard = function(){
+                if (flipAngle === 0){
+                    removeFlipClass(0);
+                    addFlipClass(180);
+                    flipAngle = 180;
+                }
+                else{
+                    removeFlipClass(180)
+                    addFlipClass(0);
+                    flipAngle = 0;
+                }
+            };
+
+            function addFlipClass(angle){
+                // might need to check if class already exists
+                element.addClass('flipCard-' + angle + ' animated');
+            }
+
+            function removeFlipClass(angle){
+                element.removeClass('flipCard-' + angle + ' animated');
+            }
+
+            function wrapAngle(angle){
+                /*
+                              /\  |   /\
+                             / \  |  /  \
+                            /   \ | /    \
+                           /     \|/      \
+                */
+                // trying to achieve a saw-function that never goes negative
+                var newAngle = Math.abs(angle);
+                var mod180 = newAngle % 180;
+                var quotient = Math.floor(newAngle/180);
+                var evenOdd = quotient % 2;
+
+                if (evenOdd === 1){
+                    // odd number should decrease
+                    mod180 = 180 - mod180;
+                }
+
+                return mod180;
+            }
 
 
         }
@@ -112,13 +175,22 @@ directivesModule.directive('cardDivHeightCalc', function(){
     return{
         restrict: 'A',
         link: function(scope, element, attrs){
-            var windowHeight = window.innerHeight;
-            var topHalfHeight = 270;
-            var bottomBarHeight = 44;
-            var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
 
-            element[0].style.height = bottomHalfHeight + 'px';
+            setHeight();
 
+            window.addEventListener('resize', setHeight);
+
+            function setHeight(){
+                var windowHeight = window.innerHeight;
+                var topHalfHeight = 270;
+                var bottomBarHeight = 64;
+                var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
+
+                if (bottomHalfHeight < 100){
+                    bottomHalfHeight = 100;
+                }
+                element[0].style.height = bottomHalfHeight + 'px';
+            }
         }
     }
 });
@@ -135,15 +207,6 @@ directivesModule.directive('dynamicWidth', function(){
             function setWindowSize() {
                 var windowWidth = window.innerWidth;
                 var marginWidth = Number(attrs.marginWidth) || 20;
-                /*
-                if (typeof attrs.marginWidth !== 'undefined'){
-                    marginWidth = Number(attrs.marginWidth);
-                }
-                else {
-                    marginWidth = 20;
-                }
-                */
-
 
                 var unconstrainedWidth = windowWidth - marginWidth;
                 var containerWidth;
