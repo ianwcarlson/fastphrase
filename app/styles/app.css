@@ -249,7 +249,7 @@
 }
 .play-word-main-inner{
     position: relative;
-    left: -20%;
+    left: 40%;
     top: 50%;
     font-size: 30px;
 }
@@ -362,6 +362,104 @@
     margin-top: -10px;
     margin-bottom: 5px;
 }
+
+/* entire container, keeps perspective */
+.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
+    -ms-transform: perspective(1000px);
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+/* flip the pane when hovered */
+.flip{
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-container, .front, .back {
+
+}
+
+/* flip speed goes here */
+.flipper {
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.flipper-outer{
+    position: absolute;
+    left: -50%;
+    top: -50%;
+}
+/* hide back of pane during swap */
+.front, .back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 0.6s;
+    -o-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+    -ms-transform-style: preserve-3d;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    left: -50%;
+
+}
+
+/* front pane, placed above back */
+.front {
+    -webkit-transform: translateZ(1px);
+    -moz-transform: translateZ(1px);
+    -o-transform: translateZ(1px);
+    -ms-transform: translateZ(1px);
+    transform: translateZ(1px);
+}
+
+/* back, initially hidden pane */
+.back {
+    -webkit-transform: rotateY(-180deg) translateZ(1px);
+    -moz-transform: rotateY(-180deg) translateZ(1px);
+    -o-transform: rotateY(-180deg) translateZ(1px);
+    -ms-transform: rotateY(-180deg) translateZ(1px);
+    transform: rotateY(-180deg) translateZ(1px);
+
+}
+
+
+
 /* sliding animations */
 /*
 @-webkit-keyframes slide-to-120 {

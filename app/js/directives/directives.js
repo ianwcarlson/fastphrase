@@ -66,7 +66,7 @@ directivesModule.directive('animateWord', [function(){
 
             var flipXStartPosition;
             var flipAngle = 0;
-            addFlipClass(0);
+            //addFlipClass(0);
 
             scope.$on('triggerNextWord', function(){
 
@@ -124,6 +124,10 @@ directivesModule.directive('animateWord', [function(){
             };
 
             scope.flipCard = function(){
+                element[0].classList.toggle("flip");
+
+
+                /*
                 if (flipAngle === 0){
                     removeFlipClass(0);
                     addFlipClass(180);
@@ -134,15 +138,16 @@ directivesModule.directive('animateWord', [function(){
                     addFlipClass(0);
                     flipAngle = 0;
                 }
+                */
             };
 
             function addFlipClass(angle){
                 // might need to check if class already exists
-                element.addClass('flipCard-' + angle + ' animated');
+                //element.addClass('flipCard-' + angle + ' animated');
             }
 
             function removeFlipClass(angle){
-                element.removeClass('flipCard-' + angle + ' animated');
+                //element.removeClass('flipCard-' + angle + ' animated');
             }
 
             function wrapAngle(angle){
