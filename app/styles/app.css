@@ -374,6 +374,11 @@
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
+
+    -webkit-transition: 0.6s;
+    -ms-transition: 0.6s;
+    -moz-transition: 0.6s;
+    transition: 0.6s;
 }
 /* flip the pane when hovered */
 .flip{

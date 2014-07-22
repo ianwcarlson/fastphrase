@@ -117,19 +117,22 @@
 
             function loadWordSet(words){
 
-                    for (var word in words) {
-                        var wordValue = words[word];
-                        if (wordValue.word) {
-                            playWordSet.push(wordValue.word);
-                        }
+                for (var word in words) {
+                    var wordValue = words[word];
+                    if (wordValue.word) {
+                        playWordSet.push({
+                            word: wordValue.word,
+                            definition: wordValue.definition
+                        });
                     }
+                }
             }
 
             function resetLiveView(){
                 liveObjectView = [
-                    {word: '', index: 2},
-                    {word: '', index: 0},
-                    {word: '', index: 1}
+                    {word: '', definition: '', index: 2},
+                    {word: '', definition: '', index: 0},
+                    {word: '', definition: '', index: 1}
                 ];
                 //scopeObjectIdx = 2;
             }
@@ -140,7 +143,11 @@
                 // shift left
                 liveObjectView.splice(0, 1);
                 // append next word and rotating index
-                liveObjectView.push({word: newWord, index: oldIndex});
+                liveObjectView.push({
+                    word: newWord.word,
+                    definition: newWord.definition,
+                    index: oldIndex
+                });
                 //incrementScopeObjectIdx();
             }
 
@@ -157,8 +164,11 @@
             }
 
             function updateOneScopeItem(liveObject, liveObjectElement){
-                var scopeKey = 'word' + liveObject[liveObjectElement].index;
-                $scope[scopeKey] = liveObject[liveObjectElement].word;
+                var index = liveObject[liveObjectElement].index;
+                var scopeWordKey = 'word' + index;
+                var scopeDefinitionKey = 'definition' + index;
+                $scope[scopeWordKey] = liveObject[liveObjectElement].word;
+                $scope[scopeDefinitionKey] = liveObject[liveObjectElement].definition;
             }
 
             function updateAllScopeItems(){

@@ -66,6 +66,8 @@ directivesModule.directive('animateWord', [function(){
 
             var flipXStartPosition;
             var flipAngle = 0;
+            var dragStart = false;
+            //var dragEnd = false;
             //addFlipClass(0);
 
             scope.$on('triggerNextWord', function(){
@@ -73,7 +75,9 @@ directivesModule.directive('animateWord', [function(){
                 prevXClassName = 'slidingCard' + styleLeft.toString();
 
                 styleLeft = (styleLeft <= -180) ? (220) : (styleLeft -=200);
-
+                if (styleLeft === 220){
+                    element.removeClass('flip');
+                }
                 modifyElementClass(prevXClassName, styleLeft);
             });
 
@@ -89,25 +93,29 @@ directivesModule.directive('animateWord', [function(){
                 element.removeClass(prevClass + ' animated');
                 element.addClass(newXClassName + ' animated');
             }
-
+            /*
             scope.dragEvent = function(event){
-                var newXPosition  = dragXStartPosition + event.gesture.deltaX;
-                //element[0].style.webkitTransform = "translateX(" + newXPosition + 'px)';
+                if (dragStart) {
+                    var newXPosition = dragXStartPosition + event.gesture.deltaX;
+                    //element[0].style.webkitTransform = "translateX(" + newXPosition + 'px)';
+                    //element.removeClass('flip');
+                    var newYPosition = flipAngle + event.gesture.deltaY;
+                    element.removeClass('flip');
+                    console.log('dragEvent');
+                    newYPosition = wrapAngle(newYPosition);
+                    var transformString = ' translate3D(' + newXPosition + 'px, 0px, 0px)';
 
-                var newYPosition = flipAngle + event.gesture.deltaY;
-                newYPosition = wrapAngle(newYPosition);
-                var transformString = 'translateX(' + newXPosition + 'px) ' +
-                    'rotateY(' + newYPosition.toString() + 'deg)';
-                element[0].style.webkitTransform = transformString;
-                console.log('transformString: ', transformString);
+                    element[0].style.webkitTransform = transformString;
+                }
             };
 
             scope.dragStart = function(event){
+                dragStart = true;
                 dragXStartPosition = element[0].offsetLeft;
-                var transformString = 'translateX(' + dragXStartPosition + 'px) ' +
-                    'rotateY(' + flipAngle + 'deg)';
+                element.removeClass('flip');
+                var transformString = ' translate3D(' + dragXStartPosition + 'px, 0px, 0px)';
                 element[0].style.webkitTransform = transformString;
-                console.log('transformStringStart: ', transformString);
+                console.log('dragStart');
 
                 element.removeClass(newXClassName + ' animated');
 
@@ -116,13 +124,15 @@ directivesModule.directive('animateWord', [function(){
             };
 
             scope.dragEnd = function(event){
+                dragStart = false;
                 element[0].style.webkitTransform = '';
                 element.addClass(newXClassName + ' animated');
-
-                addFlipClass(flipAngle);
+                element.removeClass('flip');
+                //addFlipClass(flipAngle);
+                console.log('dragEnd');
 
             };
-
+            */
             scope.flipCard = function(){
                 element[0].classList.toggle("flip");
 

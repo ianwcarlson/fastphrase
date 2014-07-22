@@ -65,22 +65,22 @@
             <div class="card-container" card-div-height-calc>
                 <div card-div-height-calc>
                     <div animate-word initial-position="-180" class="play-word-main-outer flip-container flip"
-                         ng-show="word0" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                         ng-show="word0" hm-swipe-left="getNextWord()" hm-drag-left="dragEvent($event)"
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
-                         hm-double-tap="flipCard()">
+                         hm-double-tap="flipCard()"  ng-cloak>
                         <div class="play-word-main-inner flipper">
                             <div class="flipper-outer">
                                 <p class="play-word-main-text front">{{word0}}</p>
                             </div>
                             <div class="flipper-outer">
-                                <p class="play-word-main-text back">shiite!</p>
+                                <p class="play-word-main-text back">{{definition0}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div card-div-height-calc>
-                    <div animate-word initial-position="20" class="play-word-main-outer flip-container flip"
-                         ng-show="word1" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                    <div ng-cloak animate-word initial-position="20" class="play-word-main-outer flip-container flip"
+                         ng-show="word1" hm-swipe-left="getNextWord()" hm-drag-left="dragEvent($event)"
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
                          hm-double-tap="flipCard()">
                         <div class="play-word-main-inner flipper">
@@ -88,22 +88,22 @@
                                 <p class="play-word-main-text front">{{word1}}</p>
                             </div>
                             <div class="flipper-outer">
-                                <p class="play-word-main-text back">poof!</p>
+                                <p class="play-word-main-text back">{{definition1}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div card-div-height-calc>
-                    <div animate-word initial-position="220" class="play-word-main-outer flip-container flip"
-                         ng-show="word2" hm-swipe-left="getNextWord()" hm-drag="dragEvent($event)"
+                    <div ng-cloak animate-word initial-position="220" class="play-word-main-outer flip-container flip"
+                         ng-show="word2" hm-swipe-left="getNextWord()" hm-drag-left="dragEvent($event)"
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
-                         hm-double-tap="flipCard()">
+                         hm-double-tap="flipCard()" hm-tap-opts="{dragLockMinDistance: 5}">
                         <div class="play-word-main-inner flipper">
                             <div class="flipper-outer">
                                 <p class="play-word-main-text front">{{word2}}</p>
                             </div>
                             <div class="flipper-outer">
-                                <p class="play-word-main-text back">shazam!</p>
+                                <p class="play-word-main-text back">{{definition2}}</p>
                             </div>
                         </div>
                     </div>
