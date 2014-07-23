@@ -999,10 +999,10 @@ limitations under the License.
                         var page = $rootScope.ons.navigator.getCurrentPage();
                         switch(page.options.page){
                             case('partials/definitions.html'):
-                                $state.go('words', {action: 'pop', title: ''});
+                                $state.go('user.words', {action: 'pop', title: ''});
                                 break;
                             case('partials/words.html'):
-                                $state.go('collections', {action: 'pop', title: ''});
+                                $state.go('user.collections', {action: 'pop', title: ''});
                                 break;
                             default:
                                 break;

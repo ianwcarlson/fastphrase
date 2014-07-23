@@ -33,7 +33,7 @@
         };
         $scope.nextPage = function(selectedIndex, collectionName){
             wordSetManager.setActiveCollection(selectedIndex);
-            $state.go('words', {
+            $state.go('user.words', {
                 action: 'push',
                 title: collectionName,
                 rightButtonIcon: 'fa fa-lg fa-pencil'
@@ -108,7 +108,7 @@
             $scope.nextPage = function(selectedIndex, wordName){
                 wordSetManager.setActiveWord(selectedIndex);
                 //$rootScope.ons.navigator.pushPage('definitions.html', {title: wordName})
-                $state.go('definitions', {
+                $state.go('user.definitions', {
                     action: 'push',
                     title: wordName
                 });

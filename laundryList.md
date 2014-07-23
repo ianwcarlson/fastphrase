@@ -1,12 +1,13 @@
  * Customize password reset email to current domain (need to verify)
  * ui-router allow access to sign up page
+ * Add path back to login from signup/password reset 
+ * Add confirmation modals when deleting categories and resetting
+
+ * fix card flashing upon play reset (going to 0 opacity)
+ * Busy animations during page loads
  * audit firebase calls to may require promises to guarantee order of execution
  * Logout doesn't work right
- * Add path back to login from signup/password reset
- * Add confirmation modals when deleting categories and resetting
- * Add show definition when playing
- * Busy animations during page loads
- * Implement page resize event handler to prevent next button from getting covered
+
  * Check if passwords entered match in sign up page
  * Integrate new release of Onsen
  * Ensure all templates get cached
@@ -23,4 +24,3 @@
  * Investigate advertisement streams
  * App logo
  * Optimize library dependencies, stripping unused CSS and
- * hide word after play reset

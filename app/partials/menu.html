@@ -6,7 +6,7 @@
             &nbsp; Please log in
         </ons-list-item>
 		<ons-list-item
-            ui-sref="play"
+            ui-sref="user.play"
             ng-show="loginActive"
 			class="topcoat-list__item--tappable topcoat-list__item__line-height"
             ng-click="ons.slidingMenu.closeMenu();">
@@ -19,7 +19,7 @@
 		<ons-list-item
             ng-show="loginActive"
 			class="topcoat-list__item--tappable topcoat-list__item__line-height"
-            ui-sref="collections"
+            ui-sref="user.collections"
             ng-click="ons.slidingMenu.closeMenu();">
 
 			<i class="fa fa-reorder fa-lg" style="color: #666"></i>
@@ -36,6 +36,7 @@
         </ons-list-item>
 
         <ons-list-item
+            ui-sref="anon.login"
             ng-show="loginActive"
             class="topcoat-list__item--tappable topcoat-list__item__line-height"
             ng-click="ons.slidingMenu.toggleMenu();

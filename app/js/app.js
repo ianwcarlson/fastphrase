@@ -22,31 +22,45 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 
 
     $stateProvider
-        .state('login', {
+        .state('anon', {
+            abstract: true,
+            data: {
+                access: 'anon'
+            }
+        })
+        .state('anon.login', {
             url: "/login",
             templateUrl: "partials/login.html"
         })
-        .state('signup', {
+        .state('anon.signup', {
             url: "/signup",
             templateUrl: "partials/signup.html"
         })
-        .state('resetPassword', {
+        .state('anon.resetPassword', {
             url: "/resetPassword",
             templateUrl: "partials/resetPassword.html"
+        });
+
+    $stateProvider
+        .state('user', {
+            abstract: true,
+            data: {
+                access: 'user'
+            }
         })
-        .state('collections', {
+        .state('user.collections', {
             url: "/collections?action&title",
             templateUrl: "partials/collections.html"
         })
-        .state('play', {
+        .state('user.play', {
             url: "/play",
             templateUrl: "partials/play.html"
         })
-        .state('words', {
+        .state('user.words', {
             url: "/words?action&title&rightButtonIcon",
             templateUrl: "partials/words.html"
         })
-        .state('definitions', {
+        .state('user.definitions', {
             url: "/definitions?action&title",
             templateUrl: "partials/definitions.html"
         });
@@ -67,21 +81,30 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 
-        if (loginService.verifyUserFromLocalStorage()) {
+        if (loginService.verifyUserFromLocalStorage() ||
+            toState.data.access === 'anon') {
             // user and session valid
-            switch (toParams.action) {
-                case 'push':
-                    $rootScope.ons.navigator.pushPage(toState.templateUrl, {
-                        title: toParams.title, rightButtonIcon: toParams.rightButtonIcon
-                    });
-                    break;
-                case 'pop':
-                    $rootScope.ons.navigator.popPage();
-                    break;
-                default:
-                    if ($rootScope.ons.slidingMenu) {
-                        $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
-                    }
+            if ($rootScope.ons.navigator) {
+                switch (toParams.action) {
+                    case 'push':
+                        $rootScope.ons.navigator.pushPage(toState.templateUrl, {
+                            title: toParams.title, rightButtonIcon: toParams.rightButtonIcon
+                        });
+                        break;
+                    case 'pop':
+                        $rootScope.ons.navigator.popPage();
+                        break;
+                    default:
+                        if ($rootScope.ons.slidingMenu) {
+                            $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
+                        }
+                }
+            }
+            else{
+                $state.go('user.collections');
+                if ($rootScope.ons.slidingMenu) {
+                    $rootScope.ons.slidingMenu.setAbovePage('partials/collections.html');
+                }
             }
             $timeout(function () {
                 $rootScope.$broadcast('updatePage');
@@ -95,7 +118,7 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
             // redirect to login page
             //var auth = loginService.getLoginAuthorization();
             //auth.logout();
-            $state.go('login');
+            $state.go('anon.login');
             if ($rootScope.ons.slidingMenu) {
                 $rootScope.ons.slidingMenu.setAbovePage('partials/login.html');
             }

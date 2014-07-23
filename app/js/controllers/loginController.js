@@ -12,7 +12,7 @@
         // this will get call whenever login state changes
         var updateLoginStatus = function(){
             if (loginService.getLoginActive()){
-                $state.go('collections', {
+                $state.go('user.collections', {
                     action: '',
                     title: '',
                     rightButtonIcon: 'fa fa-lg fa-pencil'
@@ -77,7 +77,7 @@
                     $scope.pw2, function(error, success){
 
                     if (!error){
-                        $state.go('login');
+                        $state.go('anon.login');
                     }
                     else{
                         $scope.passwordError = loginService.getAuthError(error);
@@ -114,7 +114,7 @@
                     $scope.pw2, function(error, success){
 
                         if (!error){
-                            $state.go('login');
+                            $state.go('anon.login');
                         }
                         else{
                             $scope.passwordError = loginService.getAuthError(error);

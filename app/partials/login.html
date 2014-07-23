@@ -3,7 +3,7 @@
     <ons-scroller ng-init="showLogin=true;" ng-show="showLogin">
         <div  class="container">
             <div class="omb_login">
-                <h3 class="omb_authTitle">Login or <a ui-sref="signup">Sign up</a></h3>
+                <h3 class="omb_authTitle">Login or <a ui-sref="anon.signup">Sign up</a></h3>
                 <div class="row omb_row-sm-offset-3 omb_socialButtons">
                     <div class="col-xs-4 col-sm-2">
                         <a href="#" ng-click="login('facebook')"
@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-3">
                         <p class="omb_forgotPwd forgot-password">
-                            <a ui-sref="resetPassword">Forgot password?</a>
+                            <a ui-sref="anon.resetPassword">Forgot password?</a>
                         </p>
                     </div>
                 </div>
