@@ -29,8 +29,8 @@
         <ons-list-item
             ng-show="loginActive"
             class="topcoat-list__item--tappable topcoat-list__item__line-height"
-            ng-click="ons.slidingMenu.toggleMenu();
-			ons.slidingMenu.setAbovePage('partials/settings.html')">
+            ui-sref="user.settings"
+            ng-click="ons.slidingMenu.closeMenu()">
             <i class="fa fa-sliders fa-lg" style="color: #666"></i>
             &nbsp; Settings
         </ons-list-item>

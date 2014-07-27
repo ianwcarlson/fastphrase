@@ -14,7 +14,8 @@ var myApp =	angular.module('myApp', [
     'menuControllerModule',
     'ui.router',
     'directivesModule',
-    'filtersModule'
+    'filtersModule',
+    'optionsCtrlModule'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',
@@ -63,6 +64,10 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
         .state('user.definitions', {
             url: "/definitions?action&title",
             templateUrl: "partials/definitions.html"
+        })
+        .state('user.settings', {
+            url: "/settings?action&title",
+            templateUrl: "partials/settings.html"
         });
 
     $urlRouterProvider.otherwise('login');
@@ -84,7 +89,7 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
         if (loginService.verifyUserFromLocalStorage() ||
             toState.data.access === 'anon') {
             // user and session valid
-            if ($rootScope.ons.navigator) {
+            //if ($rootScope.ons.navigator) {
                 switch (toParams.action) {
                     case 'push':
                         $rootScope.ons.navigator.pushPage(toState.templateUrl, {
@@ -99,16 +104,20 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
                             $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
                         }
                 }
-            }
-            else{
-                $state.go('user.collections');
-                if ($rootScope.ons.slidingMenu) {
-                    $rootScope.ons.slidingMenu.setAbovePage('partials/collections.html');
-                }
-            }
-            $timeout(function () {
-                $rootScope.$broadcast('updatePage');
-            }, 0);
+            //}
+            //else{
+                // this is a work-around for browser refresh on view page stack
+                // for some reason $rootScope.ons.navigator isn't defined
+                //$state.go('user.collections');
+                //if ($rootScope.ons.slidingMenu) {
+                //    $rootScope.ons.slidingMenu.setAbovePage('partials/collections.html');
+                //}
+
+
+            //}
+            //$timeout(function () {
+            //    $rootScope.$broadcast('updatePage');
+            //}, 0);
 
 
             $rootScope.state = $state.current;

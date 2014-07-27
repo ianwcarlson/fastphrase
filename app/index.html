@@ -45,8 +45,12 @@
 
     <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+    <!--
     <script src="lib/onsen/js/onsenui.js"></script>
     <script src="lib/onsen/js/angular/angular-touch.js"></script>
+    -->
+    <script src="lib/onsenui/js/onsenui.js"></script>
+    <script src="lib/onsenui/js/angular/angular-touch.js"></script>
     <script src="lib/angular-gestures/gestures.min.js"></script>
     <!--<script src="lib/onsenUI-master-1.0.4/build/js/onsenui.js"  ></script>-->
     <script src="lib/howler.js-master/howler.min.js"></script>
@@ -65,10 +69,12 @@
     <script src="js/controllers/playController.js"></script>
     <script src="js/controllers/menuController.js"></script>
     <script src="js/controllers/loginController.js"></script>
+    <script src="js/controllers/optionsCtrl.js"></script>
     <script src="js/services/services.js"></script>
     <script src="js/services/loginServiceModule.js"></script>
     <script src="js/directives/directives.js"></script>
     <script src="js/filters/filters.js"></script>
+
 
 </head>
 
@@ -78,7 +84,7 @@
 
     <ons-sliding-menu
         behind-page="partials/menu.html"
-        above-page=""
+        above-page="partials/login.html"
         max-slide-distance="200px">
     </ons-sliding-menu>
 

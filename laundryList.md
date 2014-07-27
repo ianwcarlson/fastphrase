@@ -2,6 +2,7 @@
  * ui-router allow access to sign up page
  * Add path back to login from signup/password reset 
  * Add confirmation modals when deleting categories and resetting
+ * center vertically center words and definitions on cards
 
  * fix card flashing upon play reset (going to 0 opacity)
  * Busy animations during page loads
