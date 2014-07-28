@@ -105,3 +105,46 @@ serviceModule.factory('wordSetManager', function(){
     }
 });
 
+serviceModule.service('appConstants', [function(){
+
+    this.firebaseMainUrl = 'https://blistering-fire-4858.firebaseio.com';
+
+    this.TIME_LIMIT_SCALER = 1.8;
+
+}]);
+
+serviceModule.factory('localStorageWrapper', [
+    'appConstants', 'localStorageService',
+    function(appConstants, localStorageService){
+
+    this.firebaseMainUrl = 'https://blistering-fire-4858.firebaseio.com';
+
+    this.TIME_LIMIT_SCALER = 1.8;
+
+    function getTimeLimit(){
+        var DEFAULT_TIME = 10;
+        var sliderValue = DEFAULT_TIME;
+        if (localStorageService.isSupported) {
+            var timeLimit = angular.fromJson(localStorageService.get('timeLimit'));
+            sliderValue = timeLimit || DEFAULT_TIME;
+            //if (angular.isDefined(timeLimit)) {
+            //    sliderValue = timeLimit;
+            //}
+            //else{
+            //    sliderValue = 10;
+            //}
+        }
+        var scaledSliderValue = Math.round(Number(sliderValue) * appConstants.TIME_LIMIT_SCALER);
+        return scaledSliderValue;
+    }
+
+    function setTimeLimit(percentOfTotal){
+        localStorageService.set('timeLimit', angular.toJson(percentOfTotal));
+    }
+    return{
+        getTimeLimit: getTimeLimit,
+        setTimeLimit: setTimeLimit
+    }
+}]);
+
+

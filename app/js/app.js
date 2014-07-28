@@ -73,12 +73,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.otherwise('login');
 }]);
 
-myApp.constant('appConstants', {
-
-    firebaseMainUrl: 'https://blistering-fire-4858.firebaseio.com'
-
-});
-
 myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache', 'loginService',
     function($rootScope, $timeout, $state, $stateParams, $templateCache, loginService) {
 

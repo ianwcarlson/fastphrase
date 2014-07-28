@@ -3,8 +3,8 @@
 	var playControllerModule = angular.module('playControllerModule', []);
 
     playControllerModule.controller('playController', [
-        '$scope', '$firebase', '$timeout','loginService', '$rootScope', '$q',
-        function($scope, $firebase, $timeout, loginService, $rootScope, $q){
+        '$scope', '$firebase', '$timeout','loginService', '$rootScope', '$q', 'localStorageWrapper',
+        function($scope, $firebase, $timeout, loginService, $rootScope, $q, localStorageWrapper){
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
@@ -346,7 +346,7 @@
 
                 },
                 startTimer: function(){
-                    time = maxTimeSecs;
+                    time = localStorageWrapper.getTimeLimit();
                     isPlayActive = true;
                     $timeout(secondTick, 1);
                 },
