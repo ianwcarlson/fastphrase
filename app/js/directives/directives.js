@@ -257,4 +257,53 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
     }
 ]);
 
+directivesModule.directive("switch", function() {
+    return {
+        restrict: "EA",
+        replace: true,
+        scope: {
+            model: "=ngModel",
+            changeExpr: "@ngChange",
+            disabled: "@"
+        },
+        template: "<div class='switch' ng-class='{active: model}'><div class='switch-handle'></div></div>",
+        link: function(scope, elem, attrs) {
+
+            elem.on('click', function(){
+                if (attrs.disabled == null) {
+                    scope.model = !scope.model;
+                    scope.$apply();
+
+                    if (scope.changeExpr != null) {
+                        scope.$parent.$eval(scope.changeExpr);
+                        //scope.changeExpr();
+                    }
+                }
+            });
+
+            elem.addClass('switch-transition-enabled');
+        }
+    };
+});
+directivesModule.directive('sliderWidth', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            setWindowSize();
+
+            window.addEventListener('resize', setWindowSize);
+
+            function setWindowSize() {
+                var windowWidth = window.innerWidth;
+                var LEFT_TEXT_WIDTH = 157;
+                var RIGHT_TEXT_WIDTH = 51;
+                var sliderWidth = windowWidth - LEFT_TEXT_WIDTH - RIGHT_TEXT_WIDTH;
+                element[0].style.width = sliderWidth + 'px';
+            }
+        }
+    }
+});
+// 107 + 51
+
 

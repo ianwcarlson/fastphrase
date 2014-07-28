@@ -2,18 +2,29 @@
     title="Settings"
     left-button-icon="fa fa-lg fa-bars">
 
-    <ons-page  ng-controller="collectionsController"
+    <ons-page  ng-controller="optionsCtrl"
         class="center">
         <ons-scroller>
             <ons-list>
                 <ons-list-item>
-                    <span>Earn Loyalty</span>
-                    <div class="setting-item-action">
-                        <label class="switch z-index-zero">
-                            <input type="checkbox" class="switch__input" checked=checked>
-                            <div class="switch__toggle"></div>
-                        </label>
+                    <i class="options-label">Play or Study: {{options.modeEnabled}}</i>
+                    <switch ng-model="options.playStudy" label=""
+                            ng-change="updateOptions()" class="pull-right switch-toggle"></switch>
+
+                </ons-list-item>
+                <ons-list-item class="options-help-text">
+                    <p class="options-help-text-paragraph">
+                        Map auto-centering will re-center the map view every
+                        time the user marker goes out of bounds
+                    </p>
+                </ons-list-item>
+                <ons-list-item class="options-slider-list-item">
+                    <i class="options-label options-slider-text" style="margin-top: 2px">Time Limit(secs)</i>
+                    <div class="slider-input-div">
+                        <input type="range" slider-width ng-model="input.sliderValue" ng-change="updateSliderValue()"
+                               class="range slider-input" style="width: 60%; display: inline;">
                     </div>
+                    <span class="options-label options-slider-text slider-value-right">{{input.scaledSliderValue}}</span>
                 </ons-list-item>
             </ons-list>
         </ons-scroller>
