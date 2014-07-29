@@ -18,12 +18,19 @@
                     </p>
                 </ons-list-item>
                 <ons-list-item class="options-slider-list-item">
+                    <!--
                     <i class="options-label options-slider-text" style="margin-top: 2px">Time Limit(secs)</i>
                     <div class="slider-input-div">
                         <input type="range" slider-width ng-model="input.sliderValue" ng-change="updateSliderValue()"
                                class="range slider-input" style="width: 60%; display: inline;">
                     </div>
                     <span class="options-label options-slider-text slider-value-right">{{input.scaledSliderValue}}</span>
+                    -->
+                    <select ng-model="input.timeLimitSelect"
+                            ng-options="value.name for value in timeLimitOptions"
+                            class="form-control" ng-change="updateTimeLimitValue()">
+                    </select>
+
                 </ons-list-item>
             </ons-list>
         </ons-scroller>

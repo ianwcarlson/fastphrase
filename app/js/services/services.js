@@ -117,16 +117,12 @@ serviceModule.factory('localStorageWrapper', [
     'appConstants', 'localStorageService',
     function(appConstants, localStorageService){
 
-    this.firebaseMainUrl = 'https://blistering-fire-4858.firebaseio.com';
-
-    this.TIME_LIMIT_SCALER = 1.8;
-
     function getTimeLimit(){
-        var DEFAULT_TIME = 10;
-        var sliderValue = DEFAULT_TIME;
+        var DEFAULT_TIME = 30;
+        var timeLimitValue = DEFAULT_TIME;
         if (localStorageService.isSupported) {
             var timeLimit = angular.fromJson(localStorageService.get('timeLimit'));
-            sliderValue = timeLimit || DEFAULT_TIME;
+            timeLimitValue = timeLimit || DEFAULT_TIME;
             //if (angular.isDefined(timeLimit)) {
             //    sliderValue = timeLimit;
             //}
@@ -134,12 +130,11 @@ serviceModule.factory('localStorageWrapper', [
             //    sliderValue = 10;
             //}
         }
-        var scaledSliderValue = Math.round(Number(sliderValue) * appConstants.TIME_LIMIT_SCALER);
-        return scaledSliderValue;
+        return (Number(timeLimitValue));
     }
 
-    function setTimeLimit(percentOfTotal){
-        localStorageService.set('timeLimit', angular.toJson(percentOfTotal));
+    function setTimeLimit(timeLimitSeconds){
+        localStorageService.set('timeLimit', angular.toJson(timeLimitSeconds));
     }
     return{
         getTimeLimit: getTimeLimit,
