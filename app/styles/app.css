@@ -534,7 +534,7 @@
     border-bottom: inherit;
 }
 .options-help-text-paragraph{
-    margin-top: 11px;
+    padding-top: 11px;
     text-align: left;
 }
 .switch-toggle{
@@ -642,6 +642,11 @@
     margin-top: 2px;
     margin-right: 5px;
     display: inline;
+}
+.options-time-limit-select{
+    width: 99%;
+    position: relative;
+    margin-top: -2px;
 }
 .slider-input-div{
     display: inline;

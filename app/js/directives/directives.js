@@ -285,7 +285,7 @@ directivesModule.directive("switch", function() {
         }
     };
 });
-directivesModule.directive('sliderWidth', function(){
+directivesModule.directive('timeLimitSelectWidth', function(){
     return{
         restrict: 'A',
         link: function(scope, element, attrs){
@@ -296,9 +296,8 @@ directivesModule.directive('sliderWidth', function(){
 
             function setWindowSize() {
                 var windowWidth = window.innerWidth;
-                var LEFT_TEXT_WIDTH = 157;
-                var RIGHT_TEXT_WIDTH = 51;
-                var sliderWidth = windowWidth - LEFT_TEXT_WIDTH - RIGHT_TEXT_WIDTH;
+                var LEFT_TEXT_WIDTH = 111;
+                var sliderWidth = windowWidth - LEFT_TEXT_WIDTH;
                 element[0].style.width = sliderWidth + 'px';
             }
         }

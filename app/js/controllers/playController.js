@@ -295,7 +295,7 @@
         }
 
         function TimerClass(){
-            var MAX_PRE_COUNT = 1;
+            var MAX_PRE_COUNT = 4;
             var time = 0;
             var maxTimeSecs = 5;
             var preCount = MAX_PRE_COUNT;
@@ -312,7 +312,6 @@
                         if (time > 15) {
                             if (preCount === 0) {
                                 beep.play();
-
                                 preCount = MAX_PRE_COUNT;
                             }
                             else {
@@ -320,13 +319,21 @@
                             }
 
                         }
-                        else {
-                            //beep.src = beep.src;
+                        else if (time > 5){
+                            if (preCount === 0) {
+                                beep.play();
+                                preCount = 2;
+                            }
+                            else {
+                                preCount -= 1;
+                            }
+                        }
+                        else{
                             beep.play();
                         }
                     }
-                    time -= 1;
-                    $timeout(secondTick, 1000);
+                    time -= 0.25;
+                    $timeout(secondTick, 250);
                 }
                 else if(soundEnabled && !timerCancelled){
                     buzzer.play();

@@ -9,8 +9,8 @@
                 <ons-list-item>
                     <i class="options-label">Play or Study: {{options.modeEnabled}}</i>
                     <switch ng-model="options.playStudy" label=""
-                            ng-change="updateOptions()" class="pull-right switch-toggle"></switch>
-
+                            ng-change="updateOptions()" class="pull-right switch-toggle">
+                    </switch>
                 </ons-list-item>
                 <ons-list-item class="options-help-text">
                     <p class="options-help-text-paragraph">
@@ -26,11 +26,19 @@
                     </div>
                     <span class="options-label options-slider-text slider-value-right">{{input.scaledSliderValue}}</span>
                     -->
-                    <select ng-model="input.timeLimitSelect"
+                    <i class="options-label" style="margin-top: 3px">Time Limit</i>
+                    <select ng-model="input.timeLimitSelect" time-limit-select-width
                             ng-options="value.name for value in timeLimitOptions"
-                            class="form-control" ng-change="updateTimeLimitValue()">
+                            class="form-control options-time-limit-select"
+                            style="display: inline"
+                            ng-change="updateTimeLimitValue()">
                     </select>
 
+                </ons-list-item>
+                <ons-list-item class="options-help-text">
+                    <p class="options-help-text-paragraph">
+                        The time allowed for each turn when playing in game mode
+                    </p>
                 </ons-list-item>
             </ons-list>
         </ons-scroller>
