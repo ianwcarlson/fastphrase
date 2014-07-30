@@ -8,7 +8,7 @@
             <p class="play-select-title">Select a category:</p>
             <select ng-model="selectedCollection"
                 ng-options="value as value.collectionName for (key,value) in collections | filterNonCategories"
-                class="form-control">
+                class="form-control" ng-change="changeWordSelection()">
             </select>
 
             <div class="row row-margin">

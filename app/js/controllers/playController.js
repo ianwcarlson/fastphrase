@@ -53,17 +53,20 @@
             turnManagerObj.resetTurn();
         };
 
+        $scope.changeWordSelection = function(){
+            wordPlayManagerObj.resetWordGroup();
+        };
+
         function incrementScore(){
             var selectedTeam = turnManagerObj.getActiveTeam();
             scoreManagerObj.incrementTeam(selectedTeam);
         }
 
         $scope.getNextWord = function() {
-            // TEMP IWC
-            //if (playTimer.isPlayActive()) {
-            wordPlayManagerObj.getNextWord();
-            incrementScore();
-            //}
+            if (playTimer.isPlayActive()) {
+                wordPlayManagerObj.getNextWord();
+                incrementScore();
+            }
         };
 
 
@@ -116,7 +119,7 @@
             }
 
             function loadWordSet(words){
-
+                playWordSet = [];
                 for (var word in words) {
                     var wordValue = words[word];
                     if (wordValue.word) {
