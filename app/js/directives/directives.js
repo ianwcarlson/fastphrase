@@ -257,7 +257,7 @@ angular.module('mobile-angular-ui.directives.overlay', []).directive('overlay', 
     }
 ]);
 
-directivesModule.directive("switch", function() {
+directivesModule.directive("switch", [function() {
     return {
         restrict: "EA",
         replace: true,
@@ -284,8 +284,8 @@ directivesModule.directive("switch", function() {
             elem.addClass('switch-transition-enabled');
         }
     };
-});
-directivesModule.directive('timeLimitSelectWidth', function(){
+}]);
+directivesModule.directive('timeLimitSelectWidth', [function(){
     return{
         restrict: 'A',
         link: function(scope, element, attrs){
@@ -302,8 +302,8 @@ directivesModule.directive('timeLimitSelectWidth', function(){
             }
         }
     }
-});
-directivesModule.directive('cardTextWidth', function(){
+}]);
+directivesModule.directive('cardTextWidth', [function(){
     return{
         restrict: 'A',
         link: function(scope, element, attrs){
@@ -323,8 +323,9 @@ directivesModule.directive('cardTextWidth', function(){
             }
         }
     }
-});
-directivesModule.directive('cardTextHeight', function(){
+}]);
+directivesModule.directive('cardTextHeight', [
+    '$timeout', function($timeout){
     return{
         restrict: 'A',
         link: function(scope, element, attrs){
@@ -332,6 +333,7 @@ directivesModule.directive('cardTextHeight', function(){
             setWindowSize();
 
             window.addEventListener('resize', setWindowSize);
+            scope.$on('triggerNextWord', setWindowSize);
 
             function setWindowSize() {
                 // need to find the height of the text which is a child of this node
@@ -339,11 +341,14 @@ directivesModule.directive('cardTextHeight', function(){
                 // set the current element to that height
 
                 var textHeight = cardText[0].offsetHeight;
+
                 element[0].style.height = textHeight + 'px';
+
+
             }
         }
     }
-});
+}]);
 // 107 + 51
 
 
