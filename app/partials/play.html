@@ -69,11 +69,11 @@
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
                          hm-double-tap="flipCard()"  ng-cloak>
                         <div class="play-word-main-inner flipper">
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text front">{{word0}}</p>
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text front">{{word0}}</p>
                             </div>
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text back">{{definition0}}</p>
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text back">{{definition0}}</p>
                             </div>
                         </div>
                     </div>
@@ -84,11 +84,11 @@
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
                          hm-double-tap="flipCard()">
                         <div class="play-word-main-inner flipper">
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text front">{{word1}}</p>
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text front">{{word1}}</p>
                             </div>
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text back">{{definition1}}</p>
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text back">{{definition1}}</p>
                             </div>
                         </div>
                     </div>
@@ -98,12 +98,12 @@
                          ng-show="word2" hm-swipe-left="getNextWord()" hm-drag-left="dragEvent($event)"
                          hm-dragstart="dragStart($event)" hm-dragend="dragEnd($event)"
                          hm-double-tap="flipCard()" hm-tap-opts="{dragLockMinDistance: 5}">
-                        <div class="play-word-main-inner fli0pper">
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text front">{{word2}}</p>
+                        <div class="play-word-main-inner flipper">
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text front">{{word2}}</p>
                             </div>
-                            <div class="flipper-outer">
-                                <p class="play-word-main-text back">{{definition2}}</p>
+                            <div card-text-width card-text-height class="flipper-outer">
+                                <p card-text-width class="play-word-main-text back">{{definition2}}</p>
                             </div>
                         </div>
                     </div>

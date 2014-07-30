@@ -416,8 +416,11 @@
     -ms-transform-style: preserve-3d;
     transition: 0.6s;
     transform-style: preserve-3d;
-    position: relative;
-    margin-top: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
     /*
     position: absolute;
     left: 50%;
@@ -425,10 +428,11 @@
     */
 }
 .flipper-outer{
-    position: relative;
+    position: absolute;
+    /*
     left: 0%;
     top: 50%;
-    /*
+
     position: absolute;
     left: -50%;
     top: -50%;
@@ -451,7 +455,7 @@
     transition: 0.6s;
     transform-style: preserve-3d;
     position: relative;
-    left: -50%;
+    margin-top: -50%;
 
 }
 
@@ -462,6 +466,7 @@
     -o-transform: translateZ(1px);
     -ms-transform: translateZ(1px);
     transform: translateZ(1px);
+    left: -50%;
 }
 
 /* back, initially hidden pane */
@@ -471,6 +476,7 @@
     -o-transform: rotateY(-180deg) translateZ(1px);
     -ms-transform: rotateY(-180deg) translateZ(1px);
     transform: rotateY(-180deg) translateZ(1px);
+    right: -50%;
 
 }
 

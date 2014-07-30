@@ -303,6 +303,47 @@ directivesModule.directive('timeLimitSelectWidth', function(){
         }
     }
 });
+directivesModule.directive('cardTextWidth', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            setWindowSize();
+
+            window.addEventListener('resize', setWindowSize);
+
+            function setWindowSize() {
+                // need to find the size of visible card and set text width to that
+                var flipCards = document.getElementsByClassName('flip-container');
+                // the third one always has full width
+                var cardWidth = flipCards[2].offsetWidth;
+
+                var textWidth = 0.8*cardWidth;
+                element[0].style.width = textWidth + 'px';
+            }
+        }
+    }
+});
+directivesModule.directive('cardTextHeight', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            setWindowSize();
+
+            window.addEventListener('resize', setWindowSize);
+
+            function setWindowSize() {
+                // need to find the height of the text which is a child of this node
+                var cardText = element.children();
+                // set the current element to that height
+
+                var textHeight = cardText[0].offsetHeight;
+                element[0].style.height = textHeight + 'px';
+            }
+        }
+    }
+});
 // 107 + 51
 
 
