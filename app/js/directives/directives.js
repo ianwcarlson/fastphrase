@@ -349,6 +349,49 @@ directivesModule.directive('cardTextHeight', [
         }
     }
 }]);
-// 107 + 51
+directivesModule.directive('autoTextSize', [
+    // auto size text to fit element
+    '$timeout', function($timeout){
+    return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            var fontSize= 30;
+
+            setTextSize();
+
+            window.addEventListener('resize', setTextSize);
+            scope.$on('triggerNextWord', setTextSize);
+
+            function setTextSize() {
+                // need to find the size of visible card
+                var flipCards = document.getElementsByClassName('flip-container');
+                // the third one always has full width
+                var cardWidth = flipCards[2].offsetWidth;
+                var cardHeight = flipCards[2].offsetHeight;
+
+                var clientWidth = element[0].clientWidth;
+                var clientHeight = element[0].clientHeight;
+                if (clientWidth*0.75 > cardWidth ||
+                    clientHeight > cardHeight){
+
+                    if (fontSize > 10) {
+                        fontSize -= 2;
+                        element[0].style.fontSize = fontSize + 'px';
+                        $timeout(setTextSize, 1);
+                    }
+                }
+                else if (clientWidth < cardWidth*0.4 ||
+                    clientHeight < cardHeight*0.4){
+                    if (fontSize < 30) {
+                        fontSize += 2;
+                        element[0].style.fontSize = fontSize + 'px';
+                        $timeout(setTextSize, 1);
+                    }
+                }
+            }
+        }
+    };
+}]);
 
 
