@@ -302,7 +302,7 @@
             var time = 0;
             var maxTimeSecs = 5;
             var preCount = MAX_PRE_COUNT;
-            var soundEnabled = true;
+            var soundEnabled = localStorageWrapper.getEnableSound();
             var timerCancelled = false;
             var timerEndCallback = function(){};
             var beep = new Howl({urls: ['media/audio/beep-08b.mp3']});

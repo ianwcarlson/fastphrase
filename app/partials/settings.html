@@ -7,7 +7,7 @@
         <ons-scroller>
             <ons-list>
                 <ons-list-item>
-                    <i class="options-label">Play or Study: {{options.modeEnabled}}</i>
+                    <i class="options-label">{{options.modeEnabled}}</i>
                     <switch ng-model="options.playStudy" label=""
                             ng-change="updateOptions()" class="pull-right switch-toggle">
                     </switch>
@@ -39,6 +39,12 @@
                     <p class="options-help-text-paragraph">
                         The time allowed for each turn when playing in game mode
                     </p>
+                </ons-list-item>
+                <ons-list-item>
+                    <i class="options-label">Enable Sound</i>
+                    <switch ng-model="options.enableSound" label=""
+                            ng-change="updateOptions()" class="pull-right switch-toggle">
+                    </switch>
                 </ons-list-item>
             </ons-list>
         </ons-scroller>

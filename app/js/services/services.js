@@ -117,28 +117,49 @@ serviceModule.factory('localStorageWrapper', [
     'appConstants', 'localStorageService',
     function(appConstants, localStorageService){
 
-    function getTimeLimit(){
-        var DEFAULT_TIME = 30;
-        var timeLimitValue = DEFAULT_TIME;
+    function getEnableSimpleOption(optionName){
+        var DEFAULT = true;
+        var value = DEFAULT;
         if (localStorageService.isSupported) {
-            var timeLimit = angular.fromJson(localStorageService.get('timeLimit'));
-            timeLimitValue = timeLimit || DEFAULT_TIME;
-            //if (angular.isDefined(timeLimit)) {
-            //    sliderValue = timeLimit;
-            //}
-            //else{
-            //    sliderValue = 10;
-            //}
+            var storedValue = angular.fromJson(localStorageService.get(optionName));
+            value = angular.isDefined(storedValue) ? storedValue : DEFAULT;
         }
-        return (Number(timeLimitValue));
+        return value;
     }
 
-    function setTimeLimit(timeLimitSeconds){
-        localStorageService.set('timeLimit', angular.toJson(timeLimitSeconds));
+    function setEnableSimpleOption(optionName, newValue){
+        localStorageService.set(optionName, angular.toJson(newValue));
     }
+
+    function getTimeLimit(){
+        return Number(getEnableSimpleOption('timeLimit'));
+    }
+
+    function setTimeLimit(newValue){
+        setEnableSimpleOption('timeLimit', newValue);
+    }
+
+    function setEnableSound(newValue){
+        setEnableSimpleOption('enableSound', newValue);
+    }
+    function getEnableSound(){
+        return getEnableSimpleOption('enableSound');
+    }
+
+    function setPlayEnable(newValue){
+        setEnableSimpleOption('playEnable', newValue);
+    }
+    function getPlayEnable(){
+        return getEnableSimpleOption('playEnable');
+    }
+
     return{
+        setTimeLimit: setTimeLimit,
         getTimeLimit: getTimeLimit,
-        setTimeLimit: setTimeLimit
+        setEnableSound: setEnableSound,
+        getEnableSound: getEnableSound,
+        setPlayEnable: setPlayEnable,
+        getPlayEnable: getPlayEnable,
     }
 }]);
 
