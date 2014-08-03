@@ -358,7 +358,7 @@ directivesModule.directive('autoTextSize', [
         link: function(scope, element, attrs){
 
             var fontSize= 30;
-
+            var CENTER_POSITION = 220;
             setTextSize();
 
             window.addEventListener('resize', setTextSize);
@@ -371,7 +371,7 @@ directivesModule.directive('autoTextSize', [
                     var arrayString = parentClassArray[idx];
                     var foundPos = arrayString.search(searchKey);
                     if (foundPos !== -1){
-                        suffix = arrayString.substr(searchKey.length-1)
+                        suffix = arrayString.substr(searchKey.length)
                         break;
                     }
                 }
@@ -389,21 +389,23 @@ directivesModule.directive('autoTextSize', [
                 var clientHeight = element[0].scrollHeight;
                 var ratio = clientWidth/clientHeight;
                 var parentPos = findParentPosition(element[0]);
-                if (clientWidth > cardWidth*0.85 ||
-                    clientHeight > cardHeight*0.7){
+                if (parentPos === CENTER_POSITION) {
+                    if (clientWidth > cardWidth * 0.85 ||
+                        clientHeight > cardHeight * 0.7) {
 
-                    if (fontSize > 10) {
-                        fontSize -= 6;
-                        element[0].style.fontSize = fontSize + 'px';
-                        //$timeout(setTextSize, 0);
+                        if (fontSize > 10) {
+                            fontSize -= 6;
+                            element[0].style.fontSize = fontSize + 'px';
+                            //$timeout(setTextSize, 0);
+                        }
                     }
-                }
-                else if (clientWidth < cardWidth*0.4 ||
-                    clientHeight < cardHeight*0.4) {
-                    if (fontSize < 30) {
-                        fontSize += 6;
-                        element[0].style.fontSize = fontSize + 'px';
-                        //$timeout(setTextSize, 0);
+                    else if (clientWidth < cardWidth * 0.4 ||
+                        clientHeight < cardHeight * 0.4) {
+                        if (fontSize < 30) {
+                            fontSize += 6;
+                            element[0].style.fontSize = fontSize + 'px';
+                            //$timeout(setTextSize, 0);
+                        }
                     }
                 }
                 //element[0].style.fontSize = fontSize + 'px';
