@@ -311,6 +311,7 @@ directivesModule.directive('cardTextWidth', [function(){
             setWindowSize();
 
             window.addEventListener('resize', setWindowSize);
+            scope.$on('triggerNextWord', setWindowSize);
 
             function setWindowSize() {
                 // need to find the size of visible card and set text width to that
@@ -362,6 +363,20 @@ directivesModule.directive('autoTextSize', [
 
             window.addEventListener('resize', setTextSize);
             scope.$on('triggerNextWord', setTextSize);
+            function findParentPosition(element){
+                var suffix = 0;
+                parentClassArray = element.parentNode.parentNode.parentNode.classList;
+                searchKey = 'slidingCard';
+                for (var idx=0; idx<parentClassArray.length; idx++){
+                    var arrayString = parentClassArray[idx];
+                    var foundPos = arrayString.search(searchKey);
+                    if (foundPos !== -1){
+                        suffix = arrayString.substr(searchKey.length-1)
+                        break;
+                    }
+                }
+                return Number(suffix);
+            }
 
             function setTextSize() {
                 // need to find the size of visible card
@@ -370,25 +385,28 @@ directivesModule.directive('autoTextSize', [
                 var cardWidth = flipCards[2].offsetWidth;
                 var cardHeight = flipCards[2].offsetHeight;
 
-                var clientWidth = element[0].clientWidth;
-                var clientHeight = element[0].clientHeight;
-                if (clientWidth > cardWidth*0.95 ||
-                    clientHeight > cardHeight*0.9){
+                var clientWidth = element[0].scrollWidth;
+                var clientHeight = element[0].scrollHeight;
+                var ratio = clientWidth/clientHeight;
+                var parentPos = findParentPosition(element[0]);
+                if (clientWidth > cardWidth*0.85 ||
+                    clientHeight > cardHeight*0.7){
 
                     if (fontSize > 10) {
-                        fontSize -= 2;
+                        fontSize -= 6;
                         element[0].style.fontSize = fontSize + 'px';
-                        $timeout(setTextSize, 0);
+                        //$timeout(setTextSize, 0);
                     }
                 }
                 else if (clientWidth < cardWidth*0.4 ||
-                    clientHeight < cardHeight*0.4){
+                    clientHeight < cardHeight*0.4) {
                     if (fontSize < 30) {
-                        fontSize += 2;
+                        fontSize += 6;
                         element[0].style.fontSize = fontSize + 'px';
-                        $timeout(setTextSize, 0);
+                        //$timeout(setTextSize, 0);
                     }
                 }
+                //element[0].style.fontSize = fontSize + 'px';
             }
         }
     };
