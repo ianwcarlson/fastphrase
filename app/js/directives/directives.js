@@ -75,8 +75,8 @@ directivesModule.directive('animateWord', [function(){
 
                 prevXClassName = 'slidingCard' + styleLeft.toString();
 
-                styleLeft = (styleLeft <= -180) ? (220) : (styleLeft -=200);
-                if (styleLeft === 220){
+                styleLeft = (styleLeft <= -190) ? (210) : (styleLeft -=200);
+                if (styleLeft === 210){
                     element.removeClass('flip');
                 }
                 modifyElementClass(prevXClassName, styleLeft);
