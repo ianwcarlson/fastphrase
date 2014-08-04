@@ -282,8 +282,7 @@
     top: 13px;
     background-color: #496050;
 }
-
-.slidingCard220{
+.slidingCard620{
     /*
     -webkit-animation: slide-to-120 1s 1;
     -moz-animation:    slide-to-120 1s 1;
@@ -295,6 +294,36 @@
     -ms-transition: 1s;
     -o-transition: 1s;
     transition: 1s;
+    left: 620% !important;
+    opacity: 0;
+}
+.slidingCard420{
+    /*
+    -webkit-animation: slide-to-120 1s 1;
+    -moz-animation:    slide-to-120 1s 1;
+    -o-animation:      slide-to-120 1s 1;
+    animation:         slide-to-120 1s 1;
+    */
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    left: 420% !important;
+    opacity: 0;
+}
+.slidingCard220{
+    /*
+    -webkit-animation: slide-to-120 1s 1;
+    -moz-animation:    slide-to-120 1s 1;
+    -o-animation:      slide-to-120 1s 1;
+    animation:         slide-to-120 1s 1;
+    */
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
     left: 220% !important;
     opacity: 0;
 }
@@ -342,6 +371,7 @@
     transition: 0.5s;
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
+    opacity: 0;
 }
 .flipCard-180{
     /*
@@ -357,6 +387,7 @@
     transition: 0.5s;
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+    opacity: 0;
 }
 .card-container{
     position: relative;
@@ -375,11 +406,12 @@
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
-
+    /*
     -webkit-transition: 0.6s;
     -ms-transition: 0.6s;
     -moz-transition: 0.6s;
     transition: 0.6s;
+    */
 }
 /* flip the pane when hovered */
 .flip{
@@ -389,15 +421,19 @@
     -ms-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
 
-    -webkit-transition: 0.6s;
+
     -webkit-transform-style: preserve-3d;
-    -ms-transition: 0.6s;
-    -moz-transition: 0.6s;
-    -moz-transform: perspective(1000px);
+
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
-    transition: 0.6s;
+    -moz-transform: perspective(1000px);
     transform-style: preserve-3d;
+
+    -webkit-transition: 0.6s;
+    -ms-transition: 0.6s;
+    -moz-transition: 0.6s;
+    transition: 0.6s;
+
 }
 
 .flip-container, .front, .back {

@@ -71,6 +71,7 @@ directivesModule.directive('animateWord', [function(){
             //addFlipClass(0);
 
             scope.$on('triggerNextWord', function(){
+                //showHideCard(element);
 
                 prevXClassName = 'slidingCard' + styleLeft.toString();
 
@@ -79,19 +80,33 @@ directivesModule.directive('animateWord', [function(){
                     element.removeClass('flip');
                 }
                 modifyElementClass(prevXClassName, styleLeft);
+
             });
 
             scope.$on('resetToInitial', function(){
+                // showHideCard(element)
+
                 prevXClassName = 'slidingCard' + styleLeft.toString();
                 styleLeft = Number(attrs.initialPosition);
 
                 modifyElementClass(prevXClassName, styleLeft);
+
             });
 
             function modifyElementClass(prevClass, newStyleLeft){
                 newXClassName = 'slidingCard' + newStyleLeft.toString();
                 element.removeClass(prevClass + ' animated');
                 element.addClass(newXClassName + ' animated');
+            }
+
+            function showHideCard(element){
+                var childElemContents = element.children().children()[0].children[0].innerHTML
+                if (childElemContents === ''){
+                    element.addClass('hide-card');
+                }
+                else{
+                    element.removeClass('hide-card');
+                }
             }
             /*
             scope.dragEvent = function(event){

@@ -133,9 +133,9 @@
 
             function resetLiveView(){
                 liveObjectView = [
-                    {word: '', definition: '', index: 2},
+                    {word: '', definition: '', index: 1},
                     {word: '', definition: '', index: 0},
-                    {word: '', definition: '', index: 1}
+                    {word: '', definition: '', index: 2}
                 ];
                 //scopeObjectIdx = 2;
             }
@@ -185,6 +185,8 @@
                 resetLiveView();
                 var gatherWordsPromise = gatherWords();
                 gatherWordsPromise.then(function() {
+                    calcIndexAndInsertWord();
+                    calcIndexAndInsertWord();
                     calcIndexAndInsertWord();
                     $timeout(function () {
                         updateAllScopeItems();
