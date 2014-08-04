@@ -374,7 +374,7 @@ directivesModule.directive('autoTextSize', [
         link: function(scope, element, attrs){
 
             var fontSize= 30;
-            var CENTER_POSITION = 220;
+            var RIGHT_POSITION = 210;
             setTextSize();
 
             window.addEventListener('resize', setTextSize);
@@ -405,7 +405,7 @@ directivesModule.directive('autoTextSize', [
                 var clientHeight = element[0].scrollHeight;
                 var ratio = clientWidth/clientHeight;
                 var parentPos = findParentPosition(element[0]);
-                if (parentPos === CENTER_POSITION) {
+                if (parentPos === RIGHT_POSITION) {
                     if (clientWidth > cardWidth * 0.85 ||
                         clientHeight > cardHeight * 0.7) {
 
