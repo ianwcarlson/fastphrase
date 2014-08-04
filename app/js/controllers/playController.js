@@ -8,6 +8,7 @@
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
+        $scope.options = {};
 
         var user = loginService.getUser();
         var wordPlayManagerObj = wordPlayManager();
@@ -30,17 +31,11 @@
             wordPlayManagerObj.setCategoryList($scope.collections);
         });
 
-        //for (var item in collections) {
-        //    var value = collections[item];
-        //    if (value.collectionName) {
-        //        $scope.collections.push({name: value.collectionName});
-        //    }
-        //}
-        //$scope.selectedCollection = $scope.collections[0];
-
         var playTimer = new TimerClass();
         var turnManagerObj = turnManager();
         var scoreManagerObj = scoreManager();
+
+        $scope.options.playEnable = localStorageWrapper.getPlayEnable();
 
 
         $scope.incrementTeam = scoreManagerObj.incrementTeam;
@@ -63,7 +58,7 @@
         }
 
         $scope.getNextWord = function() {
-            if (playTimer.isPlayActive()) {
+            if (playTimer.isPlayActive() || !$scope.options.playEnable) {
                 wordPlayManagerObj.getNextWord();
                 incrementScore();
             }

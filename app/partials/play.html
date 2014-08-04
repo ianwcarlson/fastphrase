@@ -11,7 +11,7 @@
                 class="form-control" ng-change="changeWordSelection()">
             </select>
 
-            <div class="row row-margin">
+            <div ng-show="options.playEnable" class="row row-margin">
                 <div class="col-xs-6 col-sm-6 button-group left-side-padding">
                     <button class="btn btn-lg btn-success btn-block start-round-button"
                         type="button" ng-click="startNewRound()">Start Round</button>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <br>
-            <div class="row row-margin">
+            <div ng-show="options.playEnable" class="row row-margin">
                 <div class="col-xs-6 col-sm-6 left-side-padding">
                     <div class="list-group" ng-class="{highlighted: turns.team1}">
 

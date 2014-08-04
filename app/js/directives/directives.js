@@ -212,7 +212,8 @@ directivesModule.directive('cardDivHeightCalc', function(){
 
             function setHeight(){
                 var windowHeight = window.innerHeight;
-                var topHalfHeight = 270;
+                // need to determine height of div containing all the play elements
+                var topHalfHeight = (scope.options.playEnable) ? 270 : 120;
                 var bottomBarHeight = 64;
                 var bottomHalfHeight = windowHeight - topHalfHeight - bottomBarHeight;
 
