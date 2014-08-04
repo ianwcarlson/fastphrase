@@ -8,6 +8,7 @@
         $scope.loginActive = false;
         var updateLoginStatus = function(){
             $scope.loginActive = loginService.getLoginActive();
+            $scope.$apply();
         };
         loginService.setLoginCallback(updateLoginStatus);
         updateLoginStatus();
