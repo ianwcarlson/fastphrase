@@ -4,8 +4,8 @@
     margin: 0 auto;
 }
 .container-fluid{
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .list-item-remove-button{
     display: inline;
@@ -55,6 +55,9 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9d157', endColorstr='#e5d27e',GradientType=0 );
     border-color: #bda53f;
     */
+}
+.team-font{
+    font-size: 13px;
 }
 .input-group-local{
     height: 48px;
