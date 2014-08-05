@@ -248,7 +248,7 @@
     border-style: solid;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 6px 4px 6px #888888;
+    box-shadow: 1px 3px 6px #888888;
 }
 .play-word-main-inner{
     /*
@@ -707,56 +707,72 @@
     float: right;
     margin-right: 14px;
 }
-/* sliding animations */
-/*
-@-webkit-keyframes slide-to-120 {
-    0%   { left: 220%; }
-    100% { left: 120%; }
-}
-@-moz-keyframes slide-to-120 {
-    0%   { left: 220%; }
-    100% { left: 120%; }
-}
-@-o-keyframes slide-to-120 {
-    0%   { left: 220%; }
-    100% { left: 120%; }
-}
-@keyframes slide-to-120 {
-    0%   { left: 220%; }
-    100% { left: 120%; }
+.overlay {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }
 
-@-webkit-keyframes slide-to-20 {
-    0%   { left: 120%; }
-    100% { left: 20%; }
-}
-@-moz-keyframes slide-to-20 {
-    0%   { left: 120%; }
-    100% { left: 20%; }
-}
-@-o-keyframes slide-to-20 {
-    0%   { left: 120%; }
-    100% { left: 20%; }
-}
-@keyframes slide-to-20 {
-    0%   { left: 120%; }
-    100% { margin-left: 20%; }
+.overlay .overlay-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
-@-webkit-keyframes slide-to--80 {
-    0%   { left: 20%; }
-    100% { left: -80%; }
+.overlay .overlay-inner > .overlay-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: -5px -5px -5px -5px;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1040;
 }
-@-moz-keyframes slide-to--80 {
-    0%   { left: 20%; }
-    100% { left: -80%; }
+
+.overlay .overlay-inner > .overlay-dismiss {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1051;
+    font-size: 24px;
 }
-@-o-keyframes slide-to--80 {
-    0%   { left: 20%; }
-    100% { left: -80%; }
+
+.overlay .overlay-inner > .overlay-content {
+    width: 100%;
+    box-sizing: border-box;
+    display: table;
+    background: transparent;
+    text-align: center;
+    color: #000000;
+    height: 100%;
+    z-index: 1050;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
 }
-@keyframes slide-to--80 {
-    0%   { left: 20%; }
-    100% { left: -80%; }
+
+.overlay .overlay-inner > .overlay-content > .overlay-body {
+    display: table-cell;
+    vertical-align: middle;
 }
-*/
+
+.overlay-in > .overlay-show {
+    display: block;
+}
+
+.overlay-in > .app,
+.overlay-in > .sidebar {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
