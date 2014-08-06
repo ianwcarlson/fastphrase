@@ -32,8 +32,8 @@
                         <a href="">
                             <img src="images/remove-button-th.png"
                                  class="list-item-delete-icon remove-button-animation"
-                                 width="30px" height="30px" ng-click="removeItem(key)"
-                                 ng-hide="!editMode">
+                                 width="30px" height="30px" href="#overlay" toggle="on"
+                                 ng-hide="!editMode" ng-click="setKeyToDelete(key, item.collectionName)">
                         </a>
                     </div>
                     <div ng-click="nextPage(key, item.collectionName)">
@@ -54,8 +54,20 @@
                             </ons-icon>
                         </div>
                     </div>
+
                 </ons-list-item>
             </ons-list>
         </ons-scroller>
+
     </ons-page>
+    <div overlay="overlay">
+        <h4 class="overlay-title">Confirm Delete</h4>
+        <p>
+            Do you want to delete {{confirmModal.collectionName}}?
+        </p>
+        <p toggle="off" bubble target="overlay">
+            <span ng-click="confirmModalDelete(key)" class="btn btn-primary">Ok</span>
+            <span class="btn btn-default">Cancel</span>
+        </p>
+    </div>
 </ons-navigator>
