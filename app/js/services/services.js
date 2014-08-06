@@ -117,40 +117,56 @@ serviceModule.factory('localStorageWrapper', [
     'appConstants', 'localStorageService',
     function(appConstants, localStorageService){
 
-    function getEnableSimpleOption(optionName){
-        var DEFAULT = true;
-        var value = DEFAULT;
-        if (localStorageService.isSupported) {
-            var storedValue = angular.fromJson(localStorageService.get(optionName));
-            value = angular.isDefined(storedValue) ? storedValue : DEFAULT;
+    function SimpleStorageOption(inputDefault, inputOption){
+        var defaultOption = inputDefault;
+        var optionName = inputOption;
+
+        function getOption(){
+            var value = defaultOption;
+            if (localStorageService.isSupported) {
+                var storedValue = angular.fromJson(localStorageService.get(optionName));
+                if (angular.isDefined(storedValue) && storedValue != null)
+                    value = storedValue;
+                else{
+                    value = defaultOption;
+                }
+            }
+            return value;
         }
-        return value;
+
+        function setOption(newValue){
+            localStorageService.set(optionName, angular.toJson(newValue));
+        }
+        return {
+            getOption: getOption,
+            setOption: setOption
+        }
     }
 
-    function setEnableSimpleOption(optionName, newValue){
-        localStorageService.set(optionName, angular.toJson(newValue));
-    }
+    var timeLimitOption = SimpleStorageOption(30, 'timeLimit');
+    var enableSoundOption = SimpleStorageOption(true, 'enableSound');
+    var playEnableOption = SimpleStorageOption(true, 'playEnable');
 
     function getTimeLimit(){
-        return Number(getEnableSimpleOption('timeLimit'));
+        return Number(timeLimitOption.getOption());
     }
 
     function setTimeLimit(newValue){
-        setEnableSimpleOption('timeLimit', newValue);
+        timeLimitOption.setOption(newValue);
     }
 
     function setEnableSound(newValue){
-        setEnableSimpleOption('enableSound', newValue);
+        enableSoundOption.setOption(newValue);
     }
     function getEnableSound(){
-        return getEnableSimpleOption('enableSound');
+        return enableSoundOption.getOption();
     }
 
     function setPlayEnable(newValue){
-        setEnableSimpleOption('playEnable', newValue);
+        playEnableOption.setOption(newValue);
     }
     function getPlayEnable(){
-        return getEnableSimpleOption('playEnable');
+        return playEnableOption.getOption();
     }
 
     return{
