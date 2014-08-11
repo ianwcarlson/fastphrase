@@ -15,8 +15,8 @@ var myApp =	angular.module('myApp', [
     'ui.router',
     'directivesModule',
     'filtersModule',
-    'optionsCtrlModule',
-    'modalDirectivesModule'
+    'optionsCtrlModule'
+    //'modalDirectivesModule'
     //'mobile-angular-ui'
 ]);
 

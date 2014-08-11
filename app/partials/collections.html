@@ -32,8 +32,9 @@
                         <a href="">
                             <img src="images/remove-button-th.png"
                                  class="list-item-delete-icon remove-button-animation"
-                                 width="30px" height="30px" href="#overlay" toggle="on"
-                                 ng-hide="!editMode" ng-click="setKeyToDelete(key, item.collectionName)">
+                                 width="30px" height="30px"
+                                 ng-hide="!editMode"
+                                 ng-click="setKeyToDelete(key, item.collectionName); modal.hide=false">
                         </a>
                     </div>
                     <div ng-click="nextPage(key, item.collectionName)">
@@ -57,17 +58,20 @@
 
                 </ons-list-item>
             </ons-list>
+            <div ng-cloak class="modal-fixed" ng-class="{modalhide:modal.hide}">
+                <div class="modal-outer">
+                    <div class="modal-inner">
+                        <h4>Confirm Delete</h4>
+                        <p>Sure you want to remove {{confirmModal.collectionName}}?</p>
+                        <p>
+                            <span ng-click="confirmModalDelete(key); resetGame(); modal.hide=true" class="btn btn-primary btn-lg">Ok</span>
+                            <span class="btn btn-default btn-lg" ng-click="modal.hide=true">Cancel</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </ons-scroller>
 
     </ons-page>
-    <div overlay="overlay">
-        <h4 class="overlay-title">Confirm Delete</h4>
-        <p>
-            Sure you want to remove {{confirmModal.collectionName}}?
-        </p>
-        <p toggle="off" bubble target="overlay">
-            <span ng-click="confirmModalDelete(key)" class="btn btn-primary">Ok</span>
-            <span class="btn btn-default">Cancel</span>
-        </p>
-    </div>
+
 </ons-navigator>

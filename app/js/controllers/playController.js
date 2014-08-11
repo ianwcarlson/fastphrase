@@ -9,6 +9,8 @@
         var NUM_TEAMS = 2;
         $scope.collections = [];
         $scope.options = {};
+        $scope.modal = {};
+        $scope.modal.hide = true;
 
         var user = loginService.getUser();
         var wordPlayManagerObj = wordPlayManager();

@@ -10,6 +10,9 @@
         $scope.toggleEditMode = function(){
             $scope.editMode = !$scope.editMode;
         };
+        $scope.modal = {};
+        $scope.modal.hide=true;
+
         var user = loginService.getUser();
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
         var wordSetRef = new Firebase(firebaseUrl);

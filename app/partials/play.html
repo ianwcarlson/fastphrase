@@ -18,8 +18,9 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 right-side-padding">
                     <button class="btn btn-lg btn-warning btn-block start-round-button"
-                        href="#overlay" toggle="on" type="button">
-                        Reset</button>
+                            type="button" ng-click="modal.hide=false">
+                        Reset
+                    </button>
 
                 </div>
             </div>
@@ -118,15 +119,17 @@
 
 
         </div>
-        <div overlay="overlay">
-            <h4 class="overlay-title">Confirm Reset</h4>
-            <p>
-                Do you want to reset the score?
-            </p>
-            <p toggle="off" bubble target="overlay">
-                <span ng-click="resetGame()" class="btn btn-primary">Ok</span>
-                <span class="btn btn-default">Cancel</span>
-            </p>
+        <div ng-cloak class="modal-fixed" ng-class="{modalhide:modal.hide}">
+            <div class="modal-outer">
+                <div class="modal-inner">
+                    <h4>Confirm Reset</h4>
+                    <p>Do you want to reset the score?</p>
+                    <p>
+                        <span ng-click="resetGame(); modal.hide=true" class="btn btn-primary btn-lg">Ok</span>
+                        <span class="btn btn-default btn-lg" ng-click="modal.hide=true">Cancel</span>
+                    </p>
+                </div>
+            </div>
         </div>
     </ons-page>
 </ons-navigator>

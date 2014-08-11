@@ -368,7 +368,7 @@ directivesModule.directive('autoTextSize', [
                     var arrayString = parentClassArray[idx];
                     var foundPos = arrayString.search(searchKey);
                     if (foundPos !== -1){
-                        suffix = arrayString.substr(searchKey.length)
+                        suffix = arrayString.substr(searchKey.length);
                         break;
                     }
                 }
@@ -410,5 +410,4 @@ directivesModule.directive('autoTextSize', [
         }
     };
 }]);
-
 

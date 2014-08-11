@@ -776,3 +776,26 @@
     -ms-filter: blur(5px);
     filter: blur(5px);
 }
+
+.modal-fixed{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 9999;
+}
+.modal-outer{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.modal-inner{
+    position: relative;
+    left: -50%;
+    margin-top: -50%;
+}
+.modalhide{
+    display: none!important;
+}
