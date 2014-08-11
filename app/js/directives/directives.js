@@ -410,4 +410,21 @@ directivesModule.directive('autoTextSize', [
         }
     };
 }]);
+directivesModule.directive("modalHide", [function() {
+    return {
+        restrict: "A",
+        link: function(scope, elem, attrs) {
+
+            scope.$on('modalStateChange', function(event, newState){
+                if (newState){
+                    elem.addClass('modalhide');
+                } else {
+                    elem.removeClass('modalhide');
+                }
+            });
+
+
+        }
+    };
+}]);
 

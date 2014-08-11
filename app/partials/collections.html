@@ -34,7 +34,7 @@
                                  class="list-item-delete-icon remove-button-animation"
                                  width="30px" height="30px"
                                  ng-hide="!editMode"
-                                 ng-click="setKeyToDelete(key, item.collectionName); modal.hide=false">
+                                 ng-click="setKeyToDelete(key, item.collectionName); setHideModal(false)">
                         </a>
                     </div>
                     <div ng-click="nextPage(key, item.collectionName)">
@@ -58,14 +58,14 @@
 
                 </ons-list-item>
             </ons-list>
-            <div ng-cloak class="modal-fixed" ng-class="{modalhide:modal.hide}">
+            <div modal-hide class="modal-fixed modalhide">
                 <div class="modal-outer">
                     <div class="modal-inner">
                         <h4>Confirm Delete</h4>
                         <p>Sure you want to remove {{confirmModal.collectionName}}?</p>
                         <p>
-                            <span ng-click="confirmModalDelete(key); resetGame(); modal.hide=true" class="btn btn-primary btn-lg">Ok</span>
-                            <span class="btn btn-default btn-lg" ng-click="modal.hide=true">Cancel</span>
+                            <span ng-click="confirmModalDelete(key); resetGame(); setHideModal(true)" class="btn btn-primary btn-lg">Ok</span>
+                            <span class="btn btn-default btn-lg" ng-click="setHideModal(true)">Cancel</span>
                         </p>
                     </div>
                 </div>

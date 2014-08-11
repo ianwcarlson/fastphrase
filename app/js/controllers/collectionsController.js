@@ -4,14 +4,18 @@
 
     controllerModule.controller('collectionsController', [
         '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
-        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService){
+        'broadcastStateChange',
+        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService,
+        broadcastStateChange){
 
         $scope.editMode = false;
         $scope.toggleEditMode = function(){
             $scope.editMode = !$scope.editMode;
         };
         $scope.modal = {};
-        $scope.modal.hide=true;
+        $scope.setHideModal = function(newState){
+            broadcastStateChange.modalState(newState);
+        };
 
         var user = loginService.getUser();
         var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;

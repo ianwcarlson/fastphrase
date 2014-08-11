@@ -179,4 +179,13 @@ serviceModule.factory('localStorageWrapper', [
     }
 }]);
 
+serviceModule.factory('broadcastStateChange', ['$rootScope',
+    function($rootScope){
+    return{
+        modalState: function(newState){
+            $rootScope.$broadcast('modalStateChange', newState);
+        }
+    }
+}]);
+
 

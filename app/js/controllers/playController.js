@@ -4,13 +4,16 @@
 
     playControllerModule.controller('playController', [
         '$scope', '$firebase', '$timeout','loginService', '$rootScope', '$q', 'localStorageWrapper',
-        function($scope, $firebase, $timeout, loginService, $rootScope, $q, localStorageWrapper){
+        'broadcastStateChange',
+        function($scope, $firebase, $timeout, loginService, $rootScope, $q, localStorageWrapper,
+        broadcastStateChange){
 
         var NUM_TEAMS = 2;
         $scope.collections = [];
         $scope.options = {};
-        $scope.modal = {};
-        $scope.modal.hide = true;
+        $scope.setHideModal = function(newState){
+            broadcastStateChange.modalState(newState);
+        };
 
         var user = loginService.getUser();
         var wordPlayManagerObj = wordPlayManager();
