@@ -16,8 +16,7 @@ var myApp =	angular.module('myApp', [
     'directivesModule',
     'filtersModule',
     'optionsCtrlModule',
-    'modalDirectivesModule'
-    //'mobile-angular-ui'
+    'mobile-angular-ui'
 ]);
 
 myApp.config(['$stateProvider', '$urlRouterProvider',

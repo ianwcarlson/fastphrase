@@ -40,14 +40,6 @@
             });
             //$rootScope.ons.navigator.pushPage('words.html', {title: collectionName})
         };
-        $scope.setKeyToDelete = function(newKey, newCollectionName){
-            $scope.keyToDelete = newKey;
-            $rootScope.confirmModal= {};
-            $rootScope.confirmModal.collectionName = newCollectionName;
-        };
-        $rootScope.confirmModalDelete = function(){
-            $scope.collections.$remove($scope.keyToDelete);
-        }
     }]);
 
     controllerModule.controller('wordsController', [
