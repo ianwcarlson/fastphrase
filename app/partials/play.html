@@ -115,19 +115,18 @@
                 <button class="btn btn-lg btn-info btn-block"
                     type="button" ng-click="getNextWord()">Next</button>
             </div>
-            <div overlay="overlay">
-                <h4 class="overlay-title">Confirm Reset</h4>
-                <p>
-                    Do you want to reset the score?
-                </p>
-                <p toggle="off" bubble target="overlay">
-                    <span ng-click="resetGame()" class="btn btn-primary">Ok</span>
-                    <span class="btn btn-default">Cancel</span>
-                </p>
-            </div>
 
 
         </div>
-
+        <div overlay="overlay">
+            <h4 class="overlay-title">Confirm Reset</h4>
+            <p>
+                Do you want to reset the score?
+            </p>
+            <p toggle="off" bubble target="overlay">
+                <span ng-click="resetGame()" class="btn btn-primary">Ok</span>
+                <span class="btn btn-default">Cancel</span>
+            </p>
+        </div>
     </ons-page>
 </ons-navigator>

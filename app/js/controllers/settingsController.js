@@ -1,8 +1,7 @@
 
 
 angular.module('optionsCtrlModule', [])
-    .controller('optionsCtrl', ['$scope','localStorageService', 'appConstants',
-        'localStorageWrapper', '$timeout',
+    .controller('optionsCtrl', ['$scope','localStorageService', 'appConstants', 'localStorageWrapper',
         function($scope, localStorageService, appConstants, localStorageWrapper) {
             'use strict';
 
