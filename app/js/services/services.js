@@ -146,6 +146,7 @@ serviceModule.factory('localStorageWrapper', [
     var timeLimitOption = SimpleStorageOption(30, 'timeLimit');
     var enableSoundOption = SimpleStorageOption(true, 'enableSound');
     var playEnableOption = SimpleStorageOption(true, 'playEnable');
+    var readOnlyOption = SimpleStorageOption(false, 'readOnly');
 
     function getTimeLimit(){
         return Number(timeLimitOption.getOption());
@@ -169,6 +170,13 @@ serviceModule.factory('localStorageWrapper', [
         return playEnableOption.getOption();
     }
 
+    function setReadOnly(newValue){
+        readOnlyOption.setOption(newValue);
+    }
+    function getReadOnly(){
+        return readOnlyOption.getOption();
+    }
+
     return{
         setTimeLimit: setTimeLimit,
         getTimeLimit: getTimeLimit,
@@ -176,6 +184,8 @@ serviceModule.factory('localStorageWrapper', [
         getEnableSound: getEnableSound,
         setPlayEnable: setPlayEnable,
         getPlayEnable: getPlayEnable,
+        setReadOnly: setReadOnly,
+        getReadOnly: getReadOnly
     }
 }]);
 

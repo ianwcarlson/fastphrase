@@ -2,7 +2,9 @@
 
 angular.module('optionsCtrlModule', [])
     .controller('optionsCtrl', ['$scope','localStorageService', 'appConstants', 'localStorageWrapper',
-        function($scope, localStorageService, appConstants, localStorageWrapper) {
+        '$q',
+        function($scope, localStorageService, appConstants, localStorageWrapper,
+        $q) {
             'use strict';
 
             $scope.options = {};
@@ -10,8 +12,40 @@ angular.module('optionsCtrlModule', [])
                 //timeLimitSelect: {}
             };
 
+            $scope.verifyLogin = function(provider){
+                var deferred = $q.defer();
+                var firebaseUrl = appConstants.firebaseMainUrl;
+                var chatRef = new Firebase(firebaseUrl);
+                var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
+                    if (error) {
+                        deferred.reject();
+                        // an error occurred while attempting login
+                        //errorMsg = authError(error);
+
+                    } else if (user) {
+                        deferred.resolve();
+                        // user authenticated with Firebase
+                        //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
+
+                    } else {
+                        // user is logged out
+                    }
+                });
+                auth.login(provider,{
+                    email: $scope.login.username,
+                    password: $scope.login.password
+                });
+                deferred.promise.then(function(){
+                    localStorageWrapper.setReadOnly($scope.options.readOnly);
+                }, function(){
+                    alert('login failed');
+                    // TODO make this more helpful
+                });
+            };
+
             $scope.options.enableSound = localStorageWrapper.getEnableSound();
             $scope.options.playStudy = localStorageWrapper.getPlayEnable();
+            $scope.options.readOnly = localStorageWrapper.getReadOnly();
 
             $scope.timeLimitOptions = [
                 {name: '15 seconds',    value: 15},
@@ -34,8 +68,6 @@ angular.module('optionsCtrlModule', [])
                         $scope.input.timeLimitSelect = $scope.timeLimitOptions[idx];
                     }
                 }
-
-
             };
             $scope.updateTimeLimitValue();
 

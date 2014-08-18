@@ -46,6 +46,12 @@
                             ng-change="updateOptions()" class="pull-right switch-toggle">
                     </switch>
                 </ons-list-item>
+                <ons-list-item>
+                    <i class="options-label">Read Only</i>
+                    <switch ng-model="options.enableReadOnly" label=""
+                            ng-click="modifyReadOnly()" class="pull-right switch-toggle">
+                    </switch>
+                </ons-list-item>
             </ons-list>
         </ons-scroller>
     </ons-page>
