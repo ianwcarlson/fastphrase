@@ -794,7 +794,7 @@
 .modal-inner{
     position: relative;
     left: -50%;
-    margin-top: -50%;
+    top: -50%;
 }
 .modalhide{
     display: none!important;

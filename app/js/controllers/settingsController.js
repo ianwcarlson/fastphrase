@@ -2,17 +2,21 @@
 
 angular.module('optionsCtrlModule', [])
     .controller('optionsCtrl', ['$scope','localStorageService', 'appConstants', 'localStorageWrapper',
-        '$q',
+        '$q', 'broadcastStateChange',
         function($scope, localStorageService, appConstants, localStorageWrapper,
-        $q) {
+        $q, broadcastStateChange) {
             'use strict';
 
             $scope.options = {};
             $scope.input = {
                 //timeLimitSelect: {}
             };
+            $scope.showLoginOverlay = false;
+            $scope.$on('modalStateChange', function(){
+                $scope.showLoginOverlay = true;
+            })
 
-            $scope.verifyLogin = function(provider){
+            $scope.login = function(provider){
                 var deferred = $q.defer();
                 var firebaseUrl = appConstants.firebaseMainUrl;
                 var chatRef = new Firebase(firebaseUrl);
@@ -41,6 +45,10 @@ angular.module('optionsCtrlModule', [])
                     alert('login failed');
                     // TODO make this more helpful
                 });
+            };
+
+            $scope.showLogin = function(){
+                broadcastStateChange.modalState();
             };
 
             $scope.options.enableSound = localStorageWrapper.getEnableSound();

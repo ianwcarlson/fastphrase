@@ -422,9 +422,33 @@ directivesModule.directive("modalHide", [function() {
                     elem.removeClass('modalhide');
                 }
             });
-
+        }
+    };
+}]);
+directivesModule.directive("loginSnippet", [function() {
+    return {
+        restrict: "E",
+        scope: false,
+        templateUrl: 'partials/loginSnippet.html'
+    };
+}]);
+directivesModule.directive("loginChildHeight", [function() {
+    return {
+        restrict: "A",
+        link: function(scope, element) {
+            window.addEventListener('resize', setHeight);
+            scope.$watch('showLoginOverlay', setHeight);
+            function setHeight(){
+                //var childHeight = element.children()[0].offsetHeight;
+                var child = document.getElementsByClassName('modal-inner');
+                var elemHeight = child[0].clientHeight;
+                var elemHeightString = elemHeight.toString() + 'px';
+                element[0].style.height = elemHeightString;
+            }
+            setHeight();
 
         }
     };
 }]);
+
 

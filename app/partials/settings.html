@@ -49,10 +49,23 @@
                 <ons-list-item>
                     <i class="options-label">Read Only</i>
                     <switch ng-model="options.enableReadOnly" label=""
-                            ng-click="modifyReadOnly()" class="pull-right switch-toggle">
+                            ng-click="showLogin()" class="pull-right switch-toggle">
                     </switch>
                 </ons-list-item>
             </ons-list>
         </ons-scroller>
+        <div modal-hide class="modal-fixed modalhide">
+            <div login-child-height class="omb_login modal-outer">
+                <div class="modal-inner">
+
+                    <h4>Confirm Read Only</h4>
+                    <p>Please re-authenticate to change read-only access</p>
+
+                    <login-snippet></login-snippet>
+                </div>
+
+            </div>
+
+        </div>
     </ons-page>
 </ons-navigator>
