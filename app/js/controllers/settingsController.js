@@ -18,6 +18,7 @@ angular.module('optionsCtrlModule', [])
             });
 
             $scope.login = function(provider){
+                var loginProvider = provider;
                 var deferred = $q.defer();
                 var firebaseUrl = appConstants.firebaseMainUrl;
                 var chatRef = new Firebase(firebaseUrl);
@@ -28,7 +29,7 @@ angular.module('optionsCtrlModule', [])
                         //errorMsg = authError(error);
 
 
-                    } else if (user) {
+                    } else if (user && user.provider===loginProvider) {
                         deferred.resolve();
                         // user authenticated with Firebase
                         //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
@@ -42,7 +43,8 @@ angular.module('optionsCtrlModule', [])
                     password: $scope.login.password
                 });
                 deferred.promise.then(function(){
-                    localStorageWrapper.setReadOnly($scope.options.readOnly);
+                    $scope.options.enableReadOnly = !$scope.options.enableReadOnly;
+                    localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
                     broadcastStateChange.modalState(true);
                 }, function(){
                     alert('login failed');
