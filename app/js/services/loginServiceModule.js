@@ -3,6 +3,7 @@ var loginServiceModule = angular.module('loginServiceModule', []);
 loginServiceModule.factory('loginService', ['appConstants', 'localStorageService',
     function(appConstants, localStorageService){
 
+    var globalLoginActive = true;
     var validTokenExpireTimeSecs = 3600;
     var loginActive = false;
     var userID = null;
@@ -12,12 +13,13 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
     var firebaseUrl = appConstants.firebaseMainUrl;
     var chatRef = new Firebase(firebaseUrl);
     var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
-        if (error) {
+
+        if (error && globalLoginActive) {
             loginActive = false;
             // an error occurred while attempting login
             errorMsg = authError(error);
             callEachCallback(callbackArray);
-        } else if (user) {
+        } else if (user && globalLoginActive) {
             userID = user;
             loginActive = true;
             setUserInfoToLocalStorage(user);
@@ -30,6 +32,7 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
             callEachCallback(callbackArray);
             // user is logged out
         }
+
     });
 
     function callEachCallback(callbackArray){
@@ -142,6 +145,9 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         },
         getUser: function(){
             return userID;
+        },
+        setGlobalLoginActive: function(newValue){
+            globalLoginActive = newValue;
         },
         generatePassword: generatePassword,
         getAuthError: authError,

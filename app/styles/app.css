@@ -799,3 +799,6 @@
 .modalhide{
     display: none!important;
 }
+.initial-overlay{
+    height: 233px;
+}

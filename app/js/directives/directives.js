@@ -439,10 +439,8 @@ directivesModule.directive("loginChildHeight", [function() {
             window.addEventListener('resize', setHeight);
             scope.$watch('showLoginOverlay', setHeight);
             function setHeight(){
-                //var childHeight = element.children()[0].offsetHeight;
                 var child = document.getElementsByClassName('modal-inner');
-                var elemHeight = child[0].clientHeight;
-                var elemHeightString = elemHeight.toString() + 'px';
+                var elemHeightString = child[0].clientHeight.toString() + 'px';
                 element[0].style.height = elemHeightString;
             }
             setHeight();

@@ -100,6 +100,12 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
                             $rootScope.ons.slidingMenu.setAbovePage(toState.templateUrl);
                         }
                 }
+                if (fromState.name==='user.settings'){
+                    loginService.setGlobalLoginActive(true);
+                }
+                else if (toState.name==='user.settings'){
+                    loginService.setGlobalLoginActive(false);
+                }
             //}
             //else{
                 // this is a work-around for browser refresh on view page stack

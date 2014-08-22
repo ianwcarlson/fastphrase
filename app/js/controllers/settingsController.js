@@ -2,29 +2,31 @@
 
 angular.module('optionsCtrlModule', [])
     .controller('optionsCtrl', ['$scope','localStorageService', 'appConstants', 'localStorageWrapper',
-        '$q', 'broadcastStateChange',
+        '$q', 'broadcastStateChange', 'loginService', '$timeout',
         function($scope, localStorageService, appConstants, localStorageWrapper,
-        $q, broadcastStateChange) {
+        $q, broadcastStateChange, loginService, $timeout) {
             'use strict';
 
             $scope.options = {};
-            $scope.input = {
-                //timeLimitSelect: {}
-            };
+            $scope.input = {};
+            // the loginChildHeight directive listens to this
+            // because height property doesn't update until element
+            // is actually visible
             $scope.showLoginOverlay = false;
             $scope.$on('modalStateChange', function(){
                 $scope.showLoginOverlay = true;
-            })
+            });
 
             $scope.login = function(provider){
                 var deferred = $q.defer();
                 var firebaseUrl = appConstants.firebaseMainUrl;
                 var chatRef = new Firebase(firebaseUrl);
-                var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
+                var auth = FirebaseSimpleLogin(chatRef, function(error, user) {
                     if (error) {
                         deferred.reject();
                         // an error occurred while attempting login
                         //errorMsg = authError(error);
+
 
                     } else if (user) {
                         deferred.resolve();
@@ -41,6 +43,7 @@ angular.module('optionsCtrlModule', [])
                 });
                 deferred.promise.then(function(){
                     localStorageWrapper.setReadOnly($scope.options.readOnly);
+                    broadcastStateChange.modalState(true);
                 }, function(){
                     alert('login failed');
                     // TODO make this more helpful
@@ -48,7 +51,7 @@ angular.module('optionsCtrlModule', [])
             };
 
             $scope.showLogin = function(){
-                broadcastStateChange.modalState();
+                broadcastStateChange.modalState(false);
             };
 
             $scope.options.enableSound = localStorageWrapper.getEnableSound();
