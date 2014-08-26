@@ -27,7 +27,7 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
             // user authenticated with Firebase
             //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
 
-        } else {
+        } else if (globalLoginActive){
             loginActive = false;
             callEachCallback(callbackArray);
             // user is logged out

@@ -47,6 +47,7 @@ angular.module('optionsCtrlModule', [])
                     localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
                     broadcastStateChange.modalState(true);
                 }, function(){
+                    broadcastStateChange.modalState(true);
                     alert('login failed');
                     // TODO make this more helpful
                 });
