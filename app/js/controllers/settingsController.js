@@ -41,7 +41,7 @@ angular.module('optionsCtrlModule', [])
 
             $scope.options.enableSound = localStorageWrapper.getEnableSound();
             $scope.options.playStudy = localStorageWrapper.getPlayEnable();
-            $scope.options.readOnly = localStorageWrapper.getReadOnly();
+            $scope.options.enableReadOnly = localStorageWrapper.getReadOnly();
 
             $scope.timeLimitOptions = [
                 {name: '15 seconds',    value: 15},

@@ -4,13 +4,16 @@
 
     controllerModule.controller('collectionsController', [
         '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
-        'broadcastStateChange',
+        'broadcastStateChange', 'localStorageWrapper',
         function($scope, $rootScope, wordSetManager, $firebase, $state, loginService,
-        broadcastStateChange){
+        broadcastStateChange, localStorageWrapper){
 
         $scope.editMode = false;
+        $scope.readOnly = localStorageWrapper.getReadOnly();
         $scope.toggleEditMode = function(){
-            $scope.editMode = !$scope.editMode;
+            if (!localStorageWrapper.getReadOnly()) {
+                $scope.editMode = !$scope.editMode;
+            }
         };
         $scope.modal = {};
         $scope.setHideModal = function(newState){
@@ -61,11 +64,16 @@
 
     controllerModule.controller('wordsController', [
         '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
-        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService){
+        'localStorageWrapper',
+        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService,
+        localStorageWrapper){
 
             $scope.editMode = false;
+            $scope.readOnly = localStorageWrapper.getReadOnly();
             $scope.toggleEditMode = function(){
-                $scope.editMode = !$scope.editMode;
+                if (!$scope.readOnly) {
+                    $scope.editMode = !$scope.editMode;
+                }
             };
             $scope.showDef = false;
             var activeCollectionKey = wordSetManager.getActiveCollection();
@@ -108,14 +116,16 @@
                 $scope.wordCount -= 1;
             };
             $scope.addItem = function(){
-                var newObject = {};
-                newObject.word = $scope.inputText;
-                //wordSetManager.addWord($scope.inputText, $scope.words.length+1);
-                //var wordObj = wordSetManager.getWordByName($scope.inputText);
-                //$scope.words.push(wordObj);
-                $scope.words.$add(newObject);
-                $scope.inputText = '';
-                $scope.wordCount += 1;
+                if (!localStorageWrapper.getReadOnly()) {
+                    var newObject = {};
+                    newObject.word = $scope.inputText;
+                    //wordSetManager.addWord($scope.inputText, $scope.words.length+1);
+                    //var wordObj = wordSetManager.getWordByName($scope.inputText);
+                    //$scope.words.push(wordObj);
+                    $scope.words.$add(newObject);
+                    $scope.inputText = '';
+                    $scope.wordCount += 1;
+                }
             };
             $scope.addItemKeyPress = function(ev){
                 if (ev.which==13){
@@ -134,8 +144,10 @@
         }]);
 
     controllerModule.controller('definitionController', [
-        '$scope', 'wordSetManager', '$firebase','loginService',
-        function($scope, wordSetManager, $firebase, loginService){
+        '$scope', 'wordSetManager', '$firebase','loginService', 'localStorageWrapper',
+        function($scope, wordSetManager, $firebase, loginService, localStorageWrapper){
+
+            $scope.readOnly = localStorageWrapper.getReadOnly();
 
             var activeWordKey = wordSetManager.getActiveWord();
             var activeCollectionKey = wordSetManager.getActiveCollection();

@@ -7,11 +7,13 @@
                 <input type="text" class="form-control  form-control-local"
                        ng-keypress="addItemKeyPress($event)"
                        ng-model="$parent.inputText"
-                       placeholder="Type words or phrases here">
+                       placeholder="Type words or phrases here"
+                       ng-disabled="readOnly">
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-primary-local"
                             type="button"
-                            ng-click="addItem()">
+                            ng-click="addItem()"
+                            ng-disabled="readOnly">
                             <p class="input-plus-text">+</p>
                         </button>
                     </span>
