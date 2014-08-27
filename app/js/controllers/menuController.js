@@ -5,17 +5,18 @@
     menuControllerModule.controller('menuController', [
         '$scope', 'loginService', function($scope, loginService){
 
-        $scope.loginActive = false;
+        $scope.loginActive = loginService.getLoginActive();
         var updateLoginStatus = function(){
             $scope.loginActive = loginService.getLoginActive();
-            $scope.$apply();
+            //$scope.$apply();
         };
         loginService.setLoginCallback(updateLoginStatus);
         updateLoginStatus();
 
-        var auth = loginService.getLoginAuthorization();
+        //var auth = loginService.getLoginAuthorization();
         $scope.logout = function(){
-            auth.logout();
+            loginService.logout();
+            loginService.setLoginActive(false);
         }
 
     }]);

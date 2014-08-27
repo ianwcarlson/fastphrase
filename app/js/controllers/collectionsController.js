@@ -22,6 +22,8 @@
         var wordSetRef = new Firebase(firebaseUrl);
 
         $scope.collections = $firebase(wordSetRef);
+        //var sync = $firebase(wordSetRef);
+        //$scope.collections = sync.$asObject();
 
         $scope.removeItem = function(id){
             $scope.collections.$remove(id);

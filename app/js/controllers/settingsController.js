@@ -18,34 +18,15 @@ angular.module('optionsCtrlModule', [])
             });
 
             $scope.login = function(provider){
-                var loginProvider = provider;
-                var deferred = $q.defer();
-                var firebaseUrl = appConstants.firebaseMainUrl;
-                var chatRef = new Firebase(firebaseUrl);
-                var auth = FirebaseSimpleLogin(chatRef, function(error, user) {
-                    if (error) {
-                        deferred.reject();
-                        // an error occurred while attempting login
-                        //errorMsg = authError(error);
-
-
-                    } else if (user && user.provider===loginProvider) {
-                        deferred.resolve();
-                        // user authenticated with Firebase
-                        //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
-
-                    } else {
-                        // user is logged out
-                    }
-                });
-                auth.login(provider,{
+                var loginPromise = loginService.login(provider,{
                     email: $scope.login.username,
                     password: $scope.login.password
                 });
-                deferred.promise.then(function(){
+                loginPromise.then(function(){
                     $scope.options.enableReadOnly = !$scope.options.enableReadOnly;
                     localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
                     broadcastStateChange.modalState(true);
+
                 }, function(){
                     broadcastStateChange.modalState(true);
                     alert('login failed');
@@ -55,6 +36,7 @@ angular.module('optionsCtrlModule', [])
 
             $scope.showLogin = function(){
                 broadcastStateChange.modalState(false);
+                loginService.logout();
             };
 
             $scope.options.enableSound = localStorageWrapper.getEnableSound();

@@ -78,7 +78,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache', 'loginService',
     function($rootScope, $timeout, $state, $stateParams, $templateCache, loginService) {
 
-    var auth = loginService.getLoginAuthorization();
+    //var auth = loginService.getLoginAuthorization();
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 

@@ -1,7 +1,7 @@
 var loginServiceModule = angular.module('loginServiceModule', []);
 
-loginServiceModule.factory('loginService', ['appConstants', 'localStorageService',
-    function(appConstants, localStorageService){
+loginServiceModule.factory('loginService', ['appConstants', 'localStorageService', '$q',
+    function(appConstants, localStorageService, $q){
 
     var globalLoginActive = true;
     var validTokenExpireTimeSecs = 3600;
@@ -10,30 +10,45 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
     var tokenCreationTime = 0;
     var callbackArray = [];
     var errorMsg = '';
-    var firebaseUrl = appConstants.firebaseMainUrl;
-    var chatRef = new Firebase(firebaseUrl);
-    var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
+    var user = null;
 
-        if (error && globalLoginActive) {
-            loginActive = false;
-            // an error occurred while attempting login
-            errorMsg = authError(error);
-            callEachCallback(callbackArray);
-        } else if (user && globalLoginActive) {
-            userID = user;
-            loginActive = true;
-            setUserInfoToLocalStorage(user);
-            callEachCallback(callbackArray);
-            // user authenticated with Firebase
-            //alert('User ID: ' + user.uid + ', Provider: ' + user.provider);
+    var login = function(provider, loginInfo){
+        var deferred = $q.defer();
+        var loginEmail = loginInfo.email || 'default';
+        var loginPassword = loginInfo.password || 'default';
+        var firebaseUrl = appConstants.firebaseMainUrl;
+        var chatRef = new Firebase(firebaseUrl);
+        var auth = FirebaseSimpleLogin(chatRef, function(error, user) {
+            if (error) {
+                errorMsg = authError(error);
+                deferred.reject();
+            } else if (user) {
+                deferred.resolve(user);
+            } else {
+                // user is logged out
+            }
+        });
 
-        } else if (globalLoginActive){
-            loginActive = false;
-            callEachCallback(callbackArray);
-            // user is logged out
+        var options = {};
+        if (provider==='password'){
+            options = {
+                email: loginEmail,
+                password: loginPassword
+            }
+        } else {
+            options = {
+                rememberMe: false,
+                preferRedirect: false
+            }
         }
-
-    });
+        auth.login(provider,options);
+        return deferred.promise;
+    };
+    var logout = function(){
+        var chatRef = new Firebase(appConstants.firebaseMainUrl);
+        var auth = FirebaseSimpleLogin(chatRef, function(error, user) {});
+        auth.logout();
+    };
 
     function callEachCallback(callbackArray){
         callbackArray.forEach(function(callback){
@@ -137,15 +152,24 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         setLoginCallback: function(callback){
             callbackArray.push(callback);
         },
+        setLoginActive: function(newLoginStatus){
+            loginActive = newLoginStatus;
+            callEachCallback(callbackArray);
+        },
         getLoginActive: function(){
             return loginActive;
         },
-        getLoginAuthorization: function(){
-            return auth;
+        //getLoginAuthorization: function(){
+        //    return auth;
+        //},
+        setUser: function(newUser){
+            user = newUser;
         },
         getUser: function(){
             return userID;
         },
+        login: login,
+        logout: logout,
         setGlobalLoginActive: function(newValue){
             globalLoginActive = newValue;
         },

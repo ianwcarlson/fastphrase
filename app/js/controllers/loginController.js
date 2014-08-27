@@ -6,31 +6,27 @@
         '$scope', 'loginService', '$state',
         function($scope, loginService, $state){
 
-        var auth = loginService.getLoginAuthorization();
         $scope.login = {};
 
-        // this will get call whenever login state changes
-        var updateLoginStatus = function(){
-            if (loginService.getLoginActive()){
+        $scope.login = function(provider){
+            var loginPromise = loginService.login(provider,{
+                email: $scope.login.username,
+                password: $scope.login.password
+            });
+            loginPromise.then(function(user){
                 $state.go('user.collections', {
                     action: '',
                     title: '',
                     rightButtonIcon: 'fa fa-lg fa-pencil'
                 });
-            }
-            else{
+                loginService.setUser(user);
+                loginService.setLoginActive(true);
+                loginService.setUserInfoToLocalStorage(user);
+                loginService.logoff();
+            }, function(){
                 $scope.login.loginError = loginService.getErrorMessage();
-                $scope.$apply();
-            }
-        };
-        loginService.setLoginCallback(updateLoginStatus);
-        // run the first time to see if token already valid
-        //updateLoginStatus();
-
-        $scope.login = function(provider){
-            auth.login(provider,{
-                email: $scope.login.username,
-                password: $scope.login.password
+                //$scope.$apply();
+                alert('login failed');
             })
         };
 
