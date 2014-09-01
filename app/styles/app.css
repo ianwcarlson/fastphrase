@@ -261,7 +261,7 @@
 }
 .play-word-main-text{
     position: relative;
-    z-index: 9999;
+    z-index: 3;
 }
 .row-margin{
     margin-top: -10px;

@@ -11,8 +11,10 @@
         var NUM_TEAMS = 2;
         $scope.collections = [];
         $scope.options = {};
+        $scope.modalState = true;
         $scope.setHideModal = function(newState){
             broadcastStateChange.modalState(newState);
+            $scope.modalState = newState;
         };
 
         var user = loginService.getUser();
