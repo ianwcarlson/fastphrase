@@ -117,9 +117,13 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
 
 
             //}
-            //$timeout(function () {
-            //    $rootScope.$broadcast('updatePage');
-            //}, 0);
+            // Since onsen doesn't rerun each controller when pages are
+            // pushed and popped, need to fire event to rerun controller
+            // initialization functions; specifically, the edit icon needs
+            // to be re-binded to delete elements
+            $timeout(function () {
+                $rootScope.$broadcast('updatePage');
+            }, 0);
 
 
             $rootScope.state = $state.current;
