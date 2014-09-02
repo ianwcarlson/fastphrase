@@ -23,10 +23,13 @@ angular.module('optionsCtrlModule', [])
                     password: $scope.login.password
                 });
                 loginPromise.then(function(){
+                    // need to added extra condition because outer function being fired
+                    // twice on enter press. unsure why.
                     if ($scope.showLoginOverlay) {
                         $scope.options.enableReadOnly = !$scope.options.enableReadOnly;
                         localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
                         broadcastStateChange.modalState(true);
+                        $scope.login.password = '';
                     }
                 }, function(){
                     broadcastStateChange.modalState(true);
