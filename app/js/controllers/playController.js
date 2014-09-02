@@ -343,7 +343,9 @@
                     $timeout(secondTick, 250);
                 }
                 else if(!timerCancelled){
-                    buzzer.play();
+                    if (soundEnabled) {
+                        buzzer.play();
+                    }
                     isPlayActive = false;
                     timerEndCallback();
 

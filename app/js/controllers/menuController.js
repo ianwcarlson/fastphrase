@@ -5,13 +5,13 @@
     menuControllerModule.controller('menuController', [
         '$scope', 'loginService', function($scope, loginService){
 
-        $scope.loginActive = loginService.getLoginActive();
+        $scope.loginActive = loginService.verifyUserFromLocalStorage();
         var updateLoginStatus = function(){
             $scope.loginActive = loginService.getLoginActive();
             //$scope.$apply();
         };
         loginService.setLoginCallback(updateLoginStatus);
-        updateLoginStatus();
+        //updateLoginStatus();
 
         //var auth = loginService.getLoginAuthorization();
         $scope.logout = function(){

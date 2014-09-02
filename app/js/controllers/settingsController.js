@@ -14,7 +14,7 @@ angular.module('optionsCtrlModule', [])
             // is actually visible
             $scope.showLoginOverlay = false;
             $scope.$on('modalStateChange', function(){
-                $scope.showLoginOverlay = true;
+                $scope.showLoginOverlay = !$scope.showLoginOverlay;
             });
 
             $scope.login = function(provider){
@@ -23,10 +23,11 @@ angular.module('optionsCtrlModule', [])
                     password: $scope.login.password
                 });
                 loginPromise.then(function(){
-                    $scope.options.enableReadOnly = !$scope.options.enableReadOnly;
-                    localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
-                    broadcastStateChange.modalState(true);
-
+                    if ($scope.showLoginOverlay) {
+                        $scope.options.enableReadOnly = !$scope.options.enableReadOnly;
+                        localStorageWrapper.setReadOnly($scope.options.enableReadOnly);
+                        broadcastStateChange.modalState(true);
+                    }
                 }, function(){
                     broadcastStateChange.modalState(true);
                     alert('login failed');
@@ -37,6 +38,12 @@ angular.module('optionsCtrlModule', [])
             $scope.showLogin = function(){
                 broadcastStateChange.modalState(false);
                 loginService.logout();
+            };
+
+            $scope.keyPressed = function(ev){
+                if (ev.which==13 && $scope.showLoginOverlay){
+                    $scope.login('password');
+                }
             };
 
             $scope.options.enableSound = localStorageWrapper.getEnableSound();
