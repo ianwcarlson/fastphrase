@@ -39,10 +39,12 @@
     }]);
 
     loginControllerModule.controller('signupController', [
-        '$scope', 'loginService', '$state', '$timeout',
-        function($scope, loginService, $state, $timeout){
+        '$scope', 'loginService', '$state', '$timeout', 'appConstants',
+        function($scope, loginService, $state, $timeout, appConstants){
 
-            var auth = loginService.getLoginAuthorization();
+            var firebaseUrl = appConstants.firebaseMainUrl;
+            var chatRef = new Firebase(firebaseUrl);
+            var auth = FirebaseSimpleLogin(chatRef, function(error, user) {});
             $scope.showFirst = true;
 
             $scope.submitEmail = function(){
@@ -85,10 +87,12 @@
     ]);
 
     loginControllerModule.controller('passwordResetController', [
-        '$scope', 'loginService', '$state', '$timeout',
-        function($scope, loginService, $state, $timeout){
+        '$scope', 'loginService', '$state', '$timeout', 'appConstants',
+        function($scope, loginService, $state, $timeout, appConstants){
 
-            var auth = loginService.getLoginAuthorization();
+            var firebaseUrl = appConstants.firebaseMainUrl;
+            var chatRef = new Firebase(firebaseUrl);
+            var auth = FirebaseSimpleLogin(chatRef, function(error, user) {});
             $scope.showFirst = true;
 
             $scope.submitEmail = function(){
