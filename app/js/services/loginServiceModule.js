@@ -38,7 +38,7 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         } else {
             options = {
                 //rememberMe: true,
-                preferRedirect: true
+                preferRedirect: false
             };
         }
         var providerString = 'provider ' + provider;

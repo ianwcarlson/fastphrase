@@ -8,20 +8,52 @@
 
         $scope.login = {};
 
+        function transitionState(user){
+            loginService.setUser(user);
+            loginService.setLoginActive(true);
+            loginService.setUserInfoToLocalStorage(user);
+            $state.go('user.collections', {
+                action: '',
+                title: '',
+                rightButtonIcon: 'fa fa-lg fa-pencil'
+            });
+        }
+
         var firebaseUrl = appConstants.firebaseMainUrl;
         var chatRef = new Firebase(firebaseUrl);
         var auth = FirebaseSimpleLogin(chatRef, function(error, user) {
             if (error) {
                 alert('user denied');
             } else if (user) {
-                alert('user confirmed');
-                auth.logout();
+                //alert('user confirmed');
+                if ($state.current.name === 'anon.login') {
+                    transitionState(user);
+                    auth.logout();
+                }
+
             } else {
-                alert('user logged out');
+                //alert('user logged out');
             }
         });
 
+
         $scope.login = function(provider){
+            var options = {};
+            if (provider==='password') {
+                options = {
+                    email: $scope.login.username,
+                    password: $scope.login.password
+                };
+            } else {
+                options = {
+                    //rememberMe: true,
+                    preferRedirect: true
+                };
+            }
+
+            auth.login(provider,options);
+
+            /*
             var loginPromise = loginService.login(provider,{
                 email: $scope.login.username,
                 password: $scope.login.password
@@ -43,6 +75,7 @@
                 //$scope.$apply();
                 //alert('login failed');
             })
+            */
         };
 
         $scope.keyPressed = function(ev){

@@ -39,7 +39,8 @@
         });
 
         var playTimer = new TimerClass();
-        var turnManagerObj = turnManager();
+        //var turnManagerObj = turnManager();
+        var turnManagerObj = {};
         var scoreManagerObj = scoreManager();
 
         $scope.options.playEnable = localStorageWrapper.getPlayEnable();
@@ -74,6 +75,7 @@
 
 
         $scope.startNewRound = function(){
+            turnManagerObj = turnManager();
             playTimer.startTimer();
             incrementScore();
             wordPlayManagerObj.getNextWord();
@@ -304,13 +306,16 @@
         function TimerClass(){
             var MAX_PRE_COUNT = 4;
             var time = 0;
-            var maxTimeSecs = 5;
             var preCount = MAX_PRE_COUNT;
             var soundEnabled = localStorageWrapper.getEnableSound();
             var timerCancelled = false;
             var timerEndCallback = function(){};
-            var beep = new Howl({urls: ['media/audio/beep-08b.mp3']});
-            var buzzer = new Howl({urls: ['media/audio/008664315-buzzer.mp3']});
+            var beep = new Howl({
+                urls: ['media/audio/beep-08b.mp3']
+            });
+            var buzzer = new Howl({
+                urls: ['media/audio/008664315-buzzer.mp3']
+            });
             var isPlayActive = false;
             var secondTick = function(){
                 if (time > 0 && !timerCancelled){
