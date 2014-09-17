@@ -30,17 +30,19 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         });
 
         var options = {};
-        if (provider==='password'){
+        if (provider==='password') {
             options = {
                 email: loginEmail,
                 password: loginPassword
-            }
+            };
         } else {
             options = {
-                rememberMe: false,
-                preferRedirect: false
-            }
+                //rememberMe: true,
+                preferRedirect: true
+            };
         }
+        var providerString = 'provider ' + provider;
+        //alert(providerString);
         auth.login(provider,options);
         return deferred.promise;
     };
@@ -107,7 +109,8 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
                     nonUserError = true;
                     break;
                 default:
-                    alert('Authentication Error: ', error);
+                    errorMsg = 'Authentication Error: ' + error.code;
+                    alert(errorMsg);
                     nonUserError = true;
                     break;
             }

@@ -84,6 +84,7 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
 
         if (loginService.verifyUserFromLocalStorage() ||
             toState.data.access === 'anon') {
+            //alert('sent to router');
             // user and session valid
             //if ($rootScope.ons.navigator) {
                 switch (toParams.action) {
@@ -133,6 +134,7 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
             // redirect to login page
             //var auth = loginService.getLoginAuthorization();
             //auth.logout();
+            //alert('redirect to login');
             $state.go('anon.login');
             if ($rootScope.ons.slidingMenu) {
                 $rootScope.ons.slidingMenu.setAbovePage('partials/login.html');

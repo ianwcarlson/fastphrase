@@ -3,10 +3,23 @@
 	var loginControllerModule = angular.module('loginControllerModule', []);
 
     loginControllerModule.controller('loginController', [
-        '$scope', 'loginService', '$state',
-        function($scope, loginService, $state){
+        '$scope', 'loginService', '$state', 'appConstants',
+        function($scope, loginService, $state, appConstants){
 
         $scope.login = {};
+
+        var firebaseUrl = appConstants.firebaseMainUrl;
+        var chatRef = new Firebase(firebaseUrl);
+        var auth = FirebaseSimpleLogin(chatRef, function(error, user) {
+            if (error) {
+                alert('user denied');
+            } else if (user) {
+                alert('user confirmed');
+                auth.logout();
+            } else {
+                alert('user logged out');
+            }
+        });
 
         $scope.login = function(provider){
             var loginPromise = loginService.login(provider,{
@@ -14,19 +27,21 @@
                 password: $scope.login.password
             });
             loginPromise.then(function(user){
+                loginService.setUser(user);
+                loginService.setLoginActive(true);
+                loginService.setUserInfoToLocalStorage(user);
                 $state.go('user.collections', {
                     action: '',
                     title: '',
                     rightButtonIcon: 'fa fa-lg fa-pencil'
                 });
-                loginService.setUser(user);
-                loginService.setLoginActive(true);
-                loginService.setUserInfoToLocalStorage(user);
+
                 loginService.logoff();
+                //alert('callback called');
             }, function(){
                 $scope.login.loginError = loginService.getErrorMessage();
                 //$scope.$apply();
-                alert('login failed');
+                //alert('login failed');
             })
         };
 
