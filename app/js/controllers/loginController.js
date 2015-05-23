@@ -25,17 +25,14 @@
             if (error) {
                 alert('user denied');
             } else if (user) {
-                //alert('user confirmed');
                 if ($state.current.name === 'anon.login') {
                     transitionState(user);
                     auth.logout();
                 }
-
             } else {
                 //alert('user logged out');
             }
         });
-
 
         $scope.login = function(provider){
             var options = {};
@@ -46,36 +43,11 @@
                 };
             } else {
                 options = {
-                    //rememberMe: true,
                     preferRedirect: true
                 };
             }
 
             auth.login(provider,options);
-
-            /*
-            var loginPromise = loginService.login(provider,{
-                email: $scope.login.username,
-                password: $scope.login.password
-            });
-            loginPromise.then(function(user){
-                loginService.setUser(user);
-                loginService.setLoginActive(true);
-                loginService.setUserInfoToLocalStorage(user);
-                $state.go('user.collections', {
-                    action: '',
-                    title: '',
-                    rightButtonIcon: 'fa fa-lg fa-pencil'
-                });
-
-                loginService.logoff();
-                //alert('callback called');
-            }, function(){
-                $scope.login.loginError = loginService.getErrorMessage();
-                //$scope.$apply();
-                //alert('login failed');
-            })
-            */
         };
 
         $scope.keyPressed = function(ev){
@@ -96,7 +68,6 @@
             $scope.showFirst = true;
 
             $scope.submitEmail = function(){
-                //$scope.showFirst = false;
                 var autoGenPassword = loginService.generatePassword();
                 auth.createUser($scope.signup.inputEmail, autoGenPassword, function(error, user){
 

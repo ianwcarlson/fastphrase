@@ -17,6 +17,12 @@ angular.module('optionsCtrlModule', [])
                 $scope.showLoginOverlay = !$scope.showLoginOverlay;
             });
 
+            /**
+             * Method bound to the login button that initiates the login
+             * process
+             * @param {object} login provider via Firebase API (i.e., 
+               Google/Facebook/Twitter oauth2 or email/password)
+             */
             $scope.login = function(provider){
                 var loginPromise = loginService.login(provider,{
                     email: $scope.login.username,
@@ -38,21 +44,30 @@ angular.module('optionsCtrlModule', [])
                 });
             };
 
+            /**
+             * Enables the login modal
+             */
             $scope.showLogin = function(){
                 broadcastStateChange.modalState(false);
                 loginService.logout();
             };
 
+            /** 
+             * Initiates password login method on enter key press
+             * @param {object} event object that contains the pressed key code
+             */
             $scope.keyPressed = function(ev){
                 if (ev.which==13 && $scope.showLoginOverlay){
                     $scope.login('password');
                 }
             };
 
+            // Toggle methods to store the user settings in the local storage service
             $scope.options.enableSound = localStorageWrapper.getEnableSound();
             $scope.options.playStudy = localStorageWrapper.getPlayEnable();
             $scope.options.enableReadOnly = localStorageWrapper.getReadOnly();
 
+            // String to number associations for time limit setting
             $scope.timeLimitOptions = [
                 {name: '15 seconds',    value: 15},
                 {name: '30 seconds',    value: 30},
@@ -64,6 +79,9 @@ angular.module('optionsCtrlModule', [])
                 {name: '3 minutes',     value: 180}
             ];
 
+            /**
+             * Updates the time limit value in the local storage service
+             */
             $scope.updateTimeLimitValue = function(){
                 if (angular.isDefined($scope.input.timeLimitSelect)){
                     localStorageWrapper.setTimeLimit($scope.input.timeLimitSelect.value);
@@ -77,6 +95,9 @@ angular.module('optionsCtrlModule', [])
             };
             $scope.updateTimeLimitValue();
 
+            /**
+             * Updates user view to whether they are in game mode or study mode
+             */
             var updateMode = function(){
                 $scope.options.modeEnabled = ($scope.options.playStudy === true) ?
                     'Game mode': 'Study mode';
@@ -84,25 +105,13 @@ angular.module('optionsCtrlModule', [])
             };
             updateMode();
 
-            //$scope.options.writeControl = optionsFactory.readOption('writeControl');
-            //$scope.options.enableSound = optionsFactory.readOption('enableSound');
-            //$scope.options.enableNotifications = optionsFactory.readOption('enableNotifications');
-
+            /**
+             * Update local storage service with sound and playstudy options.   
+             */
             $scope.updateOptions = function(){
-
-
                 localStorageWrapper.setEnableSound($scope.options.enableSound);
                 localStorageWrapper.setPlayEnable($scope.options.playStudy);
                 updateMode();
-                //optionsFactory.modifyOption('writeControl', $scope.writeControlEnable);
-                //optionsFactory.modifyOption('iqDataPolling', $scope.iqDataPollingEnable);
-                //optionsFactory.modifyOption('writeControl', $scope.options.writeControlEnable);
-                //optionsFactory.modifyOption('mapAutoCenter', $scope.options.disableMapAutoCenter);
-                //optionsFactory.modifyOption('showGradicules', $scope.options.showGradicules);
-                //optionsFactory.modifyOption('showScale', $scope.options.showScale);
-                //optionsFactory.modifyOption('writeControl', $scope.options.writeControl);
-                //optionsFactory.modifyOption('enableSound', $scope.options.enableSound);
-                //optionsFactory.modifyOption('enableNotifications', $scope.options.enableNotifications);
             };
 
         }

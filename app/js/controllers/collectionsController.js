@@ -25,8 +25,6 @@
         var wordSetRef = new Firebase(firebaseUrl);
 
         $scope.collections = $firebase(wordSetRef);
-        //var sync = $firebase(wordSetRef);
-        //$scope.collections = sync.$asObject();
 
         $scope.removeItem = function(id){
             $scope.collections.$remove(id);
@@ -50,7 +48,6 @@
                 title: collectionName,
                 rightButtonIcon: 'fa fa-lg fa-pencil'
             });
-            //$rootScope.ons.navigator.pushPage('words.html', {title: collectionName})
         };
         $scope.setKeyToDelete = function(newKey, newCollectionName){
             $scope.keyToDelete = newKey;
@@ -109,9 +106,6 @@
                 return result;
             };
             $scope.removeItem = function(id){
-                //wordSetManager.deleteWord(index);
-                //$scope.collections = wordSetManager.getCollectionsFromWordSet();
-                //$scope.words.splice(index, 1);
                 $scope.words.$remove(id);
                 $scope.wordCount -= 1;
             };
@@ -119,9 +113,6 @@
                 if (!localStorageWrapper.getReadOnly()) {
                     var newObject = {};
                     newObject.word = $scope.inputText;
-                    //wordSetManager.addWord($scope.inputText, $scope.words.length+1);
-                    //var wordObj = wordSetManager.getWordByName($scope.inputText);
-                    //$scope.words.push(wordObj);
                     $scope.words.$add(newObject);
                     $scope.inputText = '';
                     $scope.wordCount += 1;
@@ -134,7 +125,6 @@
             };
             $scope.nextPage = function(selectedIndex, wordName){
                 wordSetManager.setActiveWord(selectedIndex);
-                //$rootScope.ons.navigator.pushPage('definitions.html', {title: wordName})
                 $state.go('user.definitions', {
                     action: 'push',
                     title: wordName

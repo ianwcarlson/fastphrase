@@ -20,7 +20,6 @@ directivesModule.directive('pwCheck', [function(){
             var firstPassword = '#' + attrs.pwCheck;
             elem.add(firstPassword).on('keyup', function () {
                 scope.$apply(function () {
-                    // console.info(elem.val() === $(firstPassword).val());
                     ctrl.$setValidity('pwmatch', elem.val() === $(firstPassword).val());
                 });
             });
@@ -43,10 +42,6 @@ directivesModule.directive('editIcon', [function(){
                         scope.$apply();
                     }
                 }
-                //elements[0].onclick = function () {
-                //    scope.editIconCallback();
-                //    scope.$apply();
-                //}
             }
             findIconAndInvokeCallback();
             scope.$on('updatePage', findIconAndInvokeCallback);
@@ -67,8 +62,6 @@ directivesModule.directive('animateWord', [function(){
             var flipXStartPosition;
             var flipAngle = 0;
             var dragStart = false;
-            //var dragEnd = false;
-            //addFlipClass(0);
 
             scope.$on('triggerNextWord', function(){
                 //showHideCard(element);
@@ -84,13 +77,10 @@ directivesModule.directive('animateWord', [function(){
             });
 
             scope.$on('resetToInitial', function(){
-                // showHideCard(element)
-
                 prevXClassName = 'slidingCard' + styleLeft.toString();
                 styleLeft = Number(attrs.initialPosition);
 
                 modifyElementClass(prevXClassName, styleLeft);
-
             });
 
             function modifyElementClass(prevClass, newStyleLeft){
@@ -108,62 +98,8 @@ directivesModule.directive('animateWord', [function(){
                     element.removeClass('hide-card');
                 }
             }
-            /*
-            scope.dragEvent = function(event){
-                if (dragStart) {
-                    var newXPosition = dragXStartPosition + event.gesture.deltaX;
-                    //element[0].style.webkitTransform = "translateX(" + newXPosition + 'px)';
-                    //element.removeClass('flip');
-                    var newYPosition = flipAngle + event.gesture.deltaY;
-                    element.removeClass('flip');
-                    console.log('dragEvent');
-                    newYPosition = wrapAngle(newYPosition);
-                    var transformString = ' translate3D(' + newXPosition + 'px, 0px, 0px)';
-
-                    element[0].style.webkitTransform = transformString;
-                }
-            };
-
-            scope.dragStart = function(event){
-                dragStart = true;
-                dragXStartPosition = element[0].offsetLeft;
-                element.removeClass('flip');
-                var transformString = ' translate3D(' + dragXStartPosition + 'px, 0px, 0px)';
-                element[0].style.webkitTransform = transformString;
-                console.log('dragStart');
-
-                element.removeClass(newXClassName + ' animated');
-
-                removeFlipClass(flipAngle);
-
-            };
-
-            scope.dragEnd = function(event){
-                dragStart = false;
-                element[0].style.webkitTransform = '';
-                element.addClass(newXClassName + ' animated');
-                element.removeClass('flip');
-                //addFlipClass(flipAngle);
-                console.log('dragEnd');
-
-            };
-            */
             scope.flipCard = function(){
                 element[0].classList.toggle("flip");
-
-
-                /*
-                if (flipAngle === 0){
-                    removeFlipClass(0);
-                    addFlipClass(180);
-                    flipAngle = 180;
-                }
-                else{
-                    removeFlipClass(180)
-                    addFlipClass(0);
-                    flipAngle = 0;
-                }
-                */
             };
 
             function addFlipClass(angle){
@@ -273,7 +209,6 @@ directivesModule.directive("switch", [function() {
 
                     if (scope.changeExpr != null) {
                         scope.$parent.$eval(scope.changeExpr);
-                        //scope.changeExpr();
                     }
                 }
             });
@@ -393,7 +328,6 @@ directivesModule.directive('autoTextSize', [
                         if (fontSize > 10) {
                             fontSize -= 6;
                             element[0].style.fontSize = fontSize + 'px';
-                            //$timeout(setTextSize, 0);
                         }
                     }
                     else if (clientWidth < cardWidth * 0.4 ||
@@ -401,11 +335,9 @@ directivesModule.directive('autoTextSize', [
                         if (fontSize < 30) {
                             fontSize += 6;
                             element[0].style.fontSize = fontSize + 'px';
-                            //$timeout(setTextSize, 0);
                         }
                     }
                 }
-                //element[0].style.fontSize = fontSize + 'px';
             }
         }
     };

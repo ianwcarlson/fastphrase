@@ -39,7 +39,6 @@
         });
 
         var playTimer = new TimerClass();
-        //var turnManagerObj = turnManager();
         var turnManagerObj = {};
         var scoreManagerObj = scoreManager();
 
@@ -72,8 +71,6 @@
             }
         };
 
-
-
         $scope.startNewRound = function(){
             turnManagerObj = turnManager();
             playTimer.startTimer();
@@ -85,20 +82,11 @@
         };
         playTimer.timerEndCallback(endTurnTasks);
 
-        //$scope.triggerNextWord = function(){
-            //if (playTimer.isPlayActive()) {
-                //$rootScope.$broadcast('triggerNextWord');
-            //}
-        //};
-
         function wordPlayManager(){
             var playWordSet = [];
-            //var scopeObjects = ['word0', 'word1', 'word2'];
             var liveObjectView = [];
             var initialWordSet;
             var categoryList;
-
-            //var scopeObjectIdx;
 
             function gatherWords() {
                 var deferred = $q.defer();
@@ -141,7 +129,6 @@
                     {word: '', definition: '', index: 0},
                     {word: '', definition: '', index: 2}
                 ];
-                //scopeObjectIdx = 2;
             }
 
             function updateLiveView(newWord){
@@ -155,18 +142,11 @@
                     definition: newWord.definition,
                     index: oldIndex
                 });
-                //incrementScopeObjectIdx();
             }
-
-            //function incrementScopeObjectIdx(){
-            //    scopeObjectIdx = (scopeObjectIdx === scopeObjects.length - 1) ?
-            //        (0) : (scopeObjectIdx + 1);
-            //}
 
             function calcIndexAndInsertWord(){
                 var calcIndex = Math.round((playWordSet.length - 1) * Math.random());
                 updateLiveView(playWordSet[calcIndex]);
-                //$scope[scopeObject] = wordArray[calcIndex];
                 playWordSet.splice(calcIndex, 1);
             }
 
