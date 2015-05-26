@@ -1,5 +1,9 @@
 var filtersModule = angular.module('filtersModule', []);
-
+/**
+ * Custom Angular filter to filter unwanted keys in Firebase returns
+ * JS object.  Contains a mixture of the added keys along with properties
+ * and methods already contain within.
+ */
 filtersModule.filter('filterNonCategories', function(){
     return function(items){
         var result = {};
@@ -14,9 +18,7 @@ filtersModule.filter('filterNonCategories', function(){
             }
         });
         return result;
-
     };
-
 });
 
 
