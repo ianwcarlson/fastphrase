@@ -21,7 +21,7 @@ angular.module('optionsCtrlModule', [])
              * Method bound to the login button that initiates the login
              * process
              * @param {object} login provider via Firebase API (i.e., 
-               Google/Facebook/Twitter oauth2 or email/password)
+             * Google/Facebook/Twitter oauth2 or email/password)
              */
             $scope.login = function(provider){
                 var loginPromise = loginService.login(provider,{
