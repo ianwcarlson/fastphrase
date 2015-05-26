@@ -1,18 +1,20 @@
 var directivesModule = angular.module('directivesModule', []);
-
-directivesModule.directive('playSound', function(){
-    return{
-        restrict: 'E',
-        template: "<audio id='countDownBeep' src='media/audio/beep-08b.mp3' preload='auto'></audio>" +
-            "<a href='javascript:play_single_sound();'></a>",
-        link: function(scope, element){
-
-
+/**
+ * Creates a DOM element that loads an audio file
+ */
+directivesModule.directive('playSound', 
+    function(){
+        return{
+            restrict: 'E',
+            template: "<audio id='countDownBeep' src='media/audio/beep-08b.mp3' preload='auto'></audio>" +
+                "<a href='javascript:play_single_sound();'></a>",
+            link: function(scope, element){}
         }
-
     }
-});
-
+);
+/**
+ * Provides mechanism to live check password validity
+ */
 directivesModule.directive('pwCheck', [function(){
     return {
         require: 'ngModel',
@@ -26,7 +28,10 @@ directivesModule.directive('pwCheck', [function(){
         }
     }
 }]);
-
+/**
+ * Wrapper to manage the edit icon that gets pressed when the user wants to edit
+ * the view.  Also binds to specified callback on scope
+ */
 directivesModule.directive('editIcon', [function(){
     return{
         restrict: 'E',
@@ -48,7 +53,10 @@ directivesModule.directive('editIcon', [function(){
         }
     }
 }]);
-
+/**
+ * Manages the flash card animation.  The cards can flip or be swiped to the left
+ * CSS animations
+ */
 directivesModule.directive('animateWord', [function(){
     return{
         restrict: 'A',
@@ -64,8 +72,6 @@ directivesModule.directive('animateWord', [function(){
             var dragStart = false;
 
             scope.$on('triggerNextWord', function(){
-                //showHideCard(element);
-
                 prevXClassName = 'slidingCard' + styleLeft.toString();
 
                 styleLeft = (styleLeft <= -190) ? (210) : (styleLeft -=200);
@@ -131,12 +137,13 @@ directivesModule.directive('animateWord', [function(){
 
                 return mod180;
             }
-
-
         }
     }
 }]);
-
+/**
+ * Provides view logic to calculate the div height of the card, since it's 
+ * variable depending on the screen size
+ */
 directivesModule.directive('cardDivHeightCalc', function(){
     return{
         restrict: 'A',
@@ -161,7 +168,10 @@ directivesModule.directive('cardDivHeightCalc', function(){
         }
     }
 });
-
+/**
+ * Provides view logic to calculate the width of the card, since it's 
+ * variable depending on the screen size
+ */
 directivesModule.directive('dynamicWidth', function(){
     return{
         restrict: 'A',
@@ -189,7 +199,10 @@ directivesModule.directive('dynamicWidth', function(){
         }
     }
 });
-
+/**
+ * Switches between the word and definition depending on which side of the
+ * card is shown.
+ */
 directivesModule.directive("switch", [function() {
     return {
         restrict: "EA",
@@ -217,6 +230,10 @@ directivesModule.directive("switch", [function() {
         }
     };
 }]);
+/**
+ * View logic to manages the width of the time limit select element based
+ * on window size
+ */
 directivesModule.directive('timeLimitSelectWidth', [function(){
     return{
         restrict: 'A',
@@ -235,6 +252,9 @@ directivesModule.directive('timeLimitSelectWidth', [function(){
         }
     }
 }]);
+/**
+ * View logic to dynamically size card text depending on screen size
+ */
 directivesModule.directive('cardTextWidth', [function(){
     return{
         restrict: 'A',
@@ -257,6 +277,9 @@ directivesModule.directive('cardTextWidth', [function(){
         }
     }
 }]);
+/**
+ * View logic to dynamically set card text height
+ */
 directivesModule.directive('cardTextHeight', [
     '$timeout', function($timeout){
     return{
@@ -276,12 +299,13 @@ directivesModule.directive('cardTextHeight', [
                 var textHeight = cardText[0].offsetHeight;
 
                 element[0].style.height = textHeight + 'px';
-
-
             }
         }
     }
 }]);
+/**
+ * View logic to dynamically set text size based off card size
+ */
 directivesModule.directive('autoTextSize', [
     // auto size text to fit element
     '$timeout', function($timeout){
@@ -342,6 +366,9 @@ directivesModule.directive('autoTextSize', [
         }
     };
 }]);
+/**
+ * View logic to show/hide modal
+ */
 directivesModule.directive("modalHide", [function() {
     return {
         restrict: "A",
@@ -357,6 +384,9 @@ directivesModule.directive("modalHide", [function() {
         }
     };
 }]);
+/**
+ * Template wrapper for login snippet
+ */
 directivesModule.directive("loginSnippet", [function() {
     return {
         restrict: "E",
@@ -364,6 +394,10 @@ directivesModule.directive("loginSnippet", [function() {
         templateUrl: 'partials/loginSnippet.html'
     };
 }]);
+/**
+ * View logic to dynamically set login height.  Still having problems with this
+ * on different screen sizes
+ */
 directivesModule.directive("loginChildHeight", [function() {
     return {
         restrict: "A",
@@ -376,7 +410,6 @@ directivesModule.directive("loginChildHeight", [function() {
                 element[0].style.height = elemHeightString;
             }
             setHeight();
-
         }
     };
 }]);
