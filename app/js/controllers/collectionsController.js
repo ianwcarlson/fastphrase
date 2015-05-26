@@ -23,7 +23,7 @@
         $scope.modal = {};
         /**
          * Changes the visibility of the login modal
-         * @param {Boolean}
+         * @param {Boolean} newState boolean of the new state to transition to
          */
         $scope.setHideModal = function(newState){
             broadcastStateChange.modalState(newState);
@@ -36,7 +36,7 @@
         $scope.collections = $firebase(wordSetRef);
         /**
          * Removes word collection item from view and from database
-         * @param  {String} word collection name/id
+         * @param  {String} id word collection name/id
          */
         $scope.removeItem = function(id){
             $scope.collections.$remove(id);
@@ -54,7 +54,7 @@
         /**
          * Function that gets called when key is pressed.  If enter
          * key pressed then add the collection item to list
-         * @param {Object} event object containing key codes
+         * @param {Object} ev event object containing key codes
          */
         $scope.addItemKeyPress = function(ev){
             if (ev.which==13){
@@ -64,8 +64,8 @@
         /**
          * Goes to next page on the stack which would be the word lists
          * within each word collection
-         * @param  {Number} selected index of the word collection of interest
-         * @param  {String} name of collection selected
+         * @param  {Number} selectedIndex selected index of the word collection of interest
+         * @param  {String} collectionName name of collection selected
          */
         $scope.nextPage = function(selectedIndex, collectionName){
             wordSetManager.setActiveCollection(selectedIndex);
@@ -77,9 +77,9 @@
         };
         /**
          * Determines which collection name to delete
-         * @param {String} Database generated key for the word collection 
+         * @param {String} newKey Database generated key for the word collection 
          * to delete
-         * @param {String} The collection name to name to delete
+         * @param {String} newCollectionName The collection name to name to delete
          */
         $scope.setKeyToDelete = function(newKey, newCollectionName){
             $scope.keyToDelete = newKey;
@@ -144,7 +144,7 @@
              * Angular filter method to determine which items are valid words
              * to display so that ng-repeat can word on the database node that
              * contains other extraneous attributes and methods
-             * @param  {Object} array of items at the database node containing the words
+             * @param  {Object} items array of items at the database node containing the words
              * @return {Object} object with keys that contain the 'word' property
              */
             $scope.filterNonCollections = function(items) {
@@ -158,7 +158,7 @@
             };
             /**
              * Removes the specified word item
-             * @param  {String} id string corresponding to the word to be removed
+             * @param  {String} id id string corresponding to the word to be removed
              */
             $scope.removeItem = function(id){
                 $scope.words.$remove(id);
@@ -178,7 +178,7 @@
             };
             /**
              * Listens for enter key press
-             * @param {Object} The browser event object containing key codes
+             * @param {Object} ev The browser event object containing key codes
              */
             $scope.addItemKeyPress = function(ev){
                 if (ev.which==13){
@@ -187,8 +187,8 @@
             };
             /**
              * Add the definition page to the page stack
-             * @param  {Number} the index of the selected word
-             * @param  {String} the name of the select word
+             * @param  {Number} selectedIndex the index of the selected word
+             * @param  {String} wordName the name of the select word
              */
             $scope.nextPage = function(selectedIndex, wordName){
                 wordSetManager.setActiveWord(selectedIndex);
