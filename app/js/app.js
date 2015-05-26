@@ -16,14 +16,12 @@ var myApp =	angular.module('myApp', [
     'directivesModule',
     'filtersModule',
     'optionsCtrlModule'
-    //'modalDirectivesModule'
-    //'mobile-angular-ui'
 ]);
-
+/**
+ * Master app router and manages page view stack
+ */
 myApp.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
-
-
     $stateProvider
         .state('anon', {
             abstract: true,
@@ -74,7 +72,10 @@ myApp.config(['$stateProvider', '$urlRouterProvider',
 
     $urlRouterProvider.otherwise('login');
 }]);
-
+/**
+ * The onsen library being used has a rather complication nested scope structure.  Needed to
+ * access global methods it provides to overrides some of the built in functinality.
+ */
 myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache', 'loginService',
     function($rootScope, $timeout, $state, $stateParams, $templateCache, loginService) {
 
@@ -84,8 +85,6 @@ myApp.run(['$rootScope', '$timeout', '$state', '$stateParams', '$templateCache',
 
         if (loginService.verifyUserFromLocalStorage() ||
             toState.data.access === 'anon') {
-            //alert('sent to router');
-            // user and session valid
             //if ($rootScope.ons.navigator) {
                 switch (toParams.action) {
                     case 'push':
