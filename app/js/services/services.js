@@ -13,12 +13,7 @@ serviceModule.factory('wordSetManager', function(){
     }
     var activeCollectionIndex = 0;
     var activeWordIndex = 0;
-    var wordSet = [
-        //{
-        //    collectionName: '',
-        //    words: []
-        //}
-    ];
+    var wordSet = [];
 
     return{
         setActiveCollection: function(collectionIndex){
@@ -94,15 +89,24 @@ serviceModule.service('appConstants', [function(){
     this.firebaseMainUrl = 'https://blistering-fire-4858.firebaseio.com';
     this.TIME_LIMIT_SCALER = 1.8;
 }]);
-
+/**
+ * Wrapper for local storage module
+ */
 serviceModule.factory('localStorageWrapper', [
     'appConstants', 'localStorageService',
     function(appConstants, localStorageService){
-
+    /**
+     * Subclass that had methods to access generic strings from local storage
+     * @param {Polymorphic} inputDefault default value for input
+     * @param {String} inputOption  name of the option
+     */
     function SimpleStorageOption(inputDefault, inputOption){
         var defaultOption = inputDefault;
         var optionName = inputOption;
-
+        /**
+         * Gets option from local storage
+         * @return {Polymorphic}
+         */
         function getOption(){
             var value = defaultOption;
             if (localStorageService.isSupported) {
@@ -115,7 +119,10 @@ serviceModule.factory('localStorageWrapper', [
             }
             return value;
         }
-
+        /**
+         * Sets option to local storage
+         * @param {Polymorphic} newValue 
+         */
         function setOption(newValue){
             localStorageService.set(optionName, angular.toJson(newValue));
         }
@@ -124,37 +131,64 @@ serviceModule.factory('localStorageWrapper', [
             setOption: setOption
         }
     }
-
+    // defaults
     var timeLimitOption = SimpleStorageOption(30, 'timeLimit');
     var enableSoundOption = SimpleStorageOption(true, 'enableSound');
     var playEnableOption = SimpleStorageOption(true, 'playEnable');
     var readOnlyOption = SimpleStorageOption(false, 'readOnly');
-
+    /**
+     * Gets time limit
+     * @return {Number} time limit
+     */
     function getTimeLimit(){
         return Number(timeLimitOption.getOption());
     }
-
+    /**
+     * Sets time limit
+     * @param {Number} newValue new time limit
+     */
     function setTimeLimit(newValue){
         timeLimitOption.setOption(newValue);
     }
-
+    /**
+     * Sets enable sound setting
+     * @param {Boolean} newValue true/false to enable sound
+     */
     function setEnableSound(newValue){
         enableSoundOption.setOption(newValue);
     }
+    /**
+     * Gets enable sound setting
+     * @return {Boolean} sound enabled boolean
+     */
     function getEnableSound(){
         return enableSoundOption.getOption();
     }
-
+    /**
+     * Sets play enable
+     * @param {Boolean} newValue true or false
+     */
     function setPlayEnable(newValue){
         playEnableOption.setOption(newValue);
     }
+    /**
+     * Gets play enable
+     * @return {Boolean} true or false
+     */
     function getPlayEnable(){
         return playEnableOption.getOption();
     }
-
+    /**
+     * Set Read Only
+     * @param {Boolean} newValue true or false
+     */
     function setReadOnly(newValue){
         readOnlyOption.setOption(newValue);
     }
+    /**
+     * Gets read only
+     * @return {Boolean} true or false
+     */
     function getReadOnly(){
         return readOnlyOption.getOption();
     }
@@ -170,7 +204,9 @@ serviceModule.factory('localStorageWrapper', [
         getReadOnly: getReadOnly
     }
 }]);
-
+/**
+ * Wrapper for broadcasting the event 'modalStateChange' to the whole app
+ */
 serviceModule.factory('broadcastStateChange', ['$rootScope',
     function($rootScope){
     return{
