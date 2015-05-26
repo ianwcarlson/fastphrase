@@ -20,17 +20,6 @@ serviceModule.factory('wordSetManager', function(){
         //}
     ];
 
-    //var collection1 = new Collection('French Revolution', 0);
-    //collection1.words.push(new Word('guillotine', 0));
-    //collection1.words.push(new Word('bastille', 1));
-    //wordSet.push(collection1);
-
-    //var collection2 = new Collection('WWII', 0);
-    //collection2.words.push(new Word('Hitler', 0));
-    //collection2.words.push(new Word('Stalin', 1));
-    //collection2.words.push(new Word('Japanese Internment Camps', 2));
-    //wordSet.push(collection2);
-
     return{
         setActiveCollection: function(collectionIndex){
             activeCollectionIndex = collectionIndex;
@@ -90,8 +79,6 @@ serviceModule.factory('wordSetManager', function(){
             for (var idx=0; idx<wordSet[activeCollectionIndex].words.length; idx++){
                 var wordRef = wordSet[activeCollectionIndex].words[idx].word;
                 if (wordRef === name){
-                    //var wordObj = {};
-                    //wordObj.word = wordSet[activeCollectionIndex].words[idx].word;
                     return wordSet[activeCollectionIndex].words[idx];
                 }
 
@@ -100,17 +87,12 @@ serviceModule.factory('wordSetManager', function(){
         getDefinitionFromWord: function(wordIndex){
             return wordSet[activeCollectionIndex].words[wordIndex].definition;
         }
-
-
     }
 });
 
 serviceModule.service('appConstants', [function(){
-
     this.firebaseMainUrl = 'https://blistering-fire-4858.firebaseio.com';
-
     this.TIME_LIMIT_SCALER = 1.8;
-
 }]);
 
 serviceModule.factory('localStorageWrapper', [

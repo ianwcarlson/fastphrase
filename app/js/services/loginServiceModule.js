@@ -11,7 +11,14 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
     var callbackArray = [];
     var errorMsg = '';
     var user = null;
-
+    /**
+     * Initiates the login process with the Firebase API
+     * @param  {String} provider  (e.g., 'facebook', 'password')
+     * @param  {Object} loginInfo contains 'email' and 'password' properties 
+     * if that provider is selected
+     * @return {Promise object} when resolved, the promise will return the user object
+     * contain information about the user
+     */
     var login = function(provider, loginInfo){
         var deferred = $q.defer();
         var loginEmail = loginInfo.email || 'default';
@@ -46,12 +53,19 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         auth.login(provider,options);
         return deferred.promise;
     };
+    /**
+     * logs out via the Firebase API
+     */
     var logout = function(){
         var chatRef = new Firebase(appConstants.firebaseMainUrl);
         var auth = FirebaseSimpleLogin(chatRef, function(error, user) {});
         auth.logout();
     };
-
+    /**
+     * Helper method that calls each callback from an array.  This is used
+     * for assigning custom callbacks when the user has logged in. 
+     * @param  {array} callbackArray array of functions to call
+     */
     function callEachCallback(callbackArray){
         callbackArray.forEach(function(callback){
             if (angular.isDefined(callback) && typeof callback === 'function') {
@@ -59,7 +73,11 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
             }
         })
     }
-
+    /**
+     * Generates a random alpha-numeric password when the user
+     * resets their password or needs to generate a new one
+     * @return {[type]} [description]
+     */
     function generatePassword () {
         var possibleChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?_-';
         var password = '';
@@ -68,7 +86,11 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         }
         return password;
     }
-
+    /**
+     * Translates the error codes into a string
+     * @param  {Object} error object containing 'error' property
+     * @return {String} error string
+     */
     function authError(error){
 
         var nonUserError = false;
@@ -120,7 +142,10 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
         }
         return errorMessage;
     }
-
+    /**
+     * Checks to see if user oauth token is stored in localstorage
+     * @return {Boolean} true/false if user is currenlty stored
+     */
     function verifyUserFromLocalStorage(){
         var loginActive = false;
 
@@ -138,10 +163,12 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
                 }
             }
         }
-
         return loginActive;
     }
-
+    /**
+     * Stores user information into local storage
+     * @param {String} userID user identification
+     */
     function setUserInfoToLocalStorage(userID){
         if (localStorageService.isSupported){
             var date = new Date();
@@ -152,32 +179,58 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
     }
 
     return{
+        /**
+         * Assign a custom callback that gets called when the user logs in
+         * @param {Function} callback custom function
+         */
         setLoginCallback: function(callback){
             callbackArray.push(callback);
         },
+        /**
+         * External way of forcing all the login callbacks to trigger. Needed
+         * this because of enabling/disable read-only mode
+         * @param {Boolean} newLoginStatus
+         */
         setLoginActive: function(newLoginStatus){
             loginActive = newLoginStatus;
             callEachCallback(callbackArray);
         },
+        /**
+         * Gets the active login status
+         * @return {Boolean} 
+         */
         getLoginActive: function(){
             return loginActive;
         },
-        //getLoginAuthorization: function(){
-        //    return auth;
-        //},
+        /**
+         * Sets the current user, which gets used during login
+         * @param {String} newUser 
+         */
         setUser: function(newUser){
             user = newUser;
         },
+        /**
+         * Gets the current user
+         * @return {String} user identification
+         */
         getUser: function(){
             return userID;
         },
         login: login,
         logout: logout,
+        /**
+         * Sets the global login active status
+         * @param {Boolean} newValue
+         */
         setGlobalLoginActive: function(newValue){
             globalLoginActive = newValue;
         },
         generatePassword: generatePassword,
         getAuthError: authError,
+        /**
+         * Gets the login error message
+         * @return {String} error message
+         */
         getErrorMessage: function(){
             return errorMsg;
         },
