@@ -12,6 +12,16 @@ loginServiceModule.factory('loginService', ['appConstants', 'localStorageService
     var errorMsg = '';
     var user = null;
     /**
+     * Overrides login user settings.  Used for testing.
+     * @param {Object} inputUser Contains the following properties:
+     * email (String), firebaseAuthToken(String), id(String), 
+     * isTemporaryPassword(String), md5_hash, provider, uid
+     */
+    var setUser = function(inputUser){
+        user = inputUser;
+        userID = inputUser.id;
+    };
+    /**
      * Initiates the login process with the Firebase API
      * @param  {String} provider  (e.g., 'facebook', 'password')
      * @param  {Object} loginInfo contains 'email' and 'password' properties 

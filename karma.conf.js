@@ -15,10 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-
-
       // 'app/lib/angular-mocks/ngMock.js',
-
       'app/lib/firebase/firebase.js',
       'app/lib/mockfirebase/dist/mockfirebase.js',
       'app/lib/firebase-simple-login/firebase-simple-login.js',
@@ -33,11 +30,8 @@ module.exports = function(config) {
       'app/lib/onsenui/build/js/angular/angular-touch.js',
       'app/lib/angular-gestures/gestures.js',
       'app/lib/angular-local-storage/angular-local-storage.js',
-      // 'app/lib/**/*.js',
       'app/js/app.js',
       'app/js/**/*.js',
-//      'app/lib/**/*.js',
-      // 'app/js/**/*.js',
       'test/**/*Spec.js'
     ],
 

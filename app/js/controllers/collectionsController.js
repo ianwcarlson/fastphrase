@@ -30,12 +30,12 @@
         };
 
         var user = loginService.getUser();
-        if (user !== null){
+        //if (user !== null){
             var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
             var wordSetRef = new Firebase(firebaseUrl);
         
             $scope.collections = $firebase(wordSetRef);
-        }
+        //}
         /**
          * Removes word collection item from view and from database
          * @param  {String} id word collection name/id
