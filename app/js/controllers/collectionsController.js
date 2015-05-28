@@ -5,10 +5,10 @@
      * Controller assigned to the Word Collections view
      */
     controllerModule.controller('collectionsController', [
-        '$scope', '$rootScope', 'wordSetManager', '$firebase', '$state', 'loginService',
-        'broadcastStateChange', 'localStorageWrapper',
-        function($scope, $rootScope, wordSetManager, $firebase, $state, loginService,
-        broadcastStateChange, localStorageWrapper){
+        '$scope', '$rootScope', 'wordSetManager', '$state', 'loginService',
+        'broadcastStateChange', 'localStorageWrapper', '$firebase',
+        function($scope, $rootScope, wordSetManager, $state, loginService,
+        broadcastStateChange, localStorageWrapper, $firebase){
 
         $scope.editMode = false;
         $scope.readOnly = localStorageWrapper.getReadOnly();
@@ -30,10 +30,12 @@
         };
 
         var user = loginService.getUser();
-        var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
-        var wordSetRef = new Firebase(firebaseUrl);
-
-        $scope.collections = $firebase(wordSetRef);
+        if (user !== null){
+            var firebaseUrl = 'https://blistering-fire-4858.firebaseio.com/' + user.id;
+            var wordSetRef = new Firebase(firebaseUrl);
+        
+            $scope.collections = $firebase(wordSetRef);
+        }
         /**
          * Removes word collection item from view and from database
          * @param  {String} id word collection name/id

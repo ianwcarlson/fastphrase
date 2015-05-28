@@ -49,6 +49,6 @@
     "commit": "753a442b61f74700cf91eb773015c42ca8aa1a4d"
   },
   "_source": "git://github.com/OnsenUI/OnsenUI.git",
-  "_target": "~1.1.0",
+  "_target": "1.1.0",
   "_originalSource": "onsenui"
 }
